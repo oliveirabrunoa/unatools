@@ -14,8 +14,7 @@ from urllib import parse
 def leadlovers_webhook_cadastro_ppc(request):
     body_unicode = request.body.decode('utf-8')
     params = dict(parse.parse_qsl(parse.urlsplit(body_unicode).path))
-    print('web webhook cadastro recebido!  ', body_unicode)
-    # print(params['Email'])
+    print(params)
     return HttpResponse(status=200)
     # pagamento_instalacao = ItemPagamentoMoip.objects.filter(codigo_pagamento_moip = body.get('resource').get('payment').get('id'), descricao_item__iexact='Instalação').first()
     # if pagamento_instalacao:

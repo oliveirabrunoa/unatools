@@ -64,3 +64,18 @@ class Transaction(models.Model):
     class Meta:
         verbose_name = 'Transaction'
         verbose_name_plural = 'Transactions'
+
+
+# class UsersMoskit(models.Model):
+#     id = models.AutoField(primary_key=True, blank=False, null=False)
+#     id_moskit = models.AutoField(primary_key=True, blank=False, null=False)
+#     email = models.CharField(max_length=80,blank=False, null=True)
+#     nome = models.CharField(max_length=200,blank=False, null=True)
+#     area_atuacao = models.CharField(max_length=100,blank=False, null=True)
+#
+#     def __str__(self):
+#         return '{0} - {1}'.format(self.nome, self.email)
+#
+#     class Meta:
+#         verbose_name = 'Lead'
+#         verbose_name_plural = 'Leads'
