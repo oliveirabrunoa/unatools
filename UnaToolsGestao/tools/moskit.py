@@ -1,5 +1,6 @@
 import requests
 import json
+from .models import UsersMoskit
 
 class MoskitObj(object):
 
@@ -14,14 +15,14 @@ class MoskitObj(object):
                                 "name":'{0}'.format(lead.nome),
                                 "notes":"Criado by UnaTools",
                                 "createdBy":{"id":"24453"}, #Id da Conta Principal - Atualmente Comercial
-                                "responsible":{"id": '{0}'.fotmat(self.get_responsible().id_moskit)},
+                                "responsible":{"id": '{0}'.format(self.get_responsible().id_moskit)},
                                 "emails":[{"address": '{0}'.format(lead.email),}],
-                                "phones": {"number":'{0}'.format(lead.telefone),}
+                                "phones": [{"number": "992457753"}],
                             })
-
+        
         response = requests.post(url, data=payload, headers=self.headers)
         return response.status_code
 
     def get_responsible(self):
-        user_moskit_principal = UsersMoskit.objects.filter_by(principal=True).first()
+        user_moskit_principal = UsersMoskit.objects.filter(principal=True).first()
         return user_moskit_principal

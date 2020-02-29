@@ -10,6 +10,12 @@ from urllib import parse
 from .views import criar_lead_moskit
 
 #### Recebimento de Cadastro LL ####
+# 1|Formação Completa em Coaching com PNL
+# 2|Formação Oratória Magnética com técnicas de Coaching e PNL
+# 3|Formação Liderança 4.0 com técnicas de Coaching e PNL
+# 4|Formação NevEX  com técnicas de Coaching e PNL
+
+
 @require_POST
 @csrf_exempt
 def leadlovers_webhook_cadastro_ppc(request):
@@ -20,12 +26,11 @@ def leadlovers_webhook_cadastro_ppc(request):
         lead = Lead()
         lead.nome = params['Nome']
         lead.email = params['Email']
+        lead.telefone = params['Telefone']
         lead.area_atuacao = params['AreadeAtuacao']
         lead.save()
 
-        tag = Tag()
-        tag.categoria = params['maquina_origem']
-        tag.save()
+        tag = Tag.objects.filter(id=params['maquina_origem']).first()
 
         transaction = Transaction()
         transaction.lead = lead
