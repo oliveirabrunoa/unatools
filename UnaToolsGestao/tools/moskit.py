@@ -8,16 +8,20 @@ class MoskitObj(object):
         self.base_url= 'https://api.moskitcrm.com/v1/'
         self.headers = {'content-type': "application/json",'apikey': "c8e53183-f582-40be-8b5d-497871dee436",'cache-control': "no-cache",}
 
-    def criar_contato(self):
+    def criar_contato(self, lead):
         url = self.base_url + "contacts"
         payload = json.dumps({
-                                "name":"aaaaaaaaaaaaaaaBruno Teste Intesdsdsdgração",
-                                "notes":"Teste",
-                                "createdBy":{"id":"24453"},
-                                "responsible":{"id":"24453"},
-                                "emails":[{"address":"bbbbbbbstring@gmail.com",}],
-                                "phones": {"number":"888888888",}
+                                "name":'{0}'.format(lead.nome),
+                                "notes":"Criado by UnaTools",
+                                "createdBy":{"id":"24453"}, #Id da Conta Principal - Atualmente Comercial
+                                "responsible":{"id": '{0}'.fotmat(self.get_responsible().id_moskit)},
+                                "emails":[{"address": '{0}'.format(lead.email),}],
+                                "phones": {"number":'{0}'.format(lead.telefone),}
                             })
 
         response = requests.post(url, data=payload, headers=self.headers)
-        print(response.text)
+        return response.status_code
+
+    def get_responsible(self):
+        user_moskit_principal = UsersMoskit.objects.filter_by(principal=True).first()
+        return user_moskit_principal

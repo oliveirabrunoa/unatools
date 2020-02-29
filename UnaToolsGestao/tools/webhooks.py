@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 import requests
 from urllib import parse
+from .views import criar_lead_moskit
 
 #### Recebimento de Cadastro LL ####
 @require_POST
@@ -15,7 +16,30 @@ def leadlovers_webhook_cadastro_ppc(request):
     body_unicode = request.body.decode('utf-8')
     params = dict(parse.parse_qsl(parse.urlsplit(body_unicode).path))
     print(params)
+    if params:
+        lead = Lead()
+        lead.nome = params['Nome']
+        lead.email = params['Email']
+        lead.area_atuacao = params['AreadeAtuacao']
+        lead.save()
+
+        tag = Tag()
+        tag.categoria = params['maquina_origem']
+        tag.save()
+
+        transaction = Transaction()
+        transaction.lead = lead
+        transaction.tag = tag
+        transaction.save()
+
+        criar_lead_moskit(lead)
+
     return HttpResponse(status=200)
+
+
+
+
+
     # pagamento_instalacao = ItemPagamentoMoip.objects.filter(codigo_pagamento_moip = body.get('resource').get('payment').get('id'), descricao_item__iexact='Instalação').first()
     # if pagamento_instalacao:
     #     pagamento_instalacao.atualizacao_status = body.get('resource').get('payment').get('updatedAt')

@@ -1,15 +1,13 @@
 from django.shortcuts import render
+from .models import Lead
 from .moskit import MoskitObj
 import json
 # Create your views here.
 
 
-def meutest():
-    a = MoskitObj()
-    a.criar_contato()
+def criar_lead_moskit(lead):
+    moskit = MoskitObj()
+    result = moskit.criar_contato(lead)
 
-    # print(b)
-    # app_json = json.dumps(b)
-    # print(b)
-
-meutest()
+    if result == '200':
+        print("cadastro efetuado")
