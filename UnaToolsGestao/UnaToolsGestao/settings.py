@@ -81,6 +81,9 @@ DATABASES = {
        'USER': 'unatools',
        'PASSWORD': 'A6901804',
        'HOST': 'unatools.mysql.pythonanywhere-services.com',
+       'OPTIONS': {
+            'init_command': 'SET innodb_strict_mode=1',
+        },
    }
  }
 
