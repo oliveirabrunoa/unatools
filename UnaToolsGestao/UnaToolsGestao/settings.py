@@ -25,7 +25,7 @@ SECRET_KEY = '8_v6wb!hrcaf1s1dmm^hl3+acupx=smxb+32=kimlhs!7h5(vx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','www.unatools.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1','unatools.pythonanywhere.com']
 
 
 # Application definition
