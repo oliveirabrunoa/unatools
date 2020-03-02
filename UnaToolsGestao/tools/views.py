@@ -8,6 +8,5 @@ import json
 def criar_lead_moskit(lead):
     moskit = MoskitObj()
     result = moskit.criar_contato(lead)
-
     if result == '200':
-        print("cadastro efetuado")
+        print("cadastro de cliente concluido")

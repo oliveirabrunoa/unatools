@@ -19,10 +19,25 @@ class MoskitObj(object):
                                 "emails":[{"address": '{0}'.format(lead.email),}],
                                 "phones": [{"number": "992457753"}],
                             })
-        
+
         response = requests.post(url, data=payload, headers=self.headers)
         return response.status_code
 
     def get_responsible(self):
         user_moskit_principal = UsersMoskit.objects.filter(principal=True).first()
         return user_moskit_principal
+
+
+    def criar_negocio(self, lead):
+        url = self.base_url + "companies"
+        payload = json.dumps({
+                                "name":'Negócio {0}'.format(lead.nome),
+                                "notes":"Criado by UnaTools",
+                                "createdBy":{"id":"24453"}, #Id da Conta Principal - Atualmente Comercial
+                                "responsible":{"id": '{0}'.format(self.get_responsible().id_moskit)},
+                                "emails":[{"address": '{0}'.format(lead.email),}],
+                                "phones": [{"number": "992457753"}],
+                            })
+
+        response = requests.post(url, data=payload, headers=self.headers)
+        return response.status_code
