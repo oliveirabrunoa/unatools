@@ -20,7 +20,7 @@ class MoskitObj(object):
                                 "phones": [{"number": "992457753"}],
                             })
 
-        response = requests.post(url, data=payload, headers=self.headers, verify = False)
+        response = requests.post(url, data=payload, headers=self.headers)
         return response.status_code
 
     def get_responsible(self):
@@ -39,5 +39,5 @@ class MoskitObj(object):
                                 "phones": [{"number": "992457753"}],
                             })
 
-        response = requests.post(url, data=payload, headers=self.headers, verify = False)
+        response = requests.post(url, data=payload, headers=self.headers)
         return response.status_code
