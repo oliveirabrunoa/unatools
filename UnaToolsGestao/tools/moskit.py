@@ -17,7 +17,7 @@ class MoskitObj(object):
                                 "createdBy":{"id":"24453"}, #Id da Conta Principal - Atualmente Comercial
                                 "responsible":{"id": '{0}'.format(self.get_responsible().id_moskit)},
                                 "emails":[{"address": '{0}'.format(lead.email),}],
-                                "phones": [{"number": "992457753"}],
+                                "phones": [{"number": '{0}'.format(lead.telefone)}],
                             })
 
         response = requests.post(url, data=payload, headers=self.headers)
