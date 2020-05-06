@@ -25,7 +25,7 @@ SECRET_KEY = '8_v6wb!hrcaf1s1dmm^hl3+acupx=smxb+32=kimlhs!7h5(vx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','unatools.pythonanywhere.com', 'eaa28b39.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1','unatools.pythonanywhere.com', '2c74851d.ngrok.io']
 
 
 # Application definition
@@ -76,26 +76,26 @@ WSGI_APPLICATION = 'UnaToolsGestao.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 #
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.mysql',
-       'NAME': 'unatools$dbuna',
-       'USER': 'unatools',
-       'PASSWORD': 'A6901804',
-       'HOST': 'unatools.mysql.pythonanywhere-services.com',
-       'OPTIONS': {
-            'init_command': 'SET innodb_strict_mode=1',
-        },
-   }
- }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'unatools$dbuna',
+#        'USER': 'unatools',
+#        'PASSWORD': 'A6901804',
+#        'HOST': 'unatools.mysql.pythonanywhere-services.com',
+#        'OPTIONS': {
+#             'init_command': 'SET innodb_strict_mode=1',
+#         },
+#    }
+#  }
 
 
 # Password validation

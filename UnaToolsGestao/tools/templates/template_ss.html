@@ -1,0 +1,327 @@
+{% load staticfiles %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+      @page {
+        size: a4 portrait;
+        @frame header_frame {           /* Static Frame */
+          -pdf-frame-content: header_content;
+          left: 50pt; width: 500pt; top: 50pt; height: 40pt;
+          /*-pdf-frame-border: 1;    /* for debugging the layout */
+        }
+        @frame content_frame {          /* Content Frame */
+          left: 50pt; width: 500pt; top: 102pt; height: 658pt;
+          /*-pdf-frame-border: 1;    /* for debugging the layout */
+        }
+        @frame footer_frame {           /* Another static Frame */
+          -pdf-frame-content: footer_content;
+          left: 50pt; width: 500pt; top: 770pt; height: 40pt;
+          /*-pdf-frame-border: 1;    /* for debugging the layout */
+        }
+      }
+
+      .footer{
+            text-decoration: bold;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+      }
+
+      .tg td{
+        padding:2px 2px;
+        border: 1px solid #000000;
+      }
+
+</style>
+</head>
+  <body style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt;">
+      <div id="header_content">
+        <img src="{{imagem_contrato}}" height="45" width="85">
+      </div>
+
+      <div id="content">
+        <div id="qr">
+          <p style="text-align: center; font-size: 12pt;">
+            <b>CONTRATO DE PRESTA&Ccedil;&Atilde;O DE SERVI&Ccedil;O DE MONITORAMENTO DE VE&Iacute;CULO AUTOMOTOR &Agrave; DIST&Acirc;NCIA POR EQUIPAMENTO DE RASTREAMENTO &ndash; GSM/GPS E OUTRAS AVEN&Ccedil;AS</b>
+          </p>
+
+          <p style="text-align: center; font-size: 10pt;">
+              <b>QUADRO RESUMO &ndash; &ldquo;QR&rdquo;</b>
+          </p>
+
+        </br>
+        </br>
+
+          <p>
+            <b>1-<u>CONTRATADA:</u></b>
+            </br>
+            <b>NOME: DOIS MINUTOS TECNOLOGIA E RASTREAMENTO LTDA.</b>
+            </br>
+            <b>CNPJ:</b> 10.383.948/0001-27
+            </br>
+            <b>ENDERE&Ccedil;O:</b> Av. Prof. Magalh&atilde;es Neto, 1856, Ed. TK Tower, Sala 901, Pituba
+            </br>
+            <b>CIDADE:</b> Salvador <b>UF:</b> BAHIA
+            </br>
+            <b>CEP:</b> 41.810-012
+            </br>
+            <b>TEL:</b> definir
+            </br>
+            <b>E-mail:</b> definir
+          </p>
+
+          <p>
+            <b>2-<u>CONTRATANTE:</u></b>
+            </br>
+            <b>NOME: {{ nome }}</b>
+            </br>
+            <b>CPF:</b> {{ cpf }}
+            </br>
+            <b>ENDERE&Ccedil;O:</b> {{ rua }}, {{ numero }}. {{ bairro }}
+            </br>
+            <b>CIDADE:</b> {{ cidade }} <b>UF:</b> {{ estado }}
+            </br>
+            <b>CEP:</b> {{ cep }}
+            </br>
+            <b>TEL:</b> {{ telefone_celular }}
+            </br>
+            <b>E-MAIL:</b> {{ email }}
+          </p>
+
+          <p>
+            <b>3-<u>MODALIDADE DE CONTRATO:</u></b>
+            </br>
+            <b>Presta&ccedil;&atilde;o de Servi&ccedil;o de monitoramento de ve&iacute;culo automotor &agrave; dist&acirc;ncia por equipamento de rastreamento GSM/GPS e outras aven&ccedil;as</b>
+          </p>
+
+          <p>
+            <b>4-<u>PRAZO DO CONTRATO:</u></b>
+            </br>
+            <b>12 (DOZE) MESES</b>
+          </p>
+
+          <p>
+            <b>5-<u>VALOR MENSAL:</u></b>
+            </br>
+            <b>5.1 - VALOR MENSAL: R$ {{ vlr_moni_mes }}</b>
+            </br>
+            <b>5.2 - DATA DE PAGAMENTO: DIA {{ dia_pagamento }} DE CADA M&Ecirc;S</b>
+          </p>
+
+          <p>
+            <b>6-<u>TAXA DE INSTALA&Ccedil;&Atilde;O DO EQUIPAMENTO:</u></b>
+            </br>
+            <b>R$ {{ vlr_instalacao }}</b>
+          </p>
+
+          <p>
+            <b>7-<u>VALOR DO EQUIPAMENTO ENTREGUE EM COMODATO</u></b>
+            </br>
+            <b>R$ {{ vlr_equipamento_comodato }}</b>
+          </p>
+
+          <pdf:nextpage>
+
+          <p>
+            <b>8-<u>REGISTRO DO CONTRATO</u></b>
+            </br>
+            <b>CONTRATO REGISTRADO NO 2&ordm; OF&Iacute;CIO DE REGISTRO DE T&Iacute;TULOS E DOCUMENTOS DE SALVADOR/BAHIA</b>
+          </p>
+
+          <p>
+            <b>9-<u>CL&Aacute;USULAS ESPECIAIS:</u></b>
+            </br>
+            <b>9.1 &ndash; SERVI&Ccedil;OS OPCIONAIS</b>
+            </br>
+            <b>N&atilde;o foram contratados servi&ccedil;os opcionais.</b>
+          </p>
+
+          <p>
+            <b>10-<u>VE&Iacute;CULO MONITORADO</u></b>
+            </br>
+            <b>Placa:</b> {{ placa }}
+            </br>
+            <b>Cor:</b> {{ cor }}
+            </br>
+            <b>Ano:</b> {{ ano_fabricacao }}
+            </br>
+            <b>Marca \ Modelo:</b> {{ marca }} \ {{ modelo }}
+          </p>
+
+          <p>
+            <b>11-<u>PESSOAS AUTORIZADAS:</u></b>
+            </br>
+            <b>NOME: {{ nome }}</b>
+            </br>
+            <b>CPF:</b> {{ cpf }}
+            </br>
+            <b>TEL:</b> {{ telefone_celular }}
+            </br>
+            <b>E-MAIL:</b> {{ email }}
+            </br>
+            </br>
+            <b>OBS:</b> Para adicionar pessoas autorizadas entre em contrato atr&aacute;ves do n&uacute;mero de contato presente no site www.doisminutos.com.br.
+          </p>
+
+          <p>
+            <b>12-<u>DISPOSI&Ccedil;&Otilde;ES GERAIS:</u></b>
+          </p>
+
+          <div style="text-align: justify;">
+            <p>a) O <b>CONTRATANTE</b> assume a responsabilidade por todas as informa&ccedil;&otilde;es aqui prestadas e inerente aceita&ccedil;&atilde;o da presente proposta, assim como da pr&oacute;pria contrata&ccedil;&atilde;o, declarando, ainda, que todas as informa&ccedil;&otilde;es prestadas neste QUADRO RESUMO s&atilde;o verdadeiras e completas, estando ciente de que na eventualidade de serem constatados dados inver&iacute;dicos, falsos ou incompletos, a contrata&ccedil;&atilde;o estar&aacute; sujeita &agrave; imediata suspens&atilde;o, den&uacute;ncia ou at&eacute; rescis&atilde;o autom&aacute;tica, sempre a crit&eacute;rio da <b>CONTRATADA</b>;</p>
+
+            <p>b) O <b>CONTRATANTE</b> declara que tem plena ci&ecirc;ncia e est&aacute; inteiramente de acordo com todas as condi&ccedil;&otilde;es do contrato, e que foram prestados todas as informa&ccedil;&otilde;es e esclarecimentos pertinentes &agrave; contrata&ccedil;&atilde;o e &agrave;s cl&aacute;usulas e condi&ccedil;&otilde;es do contrato, especialmente quanto &agrave; espec&iacute;fica forma de funcionamento do sistema de rastreamento por telefonia m&oacute;vel GSM desenvolvido para facilitar a localiza&ccedil;&atilde;o do ve&iacute;culo do <b>CONTRATANTE</b>, na eventualidade do mesmo vir a ser furtado ou roubado;</p>
+
+            <p>c) O <b>CONTRATANTE</b> declara que tem plena ci&ecirc;ncia de que, conforme CL&Aacute;USULA TERCEIRA, ITEM 3, do Contrato, a renova&ccedil;&atilde;o dos servi&ccedil;os contratados se dar&aacute; de forma autom&aacute;tica, por per&iacute;odos iguais e sucessivos de 12 (doze) meses, bem como que o valor mensal sofrer&aacute; o reajuste previsto na CL&Aacute;USULA QUARTA, ITEM 4.2, do Contrato, no momento da renova&ccedil;&atilde;o contratual;</p>
+
+            <p>d) O <b>CONTRATANTE</b> autoriza a <b>CONTRATADA</b> a solicitar, a qualquer tempo, informa&ccedil;&otilde;es que julgar necess&aacute;rias para elucida&ccedil;&atilde;o de qualquer tipo de ocorr&ecirc;ncia administrativa ou policial que trate do objeto ou que se relacione com o presente Contrato;</p>
+
+            <p>e) O <b>CONTRATANTE</b> declara que tem plena ci&ecirc;ncia de que o objeto da contrata&ccedil;&atilde;o n&atilde;o se confunde com quaisquer dos institutos ou modalidades de seguro e que a presente contrata&ccedil;&atilde;o n&atilde;o garante, em nenhuma hip&oacute;tese, a recupera&ccedil;&atilde;o do ve&iacute;culo em caso de eventual roubo ou furto;</p>
+
+            <p>f) O <b>CONTRATANTE</b> declara estar ciente de que as condi&ccedil;&otilde;es gerais de contrata&ccedil;&atilde;o se encontram devidamente registradas no Cart&oacute;rio do 2&deg; Of&iacute;cio de Registro de T&iacute;tulos e Documentos de Salvador/BA, Registro n&ordm; 457465, podendo ser obtida c&oacute;pia diretamente no seguinte endere&ccedil;o: Av. Tancredo Neves, 1186, Ed. Catabas Center, 1&ordm; Andar, Salas 101 e 102, Caminho das &Aacute;rvores, CEP 41.820-020.</p>
+          </div>
+
+          </br>
+
+          <p style="text-align: center;">Salvador/BA, {{ dia }} de {{ mes }} de 2018.</p>
+          </br>
+          <p><b>CONTRATANTE: {{nome}}</b></p>
+          <p><b>CONTRATADA: DOIS MINUTOS TECNOLOGIA E RASTREAMENTO LTDA.</b></p>
+        </div>
+
+        <div id="contrato" style="text-align: justify;">
+          <pdf:nextpage>
+
+          <p>Pelo presente instrumento particular, de um lado, como CONTRATADA, DOIS MINUTOS TECNOLOGIA E RASTREAMENTO LTDA., devidamente qualificada no item 1 do QUADRO RESUMO, por seu representante legal que abaixo subscreve, e, de outro lado, como CONTRATANTE, a pessoa indicada no item 2 do QUADRO RESUMO, t&ecirc;m justo e contratado o seguinte:</p>
+
+          <p><b>CL&Aacute;USULA PRIMEIRA &ndash; Do objeto</b></p>
+
+          <p>1. O objeto deste contrato constitui na presta&ccedil;&atilde;o de servi&ccedil;o de monitoramento de ve&iacute;culo automotor &agrave; dist&acirc;ncia por equipamento de rastreamento com sinal codificado &ldquo;DOIS MINUTOS&rdquo; GSM/GPS, entregue em comodato pela CONTRATADA ao CONTRATANTE, e outras aven&ccedil;as, dos autom&oacute;veis descritos e caracterizados no ITEM 10 do QUADRO RESUMO.</p>
+
+          <p>1.1. O equipamento de rastreamento &ldquo;DOIS MINUTOS&rdquo; GSM/GPS instalado no ve&iacute;culo automotor do CONTRATANTE possibilita o seu rastreamento pelo uso de tecnologia de telefonia m&oacute;vel GSM e consequente monitoramento do ve&iacute;culo automotor.</p>
+
+          <p>1.2. O equipamento &ldquo;DOIS MINUTOS&rdquo; GSM/GPS &eacute; entregue pela CONTRATADA ao CONTRATANTE em regime de comodato, na forma da CL&Aacute;USULA QUINTA deste instrumento. </p>
+
+          <p><b><u>1.3. O PRESENTE CONTRATO N&Atilde;O TEM CAR&Aacute;TER DE AP&Oacute;LICE DE SEGURO E A PRESTA&Ccedil;&Atilde;O DOS SERVI&Ccedil;OS ORA AJUSTADA ENTRE AS PARTES N&Atilde;O EVITA A OCORR&Ecirc;NCIA DE ALGUM SINISTRO COM O VE&Iacute;CULO DO CONTRATANTE E N&Atilde;O SUBSTITUI QUALQUER TIPO DE EQUIPAMENTO ANTI-FURTO COMO ALARMES E TRAVAS MANUAIS, RAZ&Atilde;O PELA QUAL A CONTRATADA N&Atilde;O &Eacute; RESPONS&Aacute;VEL POR QUALQUER PREJU&Iacute;ZO SOFRIDO PELO CONTRATANTE EM CASO DE FURTO/ROUBO DO REFERIDO VE&Iacute;CULO.</u></b></p>
+
+          <p><b>1.5. O CONTRATANTE est&aacute; ciente de que o equipamento de rastreamento &eacute; pass&iacute;vel de ser retirado do ve&iacute;culo por terceiros em caso de sinistro, o que inviabiliza a presta&ccedil;&atilde;o dos servi&ccedil;os de rastreamento do aparelho e consequente monitoramento do ve&iacute;culo automotor pela CONTRATADA, que estar&aacute; isenta de qualquer tipo de responsabilidade na eventualidade desse tipo de ocorr&ecirc;ncia.</b></p>
+
+          <p><b>1.6. O servi&ccedil;o de monitoramento contratado n&atilde;o contempla aux&iacute;lio resgate em caso de sinistro do ve&iacute;culo automotor, cabendo ao CONTRATANTE utilizar os dados de localiza&ccedil;&atilde;o do ve&iacute;culo para buscar aux&iacute;lio da autoridade policial competente.</b></p>
+
+          <p><b>CL&Aacute;USULA SEGUNDA &ndash; Dos servi&ccedil;os contratados</b></p>
+
+          <p>2. O equipamento de rastreamento, codificado com n&uacute;mero intransfer&iacute;vel, ser&aacute; instalado no(s) ve&iacute;culo(s) automotor(es) descrito(s) no ITEM 10 do QUADRO RESUMO, assim que o CONTRATANTE apresentar o(s) ve&iacute;culo(s) no posto autorizado de instala&ccedil;&atilde;o, durante o hor&aacute;rio comercial.</p>
+
+          <p><b>2.1. A instala&ccedil;&atilde;o do equipamento de rastreamento somente ser&aacute; considerada conclu&iacute;da ap&oacute;s teste do instalador, o que dever&aacute; contar com a colabora&ccedil;&atilde;o do CONTRATANTE para eventual movimenta&ccedil;&atilde;o do ve&iacute;culo, no que couber.</b></p>
+
+          <p><b>2.1.2. Por medida de seguran&ccedil;a e raz&otilde;es de ordem t&eacute;cnica, o equipamento rastreador ser&aacute; instalado em local reservado do posto de instala&ccedil;&atilde;o DOIS MINUTOS, vedada a presen&ccedil;a de terceiros e/ou do CONTRATANTE.</b></p>
+
+          <p><b>2.2. O CONTRATANTE est&aacute; ciente de que o equipamento de rastreamento opera por sistema de telefonia m&oacute;vel celular e GSM/GPS e que o seu desempenho est&aacute; sujeito &agrave;s condi&ccedil;&otilde;es de recep&ccedil;&atilde;o dos sinais de telefonia m&oacute;vel celular, que podem sofrer interfer&ecirc;ncias que impe&ccedil;am o seu regular funcionamento.</b></p>
+
+          <p><b>2.2.1. Havendo problemas na opera&ccedil;&atilde;o do equipamento ocorridos por falhas na rede p&uacute;blica de telecomunica&ccedil;&otilde;es em virtude de regi&otilde;es de sombra para o sinal de r&aacute;dio el&eacute;trico ou indisponibilidade moment&acirc;nea ou definitiva dos servi&ccedil;os de telefonia m&oacute;vel celular, a CONTRATADA ficar&aacute; impossibilitada de prestar o servi&ccedil;o objeto do presente instrumento.</b></p>
+
+          <p>2.4. Toda e qualquer comunica&ccedil;&atilde;o, solicita&ccedil;&atilde;o e notifica&ccedil;&atilde;o a ser encaminhada pela CONTRATANTE dar-se-&aacute; exclusivamente atrav&eacute;s de correio eletr&ocirc;nico, atrav&eacute;s dos endere&ccedil;os de e-mail constantes da qualifica&ccedil;&atilde;o das partes no QUADRO RESUMO.</p>
+
+          <p>2.4.1. As comunica&ccedil;&otilde;es, solicita&ccedil;&otilde;es e notifica&ccedil;&otilde;es encaminhadas pela CONTRATADA ser&atilde;o encaminhadas atrav&eacute;s de correio eletr&ocirc;nico, e ser&atilde;o consideradas v&aacute;lidas no dia seguinte em que forem enviadas para o endere&ccedil;o de e-mail informado pelo CONTRATANTE no QUADRO RESUMO, independentemente do dia que o CONTRATANTE fizer a leitura do correio eletr&ocirc;nico.</p>
+
+          <p><b>CL&Aacute;USULA TERCEIRA &ndash; Do prazo de vig&ecirc;ncia e extin&ccedil;&atilde;o do contrato</b></p>
+
+          <p>3. O prazo do contrato &eacute; aquele pactuado no ITEM 4 do QUADRO RESUMO, a contar da data da assinatura do presente instrumento, e ser&aacute; renovado automaticamente por iguais e sucessivos per&iacute;odos, salvo se o CONTRATANTE pedir a sua extin&ccedil;&atilde;o, por escrito, com anteced&ecirc;ncia de 30 (trinta) dias da data de vencimento do per&iacute;odo em curso.</p>
+
+          <p>3.1. O contrato poder&aacute; ser extinto antes do seu vencimento, desde que o CONTRATANTE encaminhe solicita&ccedil;&atilde;o expressa atrav&eacute;s de correio eletr&ocirc;nico, hip&oacute;tese em que o CONTRATANTE ficar&aacute; obrigado ao pagamento da multa compensat&oacute;ria no percentual de 20% (vinte por cento) sobre a soma dos valores relativos &agrave;s mensalidades vincendas no per&iacute;odo restante do Contrato, al&eacute;m da Taxa de Desinstala&ccedil;&atilde;o apurada por ve&iacute;culo.</p>
+
+          <p>3.2. O CONTRATANTE poder&aacute; requerer o cancelamento parcial da presta&ccedil;&atilde;o dos servi&ccedil;os de monitoramento, havendo a contrata&ccedil;&atilde;o dos servi&ccedil;os para mais de um ve&iacute;culo automotor, com rela&ccedil;&atilde;o a qualquer dos ve&iacute;culos automotores descritos no ITEM 10 do QUADRO RESUMO, mantendo-se o contrato com rela&ccedil;&atilde;o aos demais, desde que o pedido de cancelamento parcial ocorra com 30 (trinta) dias de anteced&ecirc;ncia e seja realizado o pagamento da Taxa de Desinstala&ccedil;&atilde;o do equipamento prevista no ITEM 6 do QUADRO RESUMO.</p>
+
+          <p>3.2.1. Entende-se por vencimento do contrato o termo final de cada novo per&iacute;odo pactuado no ITEM 4 do QUADRO RESUMO.   3.3. O inadimplemento de qualquer valor por parte da CONTRATADA, por prazo superior a 45 (quarenta e cinco dias), acarretar&aacute; automaticamente a extin&ccedil;&atilde;o do Contrato, sem a necessidade de pr&eacute;via notifica&ccedil;&atilde;o. </p>
+
+          <p>3.3.1. A extin&ccedil;&atilde;o do contrato se dar&aacute; sem preju&iacute;zo da cobran&ccedil;a de perdas e danos por parte da CONTRATADA, inclu&iacute;dos os valores em aberto e multa compensat&oacute;ria prevista no ITEM 3.1 antecedente, cumprindo ao CONTRATANTE devolver o equipamento na forma da CL&Aacute;USULA QUINTA do presente instrumento.</p>
+
+          <p>3.4. Em caso de inadimpl&ecirc;ncia do CONTRATANTE, a CONTRATADA poder&aacute; preferir &agrave; extin&ccedil;&atilde;o do contrato a mera suspens&atilde;o do fornecimento dos servi&ccedil;os at&eacute; a regulariza&ccedil;&atilde;o dos valores em atraso por parte do CONTRATANTE, sem que tal op&ccedil;&atilde;o represente qualquer nova&ccedil;&atilde;o contratual ou gere direito &agrave; mesma toler&acirc;ncia em casos de reincid&ecirc;ncia.</p>
+
+          <p>3.4.1. A presta&ccedil;&atilde;o dos servi&ccedil;os ser&aacute; retomada no prazo de 48 (quarenta e oito) horas, a contar da compensa&ccedil;&atilde;o banc&aacute;ria do pagamento da integralidade dos valores em atraso, acrescidos os encargos morat&oacute;rios pactuados neste instrumento. </p>
+
+          <p><b>CL&Aacute;USULA QUARTA - Valores e forma de pagamento</b></p>
+
+          <p>4. Pela execu&ccedil;&atilde;o do contrato o CONTRATANTE pagar&aacute; &agrave; CONTRATADA o valor mensal pelo servi&ccedil;o de monitoramento pactuado no ITEM 5 do QUADRO RESUMO, e dos valores dos opcionais eventualmente contratados pelo CONTRATANTE conforme ajustado no ITEM 9 do QUADRO RESUMO.</p>
+
+          <p>4.1. A primeira e a segunda mensalidades pelo servi&ccedil;o de monitoramento ser&atilde;o cobradas conjuntamente, por ocasi&atilde;o do vencimento da &uacute;ltima delas, sendo que o valor da primeira ser&aacute; calculado na forma pro rata die, contado a partir da data da instala&ccedil;&atilde;o do equipamento at&eacute; o dia 30 (trinta) do m&ecirc;s em que se deu a instala&ccedil;&atilde;o, sendo os vencimentos das mensalidades a data prevista no ITEM 5.2 do QUADRO RESUMO.</p>
+
+          <p>4.2. Os pre&ccedil;os referentes ao presente contrato ser&atilde;o reajustados anualmente, ou na menor periodicidade permitida em lei, pela varia&ccedil;&atilde;o acumulada do &iacute;ndice IGP-M, publicado pela Funda&ccedil;&atilde;o Get&uacute;lio Vargas, entre o primeiro m&ecirc;s do Per&iacute;odo de Reajuste considerado e o primeiro m&ecirc;s do Per&iacute;odo de Reajuste seguinte.</p>
+
+          <p>4.2.1 Na hip&oacute;tese de a Funda&ccedil;&atilde;o Get&uacute;lio Vargas, seja por motivo de greve de seus funcion&aacute;rios ou por outro de qualquer natureza, n&atilde;o publicar o IGP-M, ser&aacute; imediatamente adotado o &Iacute;ndice de Pre&ccedil;os ao Consumidor, apurado pela Funda&ccedil;&atilde;o Instituto de Pesquisas Econ&ocirc;micas (IPC/FIPE), como &iacute;ndice substituto. Na falta de ambos, o CONTRATANTE, desde j&aacute;, aceita o &iacute;ndice que preserve o equil&iacute;brio econ&ocirc;mico e financeiro deste Contrato sugerido pela CONTRATADA.</p>
+
+          <p>4.3. O atraso no pagamento de quaisquer das import&acirc;ncias devidas por for&ccedil;a do presente Contrato importar&aacute; na cobran&ccedil;a de multa morat&oacute;ria de 2% e juros morat&oacute;rios de 1% ao m&ecirc;s sobre o valor contratado, calculados pro rata die.</p>
+
+          <p>4.4. O CONTRATANTE autoriza desde logo a CONTRATADA a emitir duplicatas de presta&ccedil;&atilde;o de servi&ccedil;os para a cobran&ccedil;a dos valores decorrentes do presente contrato, podendo proceder ao apontamento desses t&iacute;tulos a protesto por falta de pagamento, independentemente de aceite, cuja falta &eacute; suprida pela presente autoriza&ccedil;&atilde;o.</p>
+
+          <p><b>CL&Aacute;USULA QUINTA &ndash; Do comodato do equipamento de rastreamento</b></p>
+
+          <p>5.1. A presta&ccedil;&atilde;o dos servi&ccedil;os contratados pressup&otilde;e a instala&ccedil;&atilde;o de equipamento de rastreamento no ve&iacute;culo automotor do CONTRATANTE, da&iacute; porque a CONTRATADA entregar&aacute; em comodato o referido equipamento, no ato da instala&ccedil;&atilde;o do equipamento no ve&iacute;culo do CONTRATANTE.</p>
+
+          <p><b>5.2. O CONTRATANTE declara e reconhece expressamente que no ato da instala&ccedil;&atilde;o, o(s) equipamento(s) de rastreamento veicular estar&atilde;o sob sua guarda em regime de comodato, na forma dos artigos 579 a 585 do C&oacute;digo Civil brasileiro (Lei n&ordm; 10.406/2002), assumindo o CONTRATANTE as obriga&ccedil;&otilde;es de guarda e de conserva&ccedil;&atilde;o, n&atilde;o podendo dar outro uso sen&atilde;o aquele previsto no presente contrato.</b></p>
+
+          <p>5.3. O CONTRATANTE compromete-se a devolver prontamente &agrave; CONTRATADA o(s) equipamento(a) de rastreamento em perfeitas condi&ccedil;&otilde;es no caso de extin&ccedil;&atilde;o do contrato ou cancelamento parcial, no prazo de 07 (sete) dias, per&iacute;odo esse em que a CONTRATANTE dever&aacute; encaminhar o(s) ve&iacute;culo(s) que tiver(em) o servi&ccedil;o de monitoramento cancelado a um dos postos de desinstala&ccedil;&atilde;o da DOIS MINUTOS, para que promovida a devida retirada e devolu&ccedil;&atilde;o do equipamento de rastreamento &agrave; CONTRATADA.</p>
+
+          <p>5.3.1. Na hip&oacute;tese do CONTRATANTE n&atilde;o encaminhar o(s) ve&iacute;culo(s) que tiver(em) o servi&ccedil;o de monitoramento cancelado a um dos postos de desinstala&ccedil;&atilde;o da DOIS MINUTOS, para que seja promovida a devida retirada e devolu&ccedil;&atilde;o do equipamento de rastreamento &agrave; CONTRATADA, no prazo previsto no ITEM 5.3 antecedente, o CONTRATANTE ficar&aacute; obrigado, independentemente de notifica&ccedil;&atilde;o pr&eacute;via, ao pagamento de ressarcimento a t&iacute;tulo de perdas e danos no montante correspondente ao valor do equipamento pactuado no ITEM 7 do QUADRO RESUMO, por equipamento de rastreamento n&atilde;o devolvido, sem preju&iacute;zo de demais san&ccedil;&otilde;es cab&iacute;veis.</p>
+
+          <p>5.3.2. O CONTRATANTE obriga-se igualmente ao pagamento do valor do equipamento pactuado no ITEM 7 do QUADRO RESUMO no caso de perda, furto, roubo ou danos causados ao equipamento de rastreamento, ou, ainda, nos casos de roubo ou furto do ve&iacute;culo automotor, desde que n&atilde;o reavido o equipamento rastreador.</p>
+
+          <p><b>CL&Aacute;USULA SEXTA &ndash; Sigilo de dados</b></p>
+
+          <p>6. Os n&uacute;meros e c&oacute;digos informados ao CONTRATANTE ser&atilde;o de seu exclusivo conhecimento, competindo a ele a guarda e o sigilo sobre eles, n&atilde;o se responsabilizando a CONTRATADA pela utiliza&ccedil;&atilde;o dessas informa&ccedil;&otilde;es por terceiros.</p>
+
+          <p><b>CL&Aacute;USULA S&Eacute;TIMA &ndash; Pessoas autorizadas</b></p>
+
+          <p>7. Somente o CONTRATANTE e PESSOAS AUTORIZADAS indicadas no ITEM 11 do QUADRO RESUMO poder&atilde;o solicitar ao Centro de Controle da CONTRATADA a ativa&ccedil;&atilde;o e a desativa&ccedil;&atilde;o do equipamento.</p>
+
+          <p>7.1. Comunicada a ocorr&ecirc;ncia de sinistro de ve&iacute;culo pelo CONTRATANTE ou pelas pessoas autorizadas a operar o equipamento, fica a CONTRATADA autorizada a tomar as medidas cab&iacute;veis para tentar a sua localiza&ccedil;&atilde;o.</p>
+
+          <p><b>CL&Aacute;USULA OITAVA &ndash; Da opera&ccedil;&atilde;o e assist&ecirc;ncia t&eacute;cnica</b></p>
+
+          <p>8. O CONTRATANTE fica respons&aacute;vel pela conserva&ccedil;&atilde;o do equipamento, comprometendo-se a n&atilde;o permitir que pessoa n&atilde;o autorizada pela CONTRATADA realize qualquer esp&eacute;cie de interven&ccedil;&atilde;o t&eacute;cnica no mesmo.</p>
+
+          <p>8.1. A assist&ecirc;ncia t&eacute;cnica somente ser&aacute; realizada por pessoal autorizado da CONTRATADA, em hor&aacute;rio comercial, nos postos de instala&ccedil;&atilde;o ou no endere&ccedil;o do CONTRATANTE, desde que localizado no m&aacute;ximo a 50 km da assist&ecirc;ncia t&eacute;cnica mais pr&oacute;xima do local onde estiver o ve&iacute;culo. Acima desta dist&acirc;ncia o CONTRATANTE dever&aacute; deslocar o ve&iacute;culo at&eacute; o posto de instala&ccedil;&atilde;o ou arcar com os custos de locomo&ccedil;&atilde;o do t&eacute;cnico da CONTRATADA. Caso reste comprovado que o defeito decorreu de falha t&eacute;cnica do pr&oacute;prio equipamento &ldquo;DOIS MINUTOS&rdquo;, e n&atilde;o por interven&ccedil;&atilde;o indevida realizada pelo CONTRATANTE, n&atilde;o ser&aacute; cobrado o valor tratado neste item.</p>
+
+          <p>8.2. Caso o t&eacute;cnico autorizado pela CONTRATADA se desloque at&eacute; o local indicado pelo CONTRATANTE para a instala&ccedil;&atilde;o ou assist&ecirc;ncia t&eacute;cnica do equipamento e o ve&iacute;culo n&atilde;o estiver dispon&iacute;vel, ser&aacute; cobrada o valor correspondente a 01 (uma) Taxa de Instala&ccedil;&atilde;o.</p>
+
+          <p><b>CL&Aacute;USULA NONA &ndash; Da transfer&ecirc;ncia do equipamento para outro ve&iacute;culo</b></p>
+
+          <p>9. Na hip&oacute;tese de transfer&ecirc;ncia do equipamento para outro ve&iacute;culo do CONTRATANTE, ser&aacute; devido pelo CONTRATANTE o valor correspondente a 01 (uma) Taxa de Desinstala&ccedil;&atilde;o, n&atilde;o sendo cobrada o valor da Taxa de Instala&ccedil;&atilde;o no novo ve&iacute;culo. </p>
+
+          <p><b>CL&Aacute;USULA D&Eacute;CIMA &ndash; Das disposi&ccedil;&otilde;es gerais finais</b></p>
+
+          <p>10. O CONTRATANTE declara ter sido devidamente instru&iacute;do pela CONTRATADA sobre o correto funcionamento do equipamento e das normas da presta&ccedil;&atilde;o de servi&ccedil;os ora contratada. </p>
+
+          <p><b>CL&Aacute;USULA D&Eacute;CIMA PRIMEIRA &ndash; Do registro do presente contrato</b></p>
+
+          <p>11. O presente contrato est&aacute; devidamente registrado em sua integralidade no Cart&oacute;rio do 2&deg; Of&iacute;cio de Registro de T&iacute;tulos e Documentos de Salvador/BA, Registro n&ordm; 457465, podendo ser obtida c&oacute;pia diretamente no seguinte endere&ccedil;o: Av. Tancredo Neves, 1186, Ed. Catabas Center, 1&ordm; Andar, Salas 101 e 102, Caminho das &Aacute;rvores, CEP 41.820-020.</p>
+
+          <p>11.1 O presente contrato poder&aacute; ser alterado pela CONTRATADA a qualquer momento que julgar necess&aacute;rio, sem a necessidade de pr&eacute;via notifica&ccedil;&atilde;o e concord&acirc;ncia do CONTRATANTE, comprometendo-se a CONTRATADA a enviar a nova via do contrato alterado para o CONTRATANTE no prazo de 30 (trinta) dias ap&oacute;s o registro da altera&ccedil;&atilde;o. </p>
+
+          <p><b>CL&Aacute;USULA D&Eacute;CIMA SEGUNDA &ndash; Do foro</b></p>
+
+          <p>12. Elegem as partes o Foro da Circunscri&ccedil;&atilde;o de SALVADOR &ndash; BA, para dirimirem quaisquer d&uacute;vidas oriundas do presente contrato, em detrimento de qualquer outro, por mais privilegiado que seja. </p>
+        </div>
+
+          </br>
+
+          <p style="text-align: center;">Salvador/BA, {{ dia }} de {{ mes }} de 2018.</p>
+          </br>
+          <p><b>CONTRATANTE: {{nome}}</b></p>
+          <p><b>CONTRATADA: DOIS MINUTOS TECNOLOGIA E RASTREAMENTO LTDA.</b></p>
+      </div>
+
+      <div id="footer_content">
+        <p class="footer">
+          <span>
+            Av. Prof. Magalh&atilde;es Neto, 1856, Ed. TK Tower 901, Pituba, Salvador, BA &ndash; CEP 41810-012
+            </br>www.doisminutos.com.br
+            </br>p&aacute;gina <pdf:pagenumber> de <pdf:pagecount>
+          </span>
+        </p>
+      </div>
+
+  </body>
+</html>

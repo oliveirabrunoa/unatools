@@ -16,27 +16,58 @@ from .views import criar_lead_moskit
 # 4|Formação NevEX  com técnicas de Coaching e PNL
 
 
+# @require_POST
+# @csrf_exempt
+# def leadlovers_webhook_cadastro_ppc(request):
+#     body_unicode = request.body.decode('utf-8')
+#     params = dict(parse.parse_qsl(parse.urlsplit(body_unicode).path))
+#     print(params)
+#     if params:
+#         lead = Lead()
+#         lead.nome = params['Nome']
+#         lead.email = params['Email']
+#         lead.telefone = params['Telefone']
+#         lead.area_atuacao = params['AreadeAtuacao']
+#         lead.save()
+#
+#         tag = Tag.objects.filter(id=params['maquina_origem']).first()
+#
+#         transaction = Transaction()
+#         transaction.lead = lead
+#         transaction.tag = tag
+#         transaction.save()
+#
+#         criar_lead_moskit(lead)
+#
+#     return HttpResponse(status=200)
+
+# parsed = urlparse('http://user:pass@NetLoc:80/path;parameters?query=argument#fragment')
+
 @require_POST
 @csrf_exempt
-def leadlovers_webhook_cadastro_ppc(request):
+def ac_webhook_cadastro_klick(request):
     body_unicode = request.body.decode('utf-8')
-    params = dict(parse.parse_qsl(parse.urlsplit(body_unicode).path))
-    print(params)
-    if params:
-        lead = Lead()
-        lead.nome = params['Nome']
-        lead.email = params['Email']
-        lead.telefone = params['Telefone']
-        lead.area_atuacao = params['AreadeAtuacao']
-        lead.save()
+    post_args=request.POST
+    if post_args:
+        params=dict(post_args.lists())
+        nome = params.get("contact[first_name]")[0]
+        email = params.get("contact[email]")[0]
+        transaction = '{0}'.format("FromAC")
+        token = '{0}'.format("c8f64ca00902401400674529e36f9b26")
+        status = '{0}'.format("approved")
+        url = "https://api.klickmembers.com.br/webhook/advanced/NTAwOQ==/NjM2OA=="
+        headers = {'content-type': "application/json"}
 
-        tag = Tag.objects.filter(id=params['maquina_origem']).first()
-
-        transaction = Transaction()
-        transaction.lead = lead
-        transaction.tag = tag
-        transaction.save()
-
-        criar_lead_moskit(lead)
-
-    return HttpResponse(status=200)
+        try:
+            payload = json.dumps({  "name":'{0}'.format(nome),
+                    "email":'{0}'.format(email),
+                    "transaction": '{0}'.format(transaction),
+                    "token":'{0}'.format(token),
+                    "status":'{0}'.format(status)
+                })
+            response = requests.post(url, data=payload, headers=headers)
+            if response.status_code =="200":
+                return HttpResponse(status=200)
+        except:
+            print("Não foi possível criar o usuário")
+        return HttpResponse(status=200)
