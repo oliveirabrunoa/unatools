@@ -1,4 +1,4 @@
-from .models import Tag, Transaction, Lead
+from .models import Tag, Transaction
 from django.utils import timezone
 import json
 from django.views.decorators.http import require_POST

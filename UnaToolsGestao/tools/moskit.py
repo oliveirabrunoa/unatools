@@ -1,6 +1,6 @@
 import requests
 import json
-from .models import UsersMoskit
+from .models import UsersCRM
 
 class MoskitObj(object):
 

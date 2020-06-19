@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Lead
+# from .models import Lead
 from .moskit import MoskitObj
 import json
 # Create your views here.
