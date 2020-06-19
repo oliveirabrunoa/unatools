@@ -1,15 +1,18 @@
 from django.shortcuts import render
 # from .models import Lead
-from .moskit import MoskitObj
 import json
+from django.http import HttpResponseRedirect, HttpResponse
+from django.conf import settings
+import requests
+from django.shortcuts import render
 # Create your views here.
 
 
-def criar_lead_moskit(lead):
-    moskit = MoskitObj()
-    result = moskit.criar_contato(lead)
-    if result == '200':
-        print("cadastro de cliente concluido")
+# def criar_lead_moskit(lead):
+#     moskit = MoskitObj()
+#     result = moskit.criar_contato(lead)
+#     if result == '200':
+#         print("cadastro de cliente concluido")
 
 
 def gerar_contrato(nome_cliente):
@@ -26,3 +29,7 @@ def gerar_contrato(nome_cliente):
     if url_arquivo:
         return url_arquivo
     return False
+
+
+def index(request):
+    return render(request, 'Modelo-de-Contrato-PPC-ONLINE-testes.html',{'nome_cliente':'Bruno Araújo de Oliveira'})

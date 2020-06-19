@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 import requests
 from urllib import parse
-from .views import criar_lead_moskit
+# from .views import criar_lead_moskit
 
 #### Recebimento de Cadastro LL ####
 # 1|Formação Completa em Coaching com PNL
