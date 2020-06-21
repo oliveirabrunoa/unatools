@@ -5,43 +5,6 @@ from django.dispatch import receiver
 from decimal import Decimal
 
 
-# class Cliente(models.Model):
-#     id = models.AutoField(primary_key=True, blank=False, null=False)
-#     email = models.CharField(max_length=100,blank=False, null=True)
-#     cpf = models.CharField(max_length=14,blank=False, null=True)
-#     rg = models.CharField(max_length=11,blank=False, null=True)
-#     tipo_cliente = models.IntegerField(default=1,blank=False, null=True)
-#     nome = models.CharField(max_length=250,blank=False, null=True)
-#     sexo = models.CharField(max_length=1,choices=SEXO,blank=False, null=True)
-#     data_nascimento = models.DateField(blank=False, null=True)
-#     estado_civil = models.CharField(max_length=1,choices=ESTADO_CIVIL,blank=False, null=True)
-#     nacionalidade = models.CharField(max_length=100,blank=False, null=True)
-#     ramo_atividade_id = models.IntegerField(blank=True, null=True)
-#     ocupacao_id = models.IntegerField(blank=False, null=True)
-#     senha = models.CharField(max_length=50,blank=False, null=True)
-#
-#     def __str__(self):
-#         return '{0} - {1}'.format(self.nome, self.cpf)
-#
-#     class Meta:
-#         verbose_name = 'Cliente'
-#         verbose_name_plural = 'Clientes'
-
-
-# class Lead(models.Model):
-#     id = models.AutoField(primary_key=True, blank=False, null=False)
-#     email = models.CharField(max_length=80,blank=False, null=True)
-#     nome = models.CharField(max_length=200,blank=False, null=True)
-#     telefone = models.CharField(max_length=20,blank=False, null=True)
-#     area_atuacao = models.CharField(max_length=100,blank=False, null=True)
-#
-#     def __str__(self):
-#         return '{0} - {1}'.format(self.nome, self.email)
-#
-#     class Meta:
-#         verbose_name = 'Lead'
-#         verbose_name_plural = 'Leads'
-
 class Tag(models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
     categoria = models.CharField(max_length=200,blank=False, null=True)
@@ -50,13 +13,48 @@ class Tag(models.Model):
         return '{0}'.format(self.categoria)
 
     class Meta:
-        verbose_name = 'Tag'
-        verbose_name_plural = 'Tags'
+        verbose_name = 'Curso/Formação'
+        verbose_name_plural = 'Cursos/Formações'
+
+class Turma(models.Model):
+    id = models.AutoField(primary_key=True, blank=False, null=False)
+    cod_turma = models.CharField(max_length=50,blank=False, null=True)
+    curso = models.ForeignKey(Tag, null=True, on_delete=models.SET_NULL)
+    periodo = models.CharField(max_length=200,blank=False, null=True)
+    qtd_encontros =  models.IntegerField()
+
+    def __str__(self):
+        return '{0} - {1}'.format(self.cod_turma, self.curso)
+
+    class Meta:
+        verbose_name = 'Turma'
+        verbose_name_plural = 'Turmas'
+
+class Contrato(models.Model):
+    id = models.AutoField(primary_key=True, blank=False, null=False)
+    contratante = models.CharField(max_length=250,blank=False, null=True)
+    rg = models.CharField(max_length=11,blank=False, null=True)
+    cpf = models.CharField(max_length=14,blank=False, null=True)
+    endereco = models.CharField(max_length=250,blank=False, null=True)
+    cidade_estado = models.CharField(max_length=100,blank=False, null=True)
+    cep = models.CharField(max_length=100,blank=False, null=True)
+    telefone = models.CharField(max_length=100,blank=False, null=True)
+    data_nascimento = models.DateField(blank=False, null=True)
+    email = models.CharField(max_length=100,blank=False, null=True)
+    turma = models.ForeignKey(Turma, null=True, on_delete=models.SET_NULL)
+
+
+    def __str__(self):
+        return '{0} - {1}'.format(self.contratante, self.cpf)
+
+    class Meta:
+        verbose_name = 'Contrato'
+        verbose_name_plural = 'Contratos'
 
 class Transaction(models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
     data_cadastro = models.DateTimeField(default=timezone.now)
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, null=True, on_delete=models.SET_NULL)
     lead = models.CharField(max_length=200,blank=False, null=True)
 
     def __str__(self):
@@ -77,5 +75,5 @@ class UsersCRM(models.Model):
         return '{0} - {1}'.format(self.nome, self.email)
 
     class Meta:
-        verbose_name = 'UsersCRM'
-        verbose_name_plural = 'UsersCRM'
+        verbose_name = 'Consultor'
+        verbose_name_plural = 'Consultores'

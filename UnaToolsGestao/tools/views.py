@@ -32,4 +32,4 @@ def gerar_contrato(nome_cliente):
 
 
 def index(request):
-    return render(request, 'Modelo-de-Contrato-PPC-ONLINE-testes.html',{'nome_cliente':'Bruno Araújo de Oliveira'})
+    return render(request, 'Modelo-de-Contrato-PPC-ONLINE html version.html',{'contratante':'Bruno Araújo de Oliveira'})
