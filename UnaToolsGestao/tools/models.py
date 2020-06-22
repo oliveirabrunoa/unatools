@@ -32,14 +32,14 @@ class Turma(models.Model):
 
 class Contrato(models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
-    contratante = models.CharField(max_length=250,blank=False, null=True)
-    rg = models.CharField(max_length=11,blank=False, null=True)
-    cpf = models.CharField(max_length=14,blank=False, null=True)
+    contratante = models.CharField(max_length=250,verbose_name="Contratante",blank=False, null=True)
+    rg = models.CharField(max_length=11,verbose_name="RG",blank=False, null=True)
+    cpf = models.CharField(max_length=14,verbose_name="CPF",blank=False, null=True)
     endereco = models.CharField(max_length=250,blank=False, null=True)
-    cidade_estado = models.CharField(max_length=100,blank=False, null=True)
-    cep = models.CharField(max_length=100,blank=False, null=True)
+    cidade_estado = models.CharField(max_length=100,verbose_name="Cidade/UF",blank=False, null=True)
+    cep = models.CharField(max_length=100,verbose_name="CEP",blank=False, null=True)
     telefone = models.CharField(max_length=100,blank=False, null=True)
-    data_nascimento = models.DateField(blank=False, null=True)
+    data_nascimento = models.DateField(verbose_name="Data de Nascimento",blank=False, null=True)
     email = models.CharField(max_length=100,blank=False, null=True)
     turma = models.ForeignKey(Turma, null=True, on_delete=models.SET_NULL)
 
