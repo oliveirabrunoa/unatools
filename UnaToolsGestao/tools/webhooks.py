@@ -1,5 +1,6 @@
-from .models import Tag, Transaction
+from .models import Tag, Transaction, Contrato
 from django.utils import timezone
+import datetime
 import json
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -71,3 +72,82 @@ def ac_webhook_cadastro_klick(request):
         except:
             print("Não foi possível criar o usuário")
         return HttpResponse(status=200)
+
+
+# @require_POST
+# @csrf_exempt
+# def ac_webhook_cadastro_klick_ppc(request):
+#     body_unicode = request.body.decode('utf-8')
+#     post_args=request.POST
+#     if post_args:
+#         params=dict(post_args.lists())
+#         nome = params.get("contact[first_name]")[0]
+#         email = params.get("contact[email]")[0]
+#         transaction = '{0}'.format("FromAC")
+#         token = '{0}'.format("c8f64ca00902401400674529e36f9b26")
+#         status = '{0}'.format("approved")
+#         url = "https://api.klickmembers.com.br/webhook/advanced/NTAwOQ==/NjM2OA=="
+#         headers = {'content-type': "application/json"}
+#
+#         try:
+#             payload = json.dumps({  "name":'{0}'.format(nome),
+#                     "email":'{0}'.format(email),
+#                     "transaction": '{0}'.format(transaction),
+#                     "token":'{0}'.format(token),
+#                     "status":'{0}'.format(status)
+#                 })
+#             response = requests.post(url, data=payload, headers=headers)
+#             if response.status_code =="200":
+#                 return HttpResponse(status=200)
+#         except:
+#             print("Não foi possível criar o usuário")
+#         return HttpResponse(status=200)
+
+
+@require_POST
+@csrf_exempt
+def ac_webhook_contrato(request):
+    body_unicode = request.body.decode('utf-8')
+    post_args=request.POST
+    # print(post_args)
+    if post_args:
+        params=dict(post_args.lists())
+        nome_completo = '{0} {1}'.format(params.get("contact[first_name]")[0], params.get("contact[last_name]")[0])
+        email = '{0}'.format(params.get("contact[email]")[0])
+        telefone = '{0}'.format(params.get("contact[phone]")[0])
+        cpf = '{0}'.format(params.get("contact[fields][cpf]")[0])
+        rg = '{0}'.format(params.get("contact[fields][rg]")[0])
+        data_nasc = '{0}'.format(params.get("contact[fields][nascimento]")[0])
+        cidade_estado_cliente = '{0}'.format(params.get("contact[fields][cidade]")[0])
+        endereco_cliente = '{0}'.format(params.get("contact[fields][enderecocompleto]")[0])
+        bairro_cliente = '{0}'.format(params.get("contact[fields][bairro]")[0])
+        cep = '{0}'.format(params.get("contact[fields][cep]")[0])
+
+        print(nome_completo, email, telefone, cpf, rg,data_nasc,cidade_estado_cliente,endereco_cliente,bairro_cliente,cep)
+
+        #Criação de Instância do Tipo Contrato
+        contrato = Contrato()
+        contrato.contratante = nome_completo
+        contrato.rg=rg
+        contrato.cpf=cpf
+        contrato.endereco= '{0} - {1}'.format(endereco_cliente,bairro_cliente )
+        contrato.cidade_estado = cidade_estado_cliente
+        contrato.cep = cep
+        contrato.telefone = telefone
+        contrato.data_nascimento=data_nasc_format(data_nasc)
+        contrato.email = email
+        contrato.save()
+
+    return HttpResponse(status=200)
+
+def data_nasc_format(data_nasc):
+    data_nasc_cliente = data_nasc
+    if data_nasc_cliente.find('/')  > 0:
+        return datetime.datetime.strptime(data_nasc_cliente,"%d/%m/%Y").strftime("%Y-%m-%d")
+    elif data_nasc_cliente.find('-')  > 0:
+        return datetime.datetime.strptime(data_nasc_cliente,"%d-%m-%Y").strftime("%Y-%m-%d")
+    return None
+
+
+
+    return datetime.datetime.strptime(data_nasc_cliente,"%d/%m/%Y").strftime("%Y-%m-%d")
