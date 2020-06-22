@@ -13,6 +13,11 @@ from django.shortcuts import render
 #     result = moskit.criar_contato(lead)
 #     if result == '200':
 #         print("cadastro de cliente concluido")
+def visualizar_contrato(request, param):
+    try:
+        return FileResponse(open('{0}contrato_{1}'.format(settings.DIRETORIO_CONTRATOS,param), 'rb'), content_type='application/pdf')
+    except FileNotFoundError:
+        raise Http404()
 
 
 def gerar_contrato(nome_cliente):
