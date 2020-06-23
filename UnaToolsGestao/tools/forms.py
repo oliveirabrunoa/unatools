@@ -11,3 +11,10 @@ class ContratoFormAdmin(forms.ModelForm):
    class Meta:
        model = Contrato
        fields = '__all__'
+
+
+class ContratoFormAdmin2(forms.ModelForm):
+
+   class Meta:
+       model = Contrato
+       fields = ('email',)

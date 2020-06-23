@@ -5,7 +5,7 @@ from django.conf import settings
 import requests
 from django.shortcuts import render
 from django.views import View
-from .forms import ContratoFormAdmin
+from .forms import ContratoFormAdmin, ContratoFormAdmin2
 
 
 def visualizar_contrato(request, param):
@@ -41,22 +41,24 @@ class consultar_cliente(View):
 
     def get(self, request,*args, **kwargs):
         form = self.form_class()
-        print('************************************entrou')
         return render(request, self.template_name, { 'form' : form})
 
-
     def post(self, request, *args, **kwargs):
-        initial_data=dict(nome=request.POST['nome'], email=request.POST['email'],
-                           placa=formatar_campo(request.POST['placa']),
-                           ddd_telefone_celular=int(formatar_campo(request.POST['telefone'])[:2]),
-                           telefone_celular=formatar_campo(request.POST['telefone'])[2:])
-        form = ClienteForm(initial_data)
+        print(request.POST)
+        initial_data=dict(email=request.POST['email'])
+        form = ContratoFormAdmin2(initial_data)
+        print(form)
         if form.is_valid():
-            post = form.save(commit=False)
-            cliente= get_cliente_by_email(post.email)
-            cliente.nome = post.nome
-            cotacao.save()
+            print('passou validação')
+        #     post = form.save(commit=False)
+        #     cliente= get_cliente_by_email(post.email)
+        #     cliente.nome = post.nome
+        #     cotacao.save()
+        #
+        #     request.session['cotacao_id']= str(cotacao.id)
+            return HttpResponseRedirect('confirmar_dados')
+        return render(request, 'index.html')
 
-            request.session['cotacao_id']= str(cotacao.id)
-            return HttpResponseRedirect('escolher_veiculo')
-        return render(request, 'erro.html',{'raise_error':'Formulário inicial possui dados inválidos!'})
+class confirmar_dados(View):
+    def get(self, request,*args, **kwargs):
+        return render(request, 'dados-contrato.html')
