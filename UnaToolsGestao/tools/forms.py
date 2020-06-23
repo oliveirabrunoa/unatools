@@ -11,13 +11,3 @@ class ContratoFormAdmin(forms.ModelForm):
    class Meta:
        model = Contrato
        fields = '__all__'
-
-
-
-
-
-
-
-
-# class YourForm(forms.ModelForm):
-#      phone = BRPhoneNumberField(widget=BRPhoneNumberInput)
