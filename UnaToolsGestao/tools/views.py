@@ -63,6 +63,29 @@ class confirmar_dados(View):
     def get(self, request,*args, **kwargs):
         return render(request, 'dados-contrato.html')
 
+    #PARA REFATORAR - BASE
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        initial_data=dict(email=request.POST['email'])
+        form = ContratoFormAdmin2(initial_data)
+        print(form)
+        if form.is_valid():
+            print('passou validação')
+            return HttpResponseRedirect('confirmar_servico')
+        return render(request, 'index.html')
+
+
 class confirmar_servico(View):
     def get(self, request,*args, **kwargs):
         return render(request, 'dados-servico.html')
+
+    #PARA REFATORAR - BASE
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        initial_data=dict(email=request.POST['email'])
+        form = ContratoFormAdmin2(initial_data)
+        print(form)
+        if form.is_valid():
+            print('passou validação')
+            return HttpResponseRedirect('confirmar_servico')
+        return render(request, 'index.html')

@@ -52,15 +52,24 @@
 
               <div class="wrap-input100 bg1" data-validate = "Campo informado é inválido">
               <span class="label-input100">Cursos/Serviços Contratados *</span>
-                <input class="form-control" type="text" name="curso" placeholder="Confirme o Curso/Serviço do Contratante " required>
+                <!-- <input class="form-control" type="text" name="curso" placeholder="Confirme o Curso/Serviço do Contratante " required> -->
+                  <label for="turmas">Selecione Curso/Serviço</label>
+                  <select class="form-control" id="turmas" required>
+                    <option>PPC Online</option>
+                    <option>PPC Presencial</option>
+                  </select>
                 <span class="label-input100">Bônus do Curso/Serviço - Opcional</span>
                   <input class="form-control" type="text" name="complemento_curso" placeholder="Descreva aqui eventuais bônus ofertados na negociação (caso exista) ">
               </div>
 
               <div class="wrap-input100 bg1">
-              <span class="label-input100">Turma *</span>
-                <input class="form-control" type="text" name="turma" placeholder="Selecione a Turma " required>
-              </div>
+                  <label for="turmas">Turma</label>
+                  <select class="form-control" id="turmas">
+                    <option>T01</option>
+                    <option>T02</option>
+                    <option>T03</option>
+                  </select>
+                </div>
 
               <div class="wrap-input100 bg1">
               <span class="label-input100">Datas Agendadas do Treinamento *</span>
@@ -68,8 +77,12 @@
               </div>
 
               <div class="wrap-input100 bg1">
-              <span class="label-input100">Forma de Pagamento *</span>
-                <input class="form-control" type="text" name="forma-pagamento" placeholder=" " required>
+              <span class="label-input100">Forma de Pagamento * (Pressione a tecla SHIT para selecionar mais de uma opção)</span> </br>
+                <select class="form-control" type="text" name="forma-pagamento" multiple required>
+                  <option>Mustard</option>
+                  <option>Ketchup</option>
+                  <option>Relish</option>
+                </select>
               </div>
 
               <div class="wrap-input100 bg1">
@@ -88,75 +101,6 @@
 							</div>
 
 
-
-
-
-
-							<!-- <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "O RG informado é inválido">
-								<span class="label-input100">RG *</span>
-								<input class="form-control" type="text" name="rg" placeholder="Confirme o RG do Contratante" required>
-							</div>
-
-							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "O CPF informado é inválido">
-								<span class="label-input100">CPF *</span>
-								<input class="form-control cpf-mask" type="text" name="cpf" placeholder="Confirme o CPF do Contratante" required>
-							</div>
-
-							<div class="wrap-input100 bg1" data-validate = "O endereço informado é inválido">
-								<span class="label-input100">Endereço *</span>
-									<input class="form-control" type="text" name="endereco" placeholder="Confirme o endereço do Contratante " required>
-							</div>
-
-							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "A Cidade/Estado informados são inválidos">
-								<span class="label-input100">Cidade/Estado *</span>
-								<input class="form-control" type="text" name="cidade-estado" placeholder="Confirme a Cidade/Estado do Contratante" required>
-							</div>
-
-							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "O CEP informado é inválido">
-								<span class="label-input100">CEP *</span>
-								<input class="form-control cep-mask-placeholder" type="text" name="cep" placeholder="Confirme o CEP do endereço do Contratante" required>
-							</div>
-
-							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "O Telefone informado é inválido">
-								<span class="label-input100">Telefone *</span>
-								<input class="form-control phone-mask" type="text" name="telefone" placeholder="Confirme o telefone do Contratante" required>
-							</div>
-
-							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "A data de nascimento informada é inválida">
-								<span class="label-input100">Data de Nascimento *</span>
-								<input class="form-control date-mask-placeholder" type="text" name="data_nascimento" placeholder="Confirme a data de nascimento do Contratante" required>
-							</div>
-
-							<div class="wrap-input100 bg1" data-validate = "Campo informado é inválido">
-							<span class="label-input100">Cursos/Serviços Contratados *</span>
-								<input class="form-control" type="text" name="curso" placeholder="Confirme o Curso/Serviço do Contratante " required>
-							</div>
- -->
-
-
-
-							<!-- <div class="wrap-input100 validate-input bg1" data-validate = "O Email informado é inválido">
-								<span class="label-input100">Email *</span>
-									<input class="form-control" type="text" name="Contratante" placeholder="Digite o Email do Contratante " disabled>
-							</div> -->
-
-							<!-- com validacao
-              <div class="col-md-6">
-                  <h2>Campo Data</h2>
-                  <input type="text" class="form-control date-mask">
-                  <h2>Campo Data com Placeholder</h2>
-                  <input type="text" class="form-control date-mask-placeholder">
-                  <h2>Campo Telefone</h2>
-                  <input type="text" class="form-control phone-mask">
-              </div>
-
-
-              <div class="wrap-input100 bg1 rs1-wrap-input100">
-                  <span class="label-input100">CPF</span>
-                  <input type="text" class="form-control cpf-mask">
-                  <h2>Campo com Calendário</h2>
-                  <input type="text" class="form-control datepicker">
-              </div> -->
 							<div class="container-contact100-form-btn">
 								<button type="submit" class="contact100-form-btn">
 									<span>
@@ -179,5 +123,6 @@
     <script src="{% static 'js/jquery.mask.min.js' %}"></script>
     <script src="{% static 'js/masks.js' %}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   </body>
 </html>
