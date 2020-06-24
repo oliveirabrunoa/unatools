@@ -62,3 +62,7 @@ class consultar_cliente(View):
 class confirmar_dados(View):
     def get(self, request,*args, **kwargs):
         return render(request, 'dados-contrato.html')
+
+class confirmar_servico(View):
+    def get(self, request,*args, **kwargs):
+        return render(request, 'dados-servico.html')

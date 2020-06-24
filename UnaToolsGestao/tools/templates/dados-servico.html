@@ -42,19 +42,57 @@
           <div class="row">
 						<form method="POST" class="contact100-form validate-form" name="contratoForm">{% csrf_token %}
 							<span class="contact100-form-title">
-								Gerador de Contratos - UnaCoaching
+								Condições de Contratação do Serviço
 							</span>
-							<div class="wrap-input100 bg1" data-validate = "O nome do Contratante informado é inválido">
-								<span class="label-input100">Contratante *</span>
-									<input class="form-control" type="text" name="Contratante" placeholder="Confirme o nome do Contratante " required>
-							</div>
 
 							<div class="wrap-input100 bg1" data-validate = "O Email informado é inválido">
-							<span class="label-input100">Email *</span>
+							<span class="label-input100">Email do Contratante *</span>
 								<input class="form-control" type="text" name="email" placeholder="Confirme o Email do Contratante " disabled>
 							</div>
 
-							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "O RG informado é inválido">
+              <div class="wrap-input100 bg1" data-validate = "Campo informado é inválido">
+              <span class="label-input100">Cursos/Serviços Contratados *</span>
+                <input class="form-control" type="text" name="curso" placeholder="Confirme o Curso/Serviço do Contratante " required>
+                <span class="label-input100">Bônus do Curso/Serviço - Opcional</span>
+                  <input class="form-control" type="text" name="complemento_curso" placeholder="Descreva aqui eventuais bônus ofertados na negociação (caso exista) ">
+              </div>
+
+              <div class="wrap-input100 bg1">
+              <span class="label-input100">Turma *</span>
+                <input class="form-control" type="text" name="turma" placeholder="Selecione a Turma " required>
+              </div>
+
+              <div class="wrap-input100 bg1">
+              <span class="label-input100">Datas Agendadas do Treinamento *</span>
+                <input class="form-control" type="text" name="data-treinamento" placeholder=" " disabled>
+              </div>
+
+              <div class="wrap-input100 bg1">
+              <span class="label-input100">Forma de Pagamento *</span>
+                <input class="form-control" type="text" name="forma-pagamento" placeholder=" " required>
+              </div>
+
+              <div class="wrap-input100 bg1">
+              <span class="label-input100">Condições do Pagamento e Datas de Vencimento *</span>
+                <textarea class="form-control" type="text" name="condicoes-pagamento" placeholder=" " rows="3" required></textarea>
+              </div>
+
+              <div class="wrap-input100 bg1 rs1-wrap-input100">
+								<span class="label-input100">Consultor/Consultora Responsável *</span>
+								<input class="form-control" type="text" name="consultor" placeholder=" " disabled>
+							</div>
+
+              <div class="wrap-input100 bg1 rs1-wrap-input100">
+								<span class="label-input100">Local e Data de Assinatura do Contrato *</span>
+								<input class="form-control" type="text" name="data-local-assinatura" placeholder=" ">
+							</div>
+
+
+
+
+
+
+							<!-- <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "O RG informado é inválido">
 								<span class="label-input100">RG *</span>
 								<input class="form-control" type="text" name="rg" placeholder="Confirme o RG do Contratante" required>
 							</div>
@@ -89,6 +127,36 @@
 								<input class="form-control date-mask-placeholder" type="text" name="data_nascimento" placeholder="Confirme a data de nascimento do Contratante" required>
 							</div>
 
+							<div class="wrap-input100 bg1" data-validate = "Campo informado é inválido">
+							<span class="label-input100">Cursos/Serviços Contratados *</span>
+								<input class="form-control" type="text" name="curso" placeholder="Confirme o Curso/Serviço do Contratante " required>
+							</div>
+ -->
+
+
+
+							<!-- <div class="wrap-input100 validate-input bg1" data-validate = "O Email informado é inválido">
+								<span class="label-input100">Email *</span>
+									<input class="form-control" type="text" name="Contratante" placeholder="Digite o Email do Contratante " disabled>
+							</div> -->
+
+							<!-- com validacao
+              <div class="col-md-6">
+                  <h2>Campo Data</h2>
+                  <input type="text" class="form-control date-mask">
+                  <h2>Campo Data com Placeholder</h2>
+                  <input type="text" class="form-control date-mask-placeholder">
+                  <h2>Campo Telefone</h2>
+                  <input type="text" class="form-control phone-mask">
+              </div>
+
+
+              <div class="wrap-input100 bg1 rs1-wrap-input100">
+                  <span class="label-input100">CPF</span>
+                  <input type="text" class="form-control cpf-mask">
+                  <h2>Campo com Calendário</h2>
+                  <input type="text" class="form-control datepicker">
+              </div> -->
 							<div class="container-contact100-form-btn">
 								<button type="submit" class="contact100-form-btn">
 									<span>
