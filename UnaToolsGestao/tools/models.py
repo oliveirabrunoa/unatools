@@ -22,9 +22,10 @@ class Turma(models.Model):
     curso = models.ForeignKey(Tag, null=True, on_delete=models.SET_NULL)
     periodo = models.CharField(max_length=200,blank=False, null=True)
     qtd_encontros =  models.IntegerField()
+    status_turma = models.BooleanField(default=False, verbose_name="Turma Concluída?")
 
     def __str__(self):
-        return '{0} - {1}'.format(self.cod_turma, self.curso)
+        return '{0} - {1} - {2}'.format(self.cod_turma, self.curso, self.periodo)
 
     class Meta:
         verbose_name = 'Turma'
@@ -42,6 +43,9 @@ class Contrato(models.Model):
     data_nascimento = models.DateField(verbose_name="Data de Nascimento",blank=False, null=True)
     email = models.CharField(max_length=100,blank=False, null=True)
     turma = models.ForeignKey(Turma, null=True, on_delete=models.SET_NULL)
+    forma_pagamento=models.CharField(max_length=250,blank=False, null=True)
+    condicoes_pagamento=models.TextField(blank=False, null=True)
+
 
 
     def __str__(self):
