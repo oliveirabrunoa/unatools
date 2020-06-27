@@ -46,47 +46,47 @@
 							</span>
 							<div class="wrap-input100 bg1" data-validate = "O nome do Contratante informado é inválido">
 								<span class="label-input100">Contratante *</span>
-									<input class="form-control" type="text" name="Contratante" placeholder="Confirme o nome do Contratante " required>
+									<input class="form-control" type="text" name="contratante" placeholder="Confirme o nome do Contratante " required>
 							</div>
 
 							<div class="wrap-input100 bg1" data-validate = "O Email informado é inválido">
 							<span class="label-input100">Email *</span>
-								<input class="form-control" type="text" name="email" placeholder="Confirme o Email do Contratante " disabled>
+								<input class="form-control" type="text" name="email" value='{{ email }}' placeholder="Confirme o Email do Contratante " disabled>
 							</div>
 
 							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "O RG informado é inválido">
 								<span class="label-input100">RG *</span>
-								<input class="form-control" type="text" name="rg" placeholder="Confirme o RG do Contratante" required>
+								<input class="form-control" type="text" name="rg" value='{{ rg }}' placeholder="Confirme o RG do Contratante" required>
 							</div>
 
 							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "O CPF informado é inválido">
 								<span class="label-input100">CPF *</span>
-								<input class="form-control cpf-mask" type="text" name="cpf" placeholder="Confirme o CPF do Contratante" required>
+								<input class="form-control cpf-mask" type="text" name="cpf" value='{{ cpf }}' placeholder="Confirme o CPF do Contratante" required>
 							</div>
 
 							<div class="wrap-input100 bg1" data-validate = "O endereço informado é inválido">
 								<span class="label-input100">Endereço *</span>
-									<input class="form-control" type="text" name="endereco" placeholder="Confirme o endereço do Contratante " required>
+									<input class="form-control" type="text" name="endereco" value='{{ endereco }}' placeholder="Confirme o endereço do Contratante " required>
 							</div>
 
 							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "A Cidade/Estado informados são inválidos">
 								<span class="label-input100">Cidade/Estado *</span>
-								<input class="form-control" type="text" name="cidade-estado" placeholder="Confirme a Cidade/Estado do Contratante" required>
+								<input class="form-control" type="text" name="cidade-estado" value='{{ cidade_estado }}' placeholder="Confirme a Cidade/Estado do Contratante" required>
 							</div>
 
 							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "O CEP informado é inválido">
 								<span class="label-input100">CEP *</span>
-								<input class="form-control cep-mask-placeholder" type="text" name="cep" placeholder="Confirme o CEP do endereço do Contratante" required>
+								<input class="form-control cep-mask-placeholder" type="text" name="cep" value='{{ cep }}' placeholder="Confirme o CEP do endereço do Contratante" required>
 							</div>
 
 							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "O Telefone informado é inválido">
 								<span class="label-input100">Telefone *</span>
-								<input class="form-control phone-mask" type="text" name="telefone" placeholder="Confirme o telefone do Contratante" required>
+								<input class="form-control phone-mask" type="text" name="telefone" value='{{ telefone }}' placeholder="Confirme o telefone do Contratante" required>
 							</div>
 
 							<div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "A data de nascimento informada é inválida">
 								<span class="label-input100">Data de Nascimento *</span>
-								<input class="form-control date-mask-placeholder" type="text" name="data_nascimento" placeholder="Confirme a data de nascimento do Contratante" required>
+								<input class="form-control date-mask-placeholder" type="text" name="data_nascimento" value='{{ data_nascimento }}' placeholder="Confirme a data de nascimento do Contratante" required>
 							</div>
 
 							<div class="container-contact100-form-btn">
