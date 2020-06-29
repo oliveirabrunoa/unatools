@@ -10,6 +10,7 @@ from .forms import ContratoFormAdmin, ContratoFormAdmin2
 from django.utils import timezone
 from datetime import date
 import datetime
+from . import gerador_pdf
 
 
 def visualizar_contrato(request, param):
@@ -123,18 +124,35 @@ class confirmar_servico(View):
 
     def post(self, request, *args, **kwargs):
         print(request.POST)
+        contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
+
+        if not contrato:
+            return HttpResponseRedirect('consultar_cliente')
 
         if request.POST:
-            print(request.POST['forma-pagamento'].split(','))
-            print(type(request.POST['forma-pagamento']))
-            print(len(request.POST['forma-pagamento']))
             contrato_atualizado=Contrato.objects.filter(id=request.session.get('contrato_id')).update(
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
-                              forma_pagamento =  ' '.join(list(request.POST['forma-pagamento']))  ,
+                              forma_pagamento =  ''.join(list(request.POST['forma-pagamento']))  ,
                               condicoes_pagamento=request.POST['condicoes-pagamento'])
+            # return render(request, 'Modelo-de-Contrato-PPC-ONLINE html version.html',{'contratante':contrato.contratante})
+            cont = gerar_contrato(contrato_atualizado)
+            if cont:
+                print("FUNFOU!")
 
         return render(request, self.template_name)
 
+
+def gerar_contrato(contrato_id):
+    contrato=Contrato.objects.filter(id=contrato_id).first()
+    template_contrato = 'Modelo-de-Contrato-PPC-ONLINE html version.html'
+    data={
+        'contratante': contrato.contratante,
+        'cpf': contrato.cpf
+    }
+    url_arquivo= gerador_pdf.run(template_contrato, data)
+    if url_arquivo:
+        return url_arquivo
+    return None
 
 def desc_mes(mes_atual):
     meses = [(1,'Janeiro'),(2,'Fevereiro'),(3,'Março'),(4,'Abril'),(5,'Maio'),(6,'Junho'),(7,'Julho'),(8,'Agosto'),(9,'Setembro'),(10,'Outubro'),(11,'Novembro'),(12,'Dezembro')]

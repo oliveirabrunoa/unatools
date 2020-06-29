@@ -138,3 +138,4 @@ br_formats.DATE_FORMAT = 'd/m/Y'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+DIRETORIO_CONTRATOS = '{0}{1}'.format(BASE_DIR,'/tools/contratos/')
