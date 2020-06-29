@@ -8,6 +8,7 @@ from django.views import View
 from .models import Contrato
 from .forms import ContratoFormAdmin, ContratoFormAdmin2
 from django.utils import timezone
+from datetime import date
 import datetime
 
 
@@ -37,12 +38,14 @@ def gerar_contrato(nome_cliente):
 def index(request):
     return render(request, 'Modelo-de-Contrato-PPC-ONLINE html version.html',{'contratante':'Bruno Araújo de Oliveira'})
 
-from django.contrib import messages
 class consultar_cliente(View):
     template_name = 'index_base.html'
     form_class = ContratoFormAdmin
 
     def get(self, request,*args, **kwargs):
+        # if not request.user.is_authenticated:
+        #     return HttpResponseRedirect('/login/?next=%s' % request.path)
+
         form = self.form_class()
         return render(request, self.template_name, { 'form' : form})
 
@@ -56,7 +59,6 @@ class consultar_cliente(View):
                 return render(request, self.template_name, {'messages' : 'messages', 'email':param})
         return render(request, self.template_name, { 'form' : self.form_class()})
 
-
 class confirmar_dados(View):
     template_name = 'dados-contrato.html'
     form_class = ContratoFormAdmin
@@ -66,7 +68,7 @@ class confirmar_dados(View):
 
         if not contrato:
             return HttpResponseRedirect('consultar_cliente')
-
+        print(contrato.data_nascimento)
         return render(request, self.template_name, { 'form' : self.form_class(), 'contratante': contrato.contratante, 'email': contrato.email,
                         'rg': contrato.rg, 'cpf': contrato.cpf,'endereco': contrato.endereco,
                         'cidade_estado': contrato.cidade_estado, 'cep': contrato.cep,
@@ -88,17 +90,22 @@ class confirmar_dados(View):
             return HttpResponseRedirect('confirmar_servico')
         return render(request, 'index.html')
 
-def data_nasc_format(data_nasc):
-    data_nasc_cliente = data_nasc
-    if data_nasc_cliente.find('/')  > 0:
-        return datetime.datetime.strptime(data_nasc_cliente,"%d/%m/%Y").strftime("%Y-%m-%d")
-    elif data_nasc_cliente.find('-')  > 0:
-        return datetime.datetime.strptime(data_nasc_cliente,"%d-%m-%Y").strftime("%Y-%m-%d")
-    return None
+
 
 class confirmar_servico(View):
+    template_name = 'dados-servico.html'
+    form_class = ContratoFormAdmin
+
     def get(self, request,*args, **kwargs):
-        return render(request, 'dados-servico.html')
+        contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
+
+        if not contrato:
+            return HttpResponseRedirect('consultar_cliente')
+        data_atual=date.today()
+
+        return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email,
+                        'consultor': request.user, 'data_local_assinatura': '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)})
+
 
     #PARA REFATORAR - BASE
     def post(self, request, *args, **kwargs):
@@ -110,3 +117,19 @@ class confirmar_servico(View):
             print('passou validação')
             return HttpResponseRedirect('confirmar_servico')
         return render(request, 'index.html')
+
+
+
+def desc_mes(mes_atual):
+    meses = [(1,'Janeiro'),(2,'Fevereiro'),(3,'Março'),(4,'Abril'),(5,'Maio'),(6,'Junho'),(7,'Julho'),(8,'Agosto'),(9,'Setembro'),(10,'Outubro'),(11,'Novembro'),(12,'Dezembro')]
+    for mes in meses:
+        if mes[0]==mes_atual:
+            return mes[1]
+
+def data_nasc_format(data_nasc):
+    data_nasc_cliente = data_nasc
+    if data_nasc_cliente.find('/')  > 0:
+        return datetime.datetime.strptime(data_nasc_cliente,"%d/%m/%Y").strftime("%Y-%m-%d")
+    elif data_nasc_cliente.find('-')  > 0:
+        return datetime.datetime.strptime(data_nasc_cliente,"%d-%m-%Y").strftime("%Y-%m-%d")
+    return None

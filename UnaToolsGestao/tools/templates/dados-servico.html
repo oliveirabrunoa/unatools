@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-		<title>Contact V5</title>
+		<title>Gerador de Contratos - Una</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -47,13 +47,13 @@
 
 							<div class="wrap-input100 bg1" data-validate = "O Email informado é inválido">
 							<span class="label-input100">Email do Contratante *</span>
-								<input class="form-control" type="text" name="email" placeholder="Confirme o Email do Contratante " disabled>
+								<input class="form-control" type="text" name="email" value='{{ email }}' placeholder="Confirme o Email do Contratante " disabled>
 							</div>
 
               <div class="wrap-input100 bg1" data-validate = "Campo informado é inválido">
               <span class="label-input100">Cursos/Serviços Contratados *</span>
                 <!-- <input class="form-control" type="text" name="curso" placeholder="Confirme o Curso/Serviço do Contratante " required> -->
-                  <label for="turmas">Selecione Curso/Serviço</label>
+                  <label for="turmas"></label>
                   <select class="form-control" id="turmas" required>
                     <option>PPC Online</option>
                     <option>PPC Presencial</option>
@@ -92,19 +92,19 @@
 
               <div class="wrap-input100 bg1 rs1-wrap-input100">
 								<span class="label-input100">Consultor/Consultora Responsável *</span>
-								<input class="form-control" type="text" name="consultor" placeholder=" " disabled>
+								<input class="form-control" type="text" name="consultor" value='{{ consultor }}' placeholder=" ">
 							</div>
 
               <div class="wrap-input100 bg1 rs1-wrap-input100">
 								<span class="label-input100">Local e Data de Assinatura do Contrato *</span>
-								<input class="form-control" type="text" name="data-local-assinatura" placeholder=" ">
+								<input class="form-control" type="text" name="data-local-assinatura" value='{{ data_local_assinatura }}' placeholder=" ">
 							</div>
 
 
 							<div class="container-contact100-form-btn">
 								<button type="submit" class="contact100-form-btn">
 									<span>
-										Submit
+										Gerar Contrato
 										<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
 									</span>
 								</button>

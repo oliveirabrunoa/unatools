@@ -130,6 +130,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+from django.conf.locale.pt_BR import formats as br_formats
+br_formats.DATE_FORMAT = 'd/m/Y'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
