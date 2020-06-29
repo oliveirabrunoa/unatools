@@ -75,7 +75,6 @@ class confirmar_dados(View):
                         'telefone': contrato.telefone, 'data_nascimento': contrato.data_nascimento})
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
         contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
 
         if request.POST:
@@ -88,7 +87,7 @@ class confirmar_dados(View):
                               data_nascimento=data_nasc_format(request.POST['data_nascimento'])) #VERIFICAR VALIDAÇÃO
 
             return HttpResponseRedirect('confirmar_servico')
-        return render(request, 'index.html')
+        return HttpResponseRedirect('consultar_cliente')
 
 
 
@@ -125,8 +124,16 @@ class confirmar_servico(View):
     def post(self, request, *args, **kwargs):
         print(request.POST)
 
-        return render(request, self.template_name)
+        if request.POST:
+            print(request.POST['forma-pagamento'].split(','))
+            print(type(request.POST['forma-pagamento']))
+            print(len(request.POST['forma-pagamento']))
+            contrato_atualizado=Contrato.objects.filter(id=request.session.get('contrato_id')).update(
+                              turma=Turma.objects.filter(id=request.POST['turmas']).first(),
+                              forma_pagamento =  ' '.join(list(request.POST['forma-pagamento']))  ,
+                              condicoes_pagamento=request.POST['condicoes-pagamento'])
 
+        return render(request, self.template_name)
 
 
 def desc_mes(mes_atual):
