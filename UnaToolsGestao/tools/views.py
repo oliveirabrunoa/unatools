@@ -5,7 +5,7 @@ from django.conf import settings
 import requests
 from django.shortcuts import render
 from django.views import View
-from .models import Contrato
+from .models import Contrato, Turma, Tag
 from .forms import ContratoFormAdmin, ContratoFormAdmin2
 from django.utils import timezone
 from datetime import date
@@ -96,27 +96,36 @@ class confirmar_servico(View):
     template_name = 'dados-servico.html'
     form_class = ContratoFormAdmin
 
+    def get_turmas_abertas(self):
+        turmas_ativas = Turma.objects.filter(status_turma=False)
+        lista_turmas = [('','Selecione a Turma')]
+        for turma in turmas_ativas:
+            lista_turmas.append((int(turma.id), turma))
+        return lista_turmas
+
+    def get_cursos(self):
+        cursos = Tag.objects.all()
+        # lista_cursos = [('','Selecione o Curso')]
+        lista_cursos = []
+        for c in cursos:
+            lista_cursos.append((int(c.id), c))
+        return lista_cursos
+
     def get(self, request,*args, **kwargs):
         contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
 
         if not contrato:
             return HttpResponseRedirect('consultar_cliente')
+
         data_atual=date.today()
 
-        return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email,
+        return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email, 'lista_turmas': self.get_turmas_abertas(), 'lista_cursos': self.get_cursos(),
                         'consultor': request.user, 'data_local_assinatura': '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)})
 
-
-    #PARA REFATORAR - BASE
     def post(self, request, *args, **kwargs):
         print(request.POST)
-        initial_data=dict(email=request.POST['email'])
-        form = ContratoFormAdmin2(initial_data)
-        print(form)
-        if form.is_valid():
-            print('passou validação')
-            return HttpResponseRedirect('confirmar_servico')
-        return render(request, 'index.html')
+
+        return render(request, self.template_name)
 
 
 

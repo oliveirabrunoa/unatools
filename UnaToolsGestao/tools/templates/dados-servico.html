@@ -53,28 +53,26 @@
               <div class="wrap-input100 bg1" data-validate = "Campo informado é inválido">
               <span class="label-input100">Cursos/Serviços Contratados *</span>
                 <!-- <input class="form-control" type="text" name="curso" placeholder="Confirme o Curso/Serviço do Contratante " required> -->
-                  <label for="turmas"></label>
-                  <select class="form-control" id="turmas" required>
-                    <option>PPC Online</option>
-                    <option>PPC Presencial</option>
+                  <label for="cursos"></label>
+                  <select class="form-control" id="cursos" class='required' name="cursos">
+                    {% for opc in lista_cursos %}
+                      <option value="{{opc.0}}">{{opc.1}}</option>
+                    {{opc}}
+                    {% endfor %}
                   </select>
                 <span class="label-input100">Bônus do Curso/Serviço - Opcional</span>
                   <input class="form-control" type="text" name="complemento_curso" placeholder="Descreva aqui eventuais bônus ofertados na negociação (caso exista) ">
               </div>
-
+              <!-- {{ lista_turmas }} -->
               <div class="wrap-input100 bg1">
-                  <label for="turmas">Turma</label>
-                  <select class="form-control" id="turmas">
-                    <option>T01</option>
-                    <option>T02</option>
-                    <option>T03</option>
+                  <label for="turmas">Turma Disponíveis</label>
+                  <select class="form-control" id="turmas" class='required' name="turmas">
+                    {% for opc in lista_turmas %}
+                      <option value="{{opc.0}}">{{opc.1}}</option>
+                    {{opc}}
+                    {% endfor %}
                   </select>
-                </div>
-
-              <!-- <div class="wrap-input100 bg1">
-              <span class="label-input100">Datas Agendadas do Treinamento *</span>
-                <input class="form-control" type="text" name="data-treinamento" placeholder=" " disabled>
-              </div> -->
+              </div>
 
               <div class="wrap-input100 bg1">
               <span class="label-input100">Forma de Pagamento * (Pressione a tecla SHIT para selecionar mais de uma opção)</span> </br>
@@ -113,6 +111,13 @@
           </div>
 				</div>
       </div>
+      <!-- <script>
+          $('#turmas').change(function () {
+              var selectedText = $(this).find("option:selected").text();
+
+              console.log(selectedText);
+          });
+      </script> -->
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
