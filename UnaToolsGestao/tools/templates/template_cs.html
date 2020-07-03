@@ -1,0 +1,173 @@
+{% load staticfiles %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+      @page {
+        size: a4 portrait;
+        @frame header_frame {           /* Static Frame */
+          -pdf-frame-content: header_content;
+          left: 50pt; width: 500pt; top: 50pt; height: 40pt;
+          /*-pdf-frame-border: 1;    /* for debugging the layout */
+        }
+        @frame content_frame {          /* Content Frame */
+          left: 50pt; width: 500pt; top: 102pt; height: 658pt;
+          /*-pdf-frame-border: 1;    /* for debugging the layout */
+        }
+        @frame footer_frame {           /* Another static Frame */
+          -pdf-frame-content: footer_content;
+          left: 50pt; width: 500pt; top: 770pt; height: 40pt;
+          /*-pdf-frame-border: 1;    /* for debugging the layout */
+        }
+      }
+
+      .footer{
+            text-decoration: bold;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+      }
+
+      .tg td{
+        padding:2px 2px;
+        border: 1px solid #000000;
+      }
+
+</style>
+</head>
+<body class="c24">
+      <p class="c71"><span class="c5 c75">CONTRATO DE PRESTA&Ccedil;&Atilde;O DE SERVI&Ccedil;OS EDUCACIONAIS &Agrave; DIST&Acirc;NCIA</span></p>
+      <p class="c49"><span class="c5 c42"></span></p>
+      <p class="c27"><span class="c5 c18"></span></p>
+      <a id="t.7f905dff41acf0c42b13be8148fa1a7ad5a68e36"></a><a id="t.0"></a>
+      <table class="c79">
+         <tbody>
+            <tr class="c61">
+               <td class="c31" colspan="5" rowspan="1">
+                  <p class="c26"><span class="c5 c3">CONTRATANTE: </span><span class="c1">{{ contratante }}</span></p>
+               </td>
+            </tr>
+            <tr class="c32">
+               <td class="c56" colspan="2" rowspan="1">
+                  <p class="c26"><span class="c5 c3">RG: </span><span class="c1">{{ rg_cliente }}</span></p>
+               </td>
+               <td class="c68" colspan="3" rowspan="1">
+                  <p class="c7"><span class="c5 c3">CPF: </span><span class="c1">{{ cpf_cliente }}</span></p>
+               </td>
+            </tr>
+            <tr class="c25">
+               <td class="c31" colspan="5" rowspan="1">
+                  <p class="c26"><span class="c5 c3">ENDERE&Ccedil;O: </span><span class="c1">{{ endereco_cliente }}</span></p>
+               </td>
+            </tr>
+            <tr class="c32">
+               <td class="c78" colspan="4" rowspan="1">
+                  <p class="c26"><span class="c5 c3">CIDADE/ESTADO: </span><span class="c1">{{ cidade_estado_cliente }}</span></p>
+               </td>
+               <td class="c12" colspan="1" rowspan="1">
+                  <p class="c7"><span class="c5 c3">CEP.: </span><span class="c1">{{ cep_cliente }}</span></p>
+               </td>
+            </tr>
+            <tr class="c25">
+               <td class="c41" colspan="1" rowspan="1">
+                  <p class="c26"><span class="c5 c3">TELEFONE: </span><span class="c1">{{ telefone_cliente }}</span></p>
+               </td>
+               <td class="c20" colspan="4" rowspan="1">
+                  <p class="c39"><span class="c5 c3">DATA DE NASCIMENTO: </span><span class="c1">{{ nasc_cliente }}</span></p>
+               </td>
+            </tr>
+            <tr class="c32">
+               <td class="c31" colspan="5" rowspan="1">
+                  <p class="c26"><span class="c5 c3">E-MAIL: </span><span class="c1">{{ email_cliente }}</span></p>
+               </td>
+            </tr>
+            <tr class="c21">
+               <td class="c31" colspan="5" rowspan="1">
+                  <p class="c35"><span class="c5 c3">CURSOS/SERVI&Ccedil;OS CONTRATADOS: </span><span class="c1">{{ curso_info }}</span></p>
+                  <p class="c72"><span class="c1">{{ curso_desc }}</span></p>
+               </td>
+            </tr>
+            <tr class="c36">
+               <td class="c31" colspan="5" rowspan="1">
+                  <p class="c26"><span class="c5 c3">DATAS AGENDADAS DO TREINAMENTO: </span><span class="c1">{{ curso_period }}</span></p>
+               </td>
+            </tr>
+            <tr class="c36">
+               <td class="c31" colspan="5" rowspan="1">
+                  <p class="c26"><span class="c5 c3">FORMA DE PAGAMENTO:</span></p>
+               </td>
+            </tr>
+            <tr class="c74">
+               <td class="c31" colspan="5" rowspan="1">
+                  <p class="c67"><span class="c5 c6">CONDI&Ccedil;&Otilde;ES DO PAGAMENTO E DATAS DE VENCIMENTO:</span></p>
+               </td>
+            </tr>
+            <tr class="c8">
+               <td class="c70" colspan="3" rowspan="1">
+                  <p class="c35"><span class="c5 c3">TURMA: </span><span class="c1">{{ turma_cliente }}</span></p>
+               </td>
+               <td class="c70" colspan="2" rowspan="1">
+                  <p class="c44"><span class="c5 c3">CONSULTOR(a): </span><span class="c1">{{ consultor_nome }}</span></p>
+               </td>
+            </tr>
+            <tr class="c82">
+               <td class="c31" colspan="5" rowspan="1">
+                  <p class="c26"><span class="c5 c42">CIDADE E DATA DE ASSINATURA DO CONTRATO</span><span class="c5 c3">: </span><span class="c1">{{ cidade_data_contrato }}</span></p>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <p class="c49"><span class="c5 c42"></span></p>
+      <p class="c30"><span class="c5 c18"></span></p>
+      <p class="c40"><span class="c5 c3">CONTRATADA: UNACOACHING Solu&ccedil;&otilde;es em Desenvolvimento Humano</span><span class="c0">, com sede na Rua Arthur de Azevedo Machado, n&ordm; 1459 Edf. ITC Salvador, Sala 2209, Bairro Costa Azul, CEP 41.770-790, Salvador, Bahia, inscrita no CNPJ sob o n&ordm; 21.077.017/0001-17 neste ato representada pelo senhor Andr&eacute; Luiz Almeida Silva Nery, brasileiro, solteiro, Empres&aacute;rio, portador da c&eacute;dula de identidade RG. n&ordm; 1013373103 e inscrito no CPF/MF n&ordm; 010.236.545-80.</span></p>
+      <p class="c23"><span class="c5 c46"></span></p>
+      <p class="c9"><span class="c0">Pelo presente instrumento, as partes acima identificadas como CONTRATANTE e CONTRA</span><span class="c60">TADA</span><span class="c0">&nbsp;firmam Contrato de Presta&ccedil;&atilde;o de Servi&ccedil;os Educacionais que se reger&aacute; pelas cl&aacute;usulas seguintes:</span><span class="c33 c58"><br></span></p>
+      <p class="c9 c53"><span class="c4"></span></p>
+      <p class="c9 c53"><span class="c4"></span></p>
+      <p class="c9 c53"><span class="c4"></span></p>
+      <p class="c9 c53"><span class="c4"></span></p>
+      <p class="c9 c53"><span class="c4"></span></p>
+      <p class="c9"><span class="c55">D</span><span class="c4">O OBJETO DO CONTRATO</span></p>
+      <p class="c53 c54"><span class="c5 c45"></span></p>
+      <p class="c13"><span class="c0">Cl&aacute;usula 1&ordf;. O presente contrato visa &agrave; presta&ccedil;&atilde;o de servi&ccedil;o educacional &agrave; dist&acirc;ncia, na modalidade curso de Forma&ccedil;&atilde;o em Coaching, com aplica&ccedil;&atilde;o de t&eacute;cnicas e ferramentas de PNL - Programa&ccedil;&atilde;o Neurolingu&iacute;stica (PPC &ndash; Professional and Personal Coaching).</span></p>
+      <p class="c49"><span class="c5 c10"></span></p>
+      <p class="c54 c53"><span class="c5 c43"></span></p>
+      <h1 class="c19"><span class="c5 c16">DAS OBRIGA&Ccedil;&Otilde;ES DA CONTRATADA</span></h1>
+      <p class="c54 c53"><span class="c5 c48"></span></p>
+      <p class="c29 c59"><span class="c5 c3">Cl&aacute;usula 2&ordf;. </span><span class="c0">Cl&aacute;usula 2&ordf;. Compromete-se a CONTRATADA a fornecer ao (a) contratante o servi&ccedil;o objeto do contrato, material did&aacute;tico em formato digital (apostila e outros materiais de apoio), bem como certificado(s) de conclus&atilde;o do curso/treinamento em formato digital, com chancela da Una</span><span class="c60">C</span><span class="c0">oaching, da ABRAPCoaching (Associa&ccedil;&atilde;o Brasileira de Profissionais de Coaching) e IBCI - </span><span class="c60 c76">International Business Coaching Institute</span><span class="c0">, mediante o efetivo cumprimento de sua carga hor&aacute;ria e atividades propostas.</span></p>
+      <p class="c30"><span class="c0"></span></p>
+      <p class="c77"><span class="c5 c3">Cl&aacute;usula 3&ordf;. </span><span class="c0">Compromete-se a CONTRATADA, ainda, a indicar ao (a) CONTRATANTE a agenda dos encontros ao vivo e link de acesso com anteced&ecirc;ncia m&iacute;nima de 4 horas da realiza&ccedil;&atilde;o do m&oacute;dulo de treinamento.</span></p>
+      <p class="c54 c53"><span class="c5 c80"></span></p>
+      <h1 class="c37"><span class="c5 c16">DAS OBRIGA&Ccedil;&Otilde;ES DA CONTRATANTE</span></h1>
+      <p class="c53 c69"><span class="c5 c38"></span></p>
+      <p class="c37"><span class="c3">Cl&aacute;usula 4&ordf;. </span><span class="c0">Compromete-se a parte CONTRATANTE a:</span></p>
+      <p class="c23"><span class="c0"></span></p>
+      <ol class="c81 lst-kix_list_1-0 start" start="1">
+         <li class="c28"><span class="c0">Assistir &agrave;s exposi&ccedil;&otilde;es de conte&uacute;do do servi&ccedil;o/treinamento contratado, bem como a cumprir as atividades pr&aacute;ticas e te&oacute;ricas propostas para integraliza&ccedil;&atilde;o da carga hor&aacute;ria programada.</span></li>
+         <li class="c51"><span class="c0">N&atilde;o reproduzir, sob qualquer forma o material do curso, sob pena de responder, civil e criminalmente, perante a CONTRATADA e terceiros;</span></li>
+         <li class="c63"><span class="c0">Seguir os padr&otilde;es de conduta estabelecidos e vigentes na Internet, abstendo-se de: (i) violar a privacidade de outros usu&aacute;rios; (ii) permitir que outras pessoas utilizem seu acesso ao ambiente de treinamento; utilizar os nomes, e-mails e contatos dos participantes do curso para fins comerciais;</span></li>
+         <li class="c29 c66"><span class="c0">A parte CONTRATANTE autoriza para fins de comunica&ccedil;&atilde;o e publicidade da CONTRATADA o uso de sua imagem e voz gravados em ambiente coletivo dos treinamentos/cursos/palestra ou cedidos em depoimentos individuais.</span></li>
+      </ol>
+      <p class="c54 c53"><span class="c5 c57"></span></p>
+      <p class="c15"><span class="c5 c3">Cl&aacute;usula 5&ordf;. </span><span class="c0">Compromete-se a CONTRATADA, ainda, a efetuar todos os pagamentos referentes ao servi&ccedil;o contratado ciente de que sua n&atilde;o frequ&ecirc;ncia a qualquer um dos m&oacute;dulos do servi&ccedil;o/treinamento n&atilde;o obsta a quita&ccedil;&atilde;o das parcelas pactuadas, sendo facultada &agrave; CONTRATADA a reposi&ccedil;&atilde;o do</span><span class="c48 c64">&nbsp;</span><span class="c0">conte&uacute;do de acordo com a disponibilidade de outras turmas, bem como sendo informado nesta oportunidade que caracterizado o inadimplemento de quaisquer presta&ccedil;&otilde;es ou obriga&ccedil;&otilde;es assumidas implica na suspens&atilde;o do imediata ao acesso &agrave; plataforma online e aos materiais nela disponibilizados.</span></p>
+      <p class="c49"><span class="c5 c10"></span></p>
+      <p class="c23"><span class="c5 c52"></span></p>
+      <h1 class="c29"><span class="c5 c16">DO PAGAMENTO</span></h1>
+      <p class="c30"><span class="c5 c3"></span></p>
+      <p class="c62"><span class="c5 c3">Cl&aacute;usula 6&ordf;. </span><span class="c0">Compromete-se a CONTRATANTE a efetuar o pagamento do VALOR DO SERVI&Ccedil;O/TREINAMENTO conforme indicado no formul&aacute;rio inicial deste instrumento de contrato.</span></p>
+      <p class="c30"><span class="c5 c57"></span></p>
+      <p class="c9"><span class="c5 c3">Cl&aacute;usula 7&ordf;. </span><span class="c0">Caso a condi&ccedil;&atilde;o de pagamento ajustada tenha sido transfer&ecirc;ncia banc&aacute;ria ou dep&oacute;sito, o valor dever&aacute; ser destinado &agrave; Conta Corrente em benef&iacute;cio da CONTRATADA, no Banco Bradesco, Ag&ecirc;ncia 3593, Conta Corrente 62562-0, Titular UnaCoaching/Andr&eacute; Luiz Almeida Silva Nery, CNPJ 21.077.017/0001-17.</span></p>
+      <p class="c30"><span class="c0"></span></p>
+      <p class="c29 c50"><span class="c5 c3">Cl&aacute;usula 8&ordf;. </span><span class="c0">Em caso de inadimplemento, poder&aacute; a CONTRATADA cobrar multa de 2% sobre a parcela devida, juros de mora de 1% ao m&ecirc;s ou fra&ccedil;&atilde;o de m&ecirc;s e atualiza&ccedil;&atilde;o monet&aacute;ria, bem como poder&aacute; adotar todas as provid&ecirc;ncias legais de cobran&ccedil;a cab&iacute;veis, inclusive, inscrever o nome do CONTRATANTE e de seu respons&aacute;vel legal/financeiro em cadastro ou servi&ccedil;os legalmente constitu&iacute;dos e destinados &agrave; prote&ccedil;&atilde;o da cobran&ccedil;a do cr&eacute;dito advindo deste contrato, valendo o presente contrato como t&iacute;tulo executivo extrajudicial, nos termos do art. 585, II, do CPC, reconhecendo, o CONTRATANTE, desde j&aacute;, este t&iacute;tulo, como l&iacute;quido, certo e exig&iacute;vel, ou, ainda, qualquer tipo de cobran&ccedil;a prevista na legisla&ccedil;&atilde;o brasileira, protesto em cart&oacute;rio, ou cess&atilde;o de cr&eacute;dito, independentemente de pr&eacute;via notifica&ccedil;&atilde;o, podendo tais provid&ecirc;ncias serem tomadas isolada, gradativa ou cumulativamente.</span></p>
+      <p class="c49"><span class="c5 c10"></span></p>
+      <p class="c30"><span class="c1"></span></p>
+      <p class="c29 c59"><span class="c5 c3">Cl&aacute;usula 9&ordf;. </span><span class="c0">A parte CONTRATANTE se compromete a manter confidencialidade acerca da negocia&ccedil;&atilde;o de valores, descontos e condi&ccedil;&otilde;es da contrata&ccedil;&atilde;o. Mantendo reserva quanto ao contratado dentro dos princ&iacute;pios da boa f&eacute; contratual.</span></p>
+      <p class="c49"><span class="c17"><br><br></span></p>
+      <h1 class="c47"><span class="c5 c16">DO FORO</span></h1>
+      <p class="c54 c53"><span class="c5 c48"></span></p>
+      <p class="c34"><span class="c3 c5">Cl&aacute;usula 10&ordf;. </span><span class="c0">As partes elegem o foro da comarca de Salvador/BA, para dirimir quaisquer controv&eacute;rsias oriundas deste CONTRATO.</span></p>
+      <p class="c30"><span class="c5 c57"></span></p>
+      <p class="c65"><span class="c0">Por estarem assim justos e contratados, firmam o presente instrumento, em duas vias de igual teor, juntamente com 2 (duas) testemunhas, ficando desde &nbsp;j&aacute; autorizado o pacto mediante assinatura digital.</span></p>
+   </body>
+</html>

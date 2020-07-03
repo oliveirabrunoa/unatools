@@ -1,3 +1,4 @@
+ # -*- coding: utf-8 -*-
 from django.shortcuts import render
 import json
 from django.http import HttpResponseRedirect, HttpResponse
@@ -134,25 +135,28 @@ class confirmar_servico(View):
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
                               forma_pagamento =  ''.join(list(request.POST['forma-pagamento']))  ,
                               condicoes_pagamento=request.POST['condicoes-pagamento'])
-            # return render(request, 'Modelo-de-Contrato-PPC-ONLINE html version.html',{'contratante':contrato.contratante})
-            cont = gerar_contrato(contrato_atualizado)
-            if cont:
-                print("FUNFOU!")
+
+            data = gerar_contrato(contrato_atualizado)
+            print(data)
+            # return render(request, 'Modelo-de-Contrato-PPC-ONLINE.html',{'contratante':data.get('contratante'), 'cpf_cliente': data.get('cpf')})
+
 
         return render(request, self.template_name)
 
 
 def gerar_contrato(contrato_id):
     contrato=Contrato.objects.filter(id=contrato_id).first()
-    template_contrato = 'Modelo-de-Contrato-PPC-ONLINE html version.html'
+    template_contrato = 'template_csbckp.html'
     data={
         'contratante': contrato.contratante,
         'cpf': contrato.cpf
     }
     url_arquivo= gerador_pdf.run(template_contrato, data)
-    if url_arquivo:
-        return url_arquivo
-    return None
+    return data
+    # url_arquivo= gerador_pdf.run(template_contrato, data)
+    # if url_arquivo:
+    #     return url_arquivo
+    # return None
 
 def desc_mes(mes_atual):
     meses = [(1,'Janeiro'),(2,'Fevereiro'),(3,'Março'),(4,'Abril'),(5,'Maio'),(6,'Junho'),(7,'Julho'),(8,'Agosto'),(9,'Setembro'),(10,'Outubro'),(11,'Novembro'),(12,'Dezembro')]
@@ -167,3 +171,62 @@ def data_nasc_format(data_nasc):
     elif data_nasc_cliente.find('-')  > 0:
         return datetime.datetime.strptime(data_nasc_cliente,"%d-%m-%Y").strftime("%Y-%m-%d")
     return None
+
+from django.template.loader import get_template
+from .newpdf import render_to_pdf
+from weasyprint import HTML, CSS
+def meu_teste_pdf(request):
+
+    template = get_template('template_csbckp.html')
+    context = {
+        "invoice_id": 123,
+        "customer_name": "John Cooper",
+        "amount": 1399.99,
+        "today": "Today",
+    }
+
+    #A4 Portrait 296,9 x 210,1 scale 100%
+
+    HTML('http://127.0.0.1:8000').write_pdf('./una-contrato.pdf', stylesheets=[CSS(string=("@page { size: A3 }" ))])
+
+    return HttpResponse("okok")
+    # html = template.render(context)
+    # pdf = render_to_pdf()
+    # if pdf:
+    #     response = HttpResponse(pdf, content_type='application/pdf')
+    #     filename = "Invoice_%s.pdf" %("12341231")
+    #     content = "inline; filename='%s'" %(filename)
+    #     download = request.GET.get("download")
+    #     if download:
+    #         content = "attachment; filename='%s'" %(filename)
+    #     response['Content-Disposition'] = content
+    #     return response
+    # return HttpResponse("Not found")
+
+
+
+
+
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import tempfile
+
+def generate_pdf(request):
+# render(request, 'Modelo-de-Contrato-PPC-ONLINE html version.html',{'contratante':'Bruno Araújo de Oliveira'})
+    # Rendered
+    html_string = render_to_string('template_ppc_novo_contrato.html', {'contratante':'Bruno Araújo de Oliveira'})
+    html = HTML(string=html_string.replace("\\/", "/").encode().decode('utf-8'))
+    result = html.write_pdf()
+
+    # Creating http response
+    response = HttpResponse(content_type='application/pdf;')
+    response['Content-Disposition'] = 'inline; filename=list_people.pdf'
+    response['Content-Transfer-Encoding'] = 'binary'
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(result)
+        output.flush()
+        output = open(output.name, 'r')
+        response.write(output.read())
+
+    return response

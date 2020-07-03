@@ -11,9 +11,13 @@ import random
 
 
 def run(template_contrato, data):
-    filename=nome_arquivo(data['contratante'],data['cpf'])
+    # filename=nome_arquivo(data['contratante'],data['cpf'])
+    print('chegou RUN')
+    filename='meuteste.pdf'
     pdf = render_to_pdf(template_contrato, data)
+    print('PASSOU RENDER')
     save(pdf, filename)
+    print('PASSOU SAVE')
     return filename
 
 def nome_arquivo(contratante,cpf):
@@ -23,17 +27,21 @@ def gerar_codigo(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 def render_to_pdf(template_src, data):
+     print('chegou ENTROU RENDER')
      template = get_template(template_src)
      html  = template.render(data)
      result = BytesIO()
      pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1",'ignore')), result)
+     print('passou pisa')
      if not pdf.err:
+         print('sem erro')
          return HttpResponse(result.getvalue(), content_type='application/pdf')
-     return Nonesa
+     return None
 
 def save(pdf, filename):
     try:
         with open(filename, 'wb') as f:
             f.write(pdf.content)
+            print('try do save')
     except:
-        print('erro')
+        print('TRY DO ERRO SAVE')
