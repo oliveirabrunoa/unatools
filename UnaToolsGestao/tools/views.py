@@ -13,6 +13,10 @@ from datetime import date
 import datetime
 from . import gerador_pdf
 
+from django.template.loader import get_template
+from .newpdf import render_to_pdf
+from weasyprint import HTML, CSS
+
 
 def visualizar_contrato(request, param):
     try:
@@ -38,7 +42,7 @@ def gerar_contrato(nome_cliente):
 
 
 def index(request):
-    return render(request, 'Modelo-de-Contrato-PPC-ONLINE html version.html',{'contratante':'Bruno Araújo de Oliveira'})
+    return render(request, 'Modelo-de-Contrato-PPC-ONLINE.html',{'contratante':'Bruno Araújo de Oliveira'})
 
 class consultar_cliente(View):
     template_name = 'index_base.html'
@@ -138,9 +142,6 @@ class confirmar_servico(View):
 
             data = gerar_contrato(contrato_atualizado)
             print(data)
-            # return render(request, 'Modelo-de-Contrato-PPC-ONLINE.html',{'contratante':data.get('contratante'), 'cpf_cliente': data.get('cpf')})
-
-
         return render(request, self.template_name)
 
 
@@ -172,24 +173,13 @@ def data_nasc_format(data_nasc):
         return datetime.datetime.strptime(data_nasc_cliente,"%d-%m-%Y").strftime("%Y-%m-%d")
     return None
 
-from django.template.loader import get_template
-from .newpdf import render_to_pdf
-from weasyprint import HTML, CSS
-def meu_teste_pdf(request):
-
-    template = get_template('template_csbckp.html')
-    context = {
-        "invoice_id": 123,
-        "customer_name": "John Cooper",
-        "amount": 1399.99,
-        "today": "Today",
-    }
-
-    #A4 Portrait 296,9 x 210,1 scale 100%
-
-    HTML('http://127.0.0.1:8000').write_pdf('./una-contrato.pdf', stylesheets=[CSS(string=("@page { size: A3 }" ))])
-
-    return HttpResponse("okok")
+# def meu_teste_pdf(request):
+#
+#     template = get_template('template_csbckp.html')
+#
+#     HTML('http://127.0.0.1:8000').write_pdf('./una-contrato.pdf', stylesheets=[CSS(string=("@page { size: A3 }" ))])
+#
+#     return HttpResponse("okok")
     # html = template.render(context)
     # pdf = render_to_pdf()
     # if pdf:
