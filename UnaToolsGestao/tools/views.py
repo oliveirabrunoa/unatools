@@ -11,7 +11,7 @@ from .forms import ContratoFormAdmin, ContratoFormAdmin2
 from django.utils import timezone
 from datetime import date
 import datetime
-from . import gerador_pdf
+from . import gerador_contrato
 
 from django.template.loader import get_template
 from .newpdf import render_to_pdf

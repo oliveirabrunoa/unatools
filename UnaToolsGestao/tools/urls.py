@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from . import views
 from . import webhooks
-from . import gerador_pdf
+from . import gerador_contrato
 
 app_name = 'tools'
 
@@ -18,6 +18,7 @@ urlpatterns = [
 
     # url(r'^meu_teste_pdf$', views.meu_teste_pdf, name='meu_teste_pdf'),
     url(r'^$', views.index, name='index'),
-    url(r'^generate_pdf$', gerador_pdf.meu_teste_pdf, name='gerador_pdf'),
+    # url(r'^generate_pdf$', gerador_contrato.meu_teste_pdf, name='gerador_pdf'),
+    url(r'^internal_url$', gerador_contrato.internal_url, name='internal_url'),
 
 ]
