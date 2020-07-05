@@ -7,6 +7,7 @@ from weasyprint import HTML, CSS
 import os
 from django.shortcuts import render
 from django.template.loader import render_to_string
+from .models import Turma, Tag
 
 
 class ContratoAPI(object):
@@ -29,16 +30,18 @@ class ContratoAPI(object):
             else:
                 print('Template não encontrado')
 
-    def gerar_contrato(self, contrato):
+    def gerar_contrato(self, contrato, request_user, data_local):
         file_name = self.nome_arquivo(contrato)
         if file_name:
-            html_string = render_to_string(self.template_name,self.formatar_dados(contrato))
+            html_string = render_to_string(self.template_name,self.formatar_dados(contrato,request_user,data_local))
             html = HTML(string=html_string)
             result = html.write_pdf(file_name, stylesheets=[CSS(string=("@page { size: A3 }"))])
             return True
         return False
 
-    def formatar_dados(self,contrato):
+    def formatar_dados(self,contrato, request_user, data_local):
+        turma = Turma.objects.filter(id=contrato.turma.id).first()
+        curso = Tag.objects.filter(id=turma.curso.id).first()
         return {'contratante': contrato.contratante,
                 'rg_cliente': contrato.rg,
                 'cpf_cliente': contrato.cpf,
@@ -48,11 +51,11 @@ class ContratoAPI(object):
                 'telefone_cliente': contrato.telefone,
                 'nasc_cliente': contrato.data_nascimento,
                 'email_cliente': contrato.email,
-                'curso_info': 'Formação Completa em Coaching com PNL - Online',
-                'curso_desc': 'PENDENTE',
-                'curso_period': 'PENDENTE',
+                'curso_info': curso.categoria,
+                'curso_desc': contrato.extra_bonus,
+                'curso_period': turma.periodo,
                 'forma_pagamento': contrato.forma_pagamento,
                 'cond_pagamento': contrato.condicoes_pagamento,
                 'turma_cliente': contrato.turma,
-                'consultor_nome': 'PENDENTE',
-                'cidade_data_contrato': 'PENDENTE'}
+                'consultor_nome': request_user,
+                'cidade_data_contrato': data_local}

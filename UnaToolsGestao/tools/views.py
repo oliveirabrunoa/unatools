@@ -24,27 +24,11 @@ def visualizar_contrato(request, param):
         raise Http404()
 
 
-def gerar_contrato(nome_cliente):
-    data={}
-    template_contrato = "template_ss.html"
-
-    data = {
-        "imagem_contrato": "{0}{1}".format(settings.BASE_DIR,"/vendas/templates/images/doisminutos_logo.png"),
-        "nome": '{0}'.format(cliente.nome),
-        "cpf": '{0}'.format(cliente.cpf),
-    }
-
-    url_arquivo= gerador_pdf.run(template_contrato, data, cod_pagamento)
-    if url_arquivo:
-        return url_arquivo
-    return False
-
-
 def index(request):
     contrato= Contrato.objects.all().first()
     a=ContratoAPI()
-    a.gerar_contrato(contrato)
-    print(a)
+    data_atual=date.today()
+    a.gerar_contrato(contrato, request.user,'{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year))    
     return HttpResponse("okok")
 
 
@@ -100,7 +84,6 @@ class confirmar_dados(View):
         return HttpResponseRedirect('consultar_cliente')
 
 
-
 class confirmar_servico(View):
     template_name = 'dados-servico.html'
     form_class = ContratoFormAdmin
@@ -127,7 +110,6 @@ class confirmar_servico(View):
             return HttpResponseRedirect('consultar_cliente')
 
         data_atual=date.today()
-
         return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email, 'lista_turmas': self.get_turmas_abertas(), 'lista_cursos': self.get_cursos(),
                         'consultor': request.user, 'data_local_assinatura': '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)})
 
@@ -145,7 +127,6 @@ class confirmar_servico(View):
                               condicoes_pagamento=request.POST['condicoes-pagamento'])
 
             data = gerar_contrato(contrato_atualizado)
-            print(data)
         return render(request, self.template_name)
 
 
@@ -173,46 +154,3 @@ def data_nasc_format(data_nasc):
     elif data_nasc_cliente.find('-')  > 0:
         return datetime.datetime.strptime(data_nasc_cliente,"%d-%m-%Y").strftime("%Y-%m-%d")
     return None
-
-# def meu_teste_pdf(request):
-#
-#     template = get_template('template_csbckp.html')
-#
-#     HTML('http://127.0.0.1:8000').write_pdf('./una-contrato.pdf', stylesheets=[CSS(string=("@page { size: A3 }" ))])
-#
-#     return HttpResponse("okok")
-    # html = template.render(context)
-    # pdf = render_to_pdf()
-    # if pdf:
-    #     response = HttpResponse(pdf, content_type='application/pdf')
-    #     filename = "Invoice_%s.pdf" %("12341231")
-    #     content = "inline; filename='%s'" %(filename)
-    #     download = request.GET.get("download")
-    #     if download:
-    #         content = "attachment; filename='%s'" %(filename)
-    #     response['Content-Disposition'] = content
-    #     return response
-    # return HttpResponse("Not found")
-
-
-
-
-
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-from weasyprint import HTML
-import tempfile
-
-def generate_pdf(request):
-
-    # Creating http response
-    response = HttpResponse(content_type='application/pdf;')
-    response['Content-Disposition'] = 'inline; filename=list_people.pdf'
-    response['Content-Transfer-Encoding'] = 'binary'
-    with tempfile.NamedTemporaryFile(delete=True) as output:
-        output.write(result)
-        output.flush()
-        output = open(output.name, 'r')
-        response.write(output.read())
-
-    return response

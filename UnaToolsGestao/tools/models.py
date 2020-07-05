@@ -45,6 +45,7 @@ class Contrato(models.Model):
     turma = models.ForeignKey(Turma, null=True, on_delete=models.SET_NULL)
     forma_pagamento=models.CharField(max_length=250,blank=False, null=True)
     condicoes_pagamento=models.TextField(blank=False, null=True)
+    extra_bonus =  models.CharField(max_length=100,blank=False, null=True)
 
 
 
