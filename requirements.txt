@@ -6,3 +6,4 @@ reportlab
 xhtml2pdf
 django-suit==0.2.25
 django-localflavor
+wkhtmltopdf
