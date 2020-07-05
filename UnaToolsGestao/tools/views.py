@@ -11,8 +11,7 @@ from .forms import ContratoFormAdmin, ContratoFormAdmin2
 from django.utils import timezone
 from datetime import date
 import datetime
-from . import gerador_contrato
-
+from .gerador_contrato import ContratoAPI
 from django.template.loader import get_template
 from .newpdf import render_to_pdf
 from weasyprint import HTML, CSS
@@ -42,7 +41,12 @@ def gerar_contrato(nome_cliente):
 
 
 def index(request):
-    return render(request, 'Modelo-de-Contrato-PPC-ONLINE.html',{'contratante':'Bruno Araújo de Oliveira'})
+    contrato= Contrato.objects.all().first()
+    a=ContratoAPI()
+    a.gerar_contrato(contrato)
+    print(a)
+    return HttpResponse("okok")
+
 
 class consultar_cliente(View):
     template_name = 'index_base.html'
@@ -154,10 +158,7 @@ def gerar_contrato(contrato_id):
     }
     url_arquivo= gerador_pdf.run(template_contrato, data)
     return data
-    # url_arquivo= gerador_pdf.run(template_contrato, data)
-    # if url_arquivo:
-    #     return url_arquivo
-    # return None
+
 
 def desc_mes(mes_atual):
     meses = [(1,'Janeiro'),(2,'Fevereiro'),(3,'Março'),(4,'Abril'),(5,'Maio'),(6,'Junho'),(7,'Julho'),(8,'Agosto'),(9,'Setembro'),(10,'Outubro'),(11,'Novembro'),(12,'Dezembro')]
@@ -203,11 +204,6 @@ from weasyprint import HTML
 import tempfile
 
 def generate_pdf(request):
-# render(request, 'Modelo-de-Contrato-PPC-ONLINE html version.html',{'contratante':'Bruno Araújo de Oliveira'})
-    # Rendered
-    html_string = render_to_string('template_ppc_novo_contrato.html', {'contratante':'Bruno Araújo de Oliveira'})
-    html = HTML(string=html_string.replace("\\/", "/").encode().decode('utf-8'))
-    result = html.write_pdf()
 
     # Creating http response
     response = HttpResponse(content_type='application/pdf;')
