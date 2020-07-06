@@ -52,10 +52,10 @@ class ContratoAPI(object):
                 'nasc_cliente': contrato.data_nascimento,
                 'email_cliente': contrato.email,
                 'curso_info': curso.categoria,
-                'curso_desc': contrato.extra_bonus,
+                'curso_desc': contrato.extra_bonus if contrato.extra_bonus else '  ',
                 'curso_period': turma.periodo,
                 'forma_pagamento': contrato.forma_pagamento,
-                'cond_pagamento': contrato.condicoes_pagamento,
+                'cond_pagamento': '{0}{1}'.format(' - ', contrato.condicoes_pagamento),
                 'turma_cliente': contrato.turma,
                 'consultor_nome': request_user,
                 'cidade_data_contrato': data_local}

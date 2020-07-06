@@ -15,6 +15,7 @@ from .gerador_contrato import ContratoAPI
 from django.template.loader import get_template
 from .newpdf import render_to_pdf
 from weasyprint import HTML, CSS
+import time
 
 
 def visualizar_contrato(request, param):
@@ -28,7 +29,7 @@ def index(request):
     contrato= Contrato.objects.all().first()
     a=ContratoAPI()
     data_atual=date.today()
-    a.gerar_contrato(contrato, request.user,'{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year))    
+    a.gerar_contrato(contrato, request.user,'{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year))
     return HttpResponse("okok")
 
 
@@ -95,6 +96,17 @@ class confirmar_servico(View):
             lista_turmas.append((int(turma.id), turma))
         return lista_turmas
 
+    def querydict_to_string(self, query_dict, filter_name):
+        result=' '
+        for key in query_dict.keys():
+            if key == filter_name:
+                v = query_dict.getlist(key)
+                if len(v)==1:
+                    return v[0]
+                result = ', '.join(v)
+                return result
+        return result
+
     def get_cursos(self):
         cursos = Tag.objects.all()
         # lista_cursos = [('','Selecione o Curso')]
@@ -115,6 +127,7 @@ class confirmar_servico(View):
 
     def post(self, request, *args, **kwargs):
         print(request.POST)
+        print(self.querydict_to_string(request.POST, 'forma-pagamento'))
         contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
 
         if not contrato:
@@ -123,22 +136,17 @@ class confirmar_servico(View):
         if request.POST:
             contrato_atualizado=Contrato.objects.filter(id=request.session.get('contrato_id')).update(
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
-                              forma_pagamento =  ''.join(list(request.POST['forma-pagamento']))  ,
+                              forma_pagamento =  self.querydict_to_string(request.POST, 'forma-pagamento'),
                               condicoes_pagamento=request.POST['condicoes-pagamento'])
-
-            data = gerar_contrato(contrato_atualizado)
+            time.sleep(3)
+            try:
+                assinar_contrato=ContratoAPI()
+                data_atual=date.today()
+                assinar_contrato.gerar_contrato(contrato, request.user,'{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year))
+                return HttpResponseRedirect('consultar_cliente')
+            except:
+                print('algo deu erradp')
         return render(request, self.template_name)
-
-
-def gerar_contrato(contrato_id):
-    contrato=Contrato.objects.filter(id=contrato_id).first()
-    template_contrato = 'template_csbckp.html'
-    data={
-        'contratante': contrato.contratante,
-        'cpf': contrato.cpf
-    }
-    url_arquivo= gerador_pdf.run(template_contrato, data)
-    return data
 
 
 def desc_mes(mes_atual):

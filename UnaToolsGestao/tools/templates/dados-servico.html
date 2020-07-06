@@ -66,7 +66,7 @@
               <!-- {{ lista_turmas }} -->
               <div class="wrap-input100 bg1">
                   <label for="turmas">Turma Disponíveis</label>
-                  <select class="form-control" id="turmas" class='required' name="turmas">
+                  <select class="form-control" id="turmas" class='required' name="turmas" required>
                     {% for opc in lista_turmas %}
                       <option value="{{opc.0}}">{{opc.1}}</option>
                     {{opc}}
@@ -77,15 +77,16 @@
               <div class="wrap-input100 bg1">
               <span class="label-input100">Forma de Pagamento * (Pressione a tecla SHIT para selecionar mais de uma opção)</span> </br>
                 <select class="form-control" type="text" name="forma-pagamento" multiple required>
-                  <option>Mustard</option>
-                  <option>Ketchup</option>
-                  <option>Relish</option>
+                  <option value="Transferência Bancária">Transferência Bancária</option>
+                  <option value="Cartão de Crédito">Cartão de Crédito</option>
+                  <option value="Boleto">Boleto</option>
+                  <option value="Cheque">Cheque</option>
                 </select>
               </div>
 
               <div class="wrap-input100 bg1">
               <span class="label-input100">Condições do Pagamento e Datas de Vencimento *</span>
-                <textarea class="form-control" type="text" name="condicoes-pagamento" placeholder=" " rows="3" required></textarea>
+                <textarea class="form-control" type="text" name="condicoes-pagamento" placeholder=" " rows="5" required></textarea>
               </div>
 
               <div class="wrap-input100 bg1 rs1-wrap-input100">
