@@ -1,35 +1,28 @@
  # -*- coding: utf-8 -*-
-from django.shortcuts import render
+ #Python Imports
 import json
-from django.http import HttpResponseRedirect, HttpResponse
-from django.conf import settings
-import requests
-from django.shortcuts import render
-from django.views import View
-from .models import Contrato, Turma, Tag
-from .forms import ContratoFormAdmin, ContratoFormAdmin2
-from django.utils import timezone
+import os
 from datetime import date
 import datetime
-from .gerador_contrato import ContratoAPI
-from django.template.loader import get_template
-from .newpdf import render_to_pdf
-from weasyprint import HTML, CSS
+import requests
 import time
-
-
-def visualizar_contrato(request, param):
-    try:
-        return FileResponse(open('{0}contrato_{1}'.format(settings.DIRETORIO_CONTRATOS,param), 'rb'), content_type='application/pdf')
-    except FileNotFoundError:
-        raise Http404()
+#Django Imports
+from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse,Http404
+from django.conf import settings
+from django.views import View
+from django.utils import timezone
+from django.template.loader import get_template
+#Aplications Imports
+from .models import Contrato, Turma, Tag
+from .forms import ContratoFormAdmin, ContratoFormAdmin2
+from .gerador_contrato import ContratoAPI
 
 
 def index(request):
     contrato= Contrato.objects.all().first()
-    a=ContratoAPI()
-    data_atual=date.today()
-    a.gerar_contrato(contrato, request.user,'{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year))
+
+    print(result)
     return HttpResponse("okok")
 
 
@@ -138,15 +131,65 @@ class confirmar_servico(View):
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
                               forma_pagamento =  self.querydict_to_string(request.POST, 'forma-pagamento'),
                               condicoes_pagamento=request.POST['condicoes-pagamento'])
-            time.sleep(3)
-            try:
-                assinar_contrato=ContratoAPI()
-                data_atual=date.today()
-                assinar_contrato.gerar_contrato(contrato, request.user,'{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year))
-                return HttpResponseRedirect('consultar_cliente')
-            except:
-                print('algo deu erradp')
+            return HttpResponseRedirect('generate_pdf')
+
         return render(request, self.template_name)
+
+
+class generate_pdf(View):
+    template_name = 'generate-wait.html'
+
+    def get(self, request,*args, **kwargs):
+        contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
+
+        if not contrato:
+            return HttpResponseRedirect('consultar_cliente')
+
+        time.sleep(2)
+        a=ContratoAPI()
+        data_atual=date.today()
+        result = a.gerar_contrato(contrato, request.user,'{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year))
+        return render(request, self.template_name)
+
+class concluido(View):
+    template_name = 'generated.html'
+
+    def get(self, request,*args, **kwargs):
+        return render(request, self.template_name)
+
+
+class visualizar_contrato(View):
+
+    def get(self, request,*args, **kwargs):
+        contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
+
+        if not contrato:
+            return HttpResponseRedirect('consultar_cliente')
+
+        file_path = contrato.url_contrato
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as fh:
+                response = HttpResponse(fh.read(), content_type="application/pdf")
+                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+                return response
+        raise Http404
+
+
+class download_contrato(View):
+
+    def get(self, request,*args, **kwargs):
+        contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
+
+        if not contrato:
+            return HttpResponseRedirect('consultar_cliente')
+
+        file_path = contrato.url_contrato
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as fh:
+                response = HttpResponse(fh.read(), content_type="application/force-download")
+                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+                return response
+        raise Http404
 
 
 def desc_mes(mes_atual):

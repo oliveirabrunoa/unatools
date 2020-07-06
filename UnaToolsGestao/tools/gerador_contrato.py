@@ -21,14 +21,7 @@ class ContratoAPI(object):
         return ''.join(random.choice(chars) for _ in range(size))
 
     def nome_arquivo(self, contrato):
-        return '{0}Contrato_{1}_{2}_{3}.pdf'.format(settings.DIRETORIO_CONTRATOS, contrato.contratante, contrato.cpf, self.cod_transacao)
-
-    def obter_template(self,template_name):
-        for root, dirs, files in os.walk(settings.BASE_DIR+'/tools/templates/'):
-            if template_name in files:
-                return os.path.join(root, template_name)
-            else:
-                print('Template não encontrado')
+        return '{0}Contrato_{1}_{2}_{3}.pdf'.format(settings.DIRETORIO_CONTRATOS, str(contrato.contratante).replace(' ', '-'), contrato.cpf, self.cod_transacao)
 
     def gerar_contrato(self, contrato, request_user, data_local):
         file_name = self.nome_arquivo(contrato)
@@ -36,6 +29,8 @@ class ContratoAPI(object):
             html_string = render_to_string(self.template_name,self.formatar_dados(contrato,request_user,data_local))
             html = HTML(string=html_string)
             result = html.write_pdf(file_name, stylesheets=[CSS(string=("@page { size: A3 }"))])
+            contrato.url_contrato=file_name
+            contrato.save()
             return True
         return False
 
