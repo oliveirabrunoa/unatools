@@ -14,16 +14,8 @@ from django.views import View
 from django.utils import timezone
 from django.template.loader import get_template
 #Aplications Imports
-from .models import Contrato, Turma, Tag
-from .forms import ContratoFormAdmin, ContratoFormAdmin2
-from .gerador_contrato import ContratoAPI
-
-
-def index(request):
-    contrato= Contrato.objects.all().first()
-
-    print(result)
-    return HttpResponse("okok")
+from .models import Contrato, Turma, Tag, Transaction
+from .forms import ContratoFormAdmin
 
 
 class consultar_cliente(View):
@@ -42,6 +34,7 @@ class consultar_cliente(View):
         if param:
             if Contrato.objects.filter(email=param).first():
                 request.session['contrato_id']= str(Contrato.objects.filter(email=param).first().id)
+                transaction = Transaction.objects.create(contrato=Contrato.objects.filter(email=param).first())
                 return HttpResponseRedirect('confirmar_dados')
             else:
                 return render(request, self.template_name, {'messages' : 'messages', 'email':param})
@@ -130,7 +123,9 @@ class confirmar_servico(View):
             contrato_atualizado=Contrato.objects.filter(id=request.session.get('contrato_id')).update(
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
                               forma_pagamento =  self.querydict_to_string(request.POST, 'forma-pagamento'),
-                              condicoes_pagamento=request.POST['condicoes-pagamento'])
+                              condicoes_pagamento=request.POST['condicoes-pagamento'],
+                              consultor='{0}'.format(request.user))
+
             return HttpResponseRedirect('generate_pdf')
 
         return render(request, self.template_name)
@@ -145,10 +140,9 @@ class generate_pdf(View):
         if not contrato:
             return HttpResponseRedirect('consultar_cliente')
 
-        time.sleep(2)
-        a=ContratoAPI()
         data_atual=date.today()
-        result = a.gerar_contrato(contrato, request.user,'{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year))
+        contrato.data_criacao = '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)
+        contrato.save()
         return render(request, self.template_name)
 
 class concluido(View):

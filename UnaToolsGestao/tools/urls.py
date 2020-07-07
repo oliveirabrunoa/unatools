@@ -20,5 +20,5 @@ urlpatterns = [
     url(r'^visualizar_contrato$', views.visualizar_contrato.as_view(), name='visualizar_contrato'),
     url(r'^download_contrato$', views.download_contrato.as_view(), name='download_contrato'),
     #Index
-    url(r'^$', views.index, name='index'),
+    # url(r'^$', views.index, name='index'),
 ]

@@ -25,7 +25,7 @@ class Turma(models.Model):
     status_turma = models.BooleanField(default=False, verbose_name="Turma Concluída?")
 
     def __str__(self):
-        return '{0} - {1} - {2}'.format(self.cod_turma, self.curso, self.periodo)
+        return '{0} - {1}'.format(self.cod_turma, self.periodo)
 
     class Meta:
         verbose_name = 'Turma'
@@ -46,9 +46,9 @@ class Contrato(models.Model):
     forma_pagamento=models.CharField(max_length=250,blank=False, null=True)
     condicoes_pagamento=models.TextField(blank=False, null=True)
     extra_bonus =  models.CharField(max_length=100,blank=False, null=True)
+    data_criacao = models.CharField(max_length=100,blank=True, null=True)
+    consultor = models.CharField(max_length=100,blank=True, null=True)
     url_contrato=models.CharField(max_length=250,blank=False, null=True)
-
-
 
     def __str__(self):
         return '{0} - {1}'.format(self.contratante, self.cpf)
@@ -60,8 +60,8 @@ class Contrato(models.Model):
 class Transaction(models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
     data_cadastro = models.DateTimeField(default=timezone.now)
-    tag = models.ForeignKey(Tag, null=True, on_delete=models.SET_NULL)
-    lead = models.CharField(max_length=200,blank=False, null=True)
+    contrato = models.ForeignKey(Contrato, null=True, on_delete=models.SET_NULL)
+    cod_transacao = models.CharField(max_length=200,blank=False, null=True)
 
     def __str__(self):
         return '{0} - {1}'.format(self.id, self.data_cadastro)

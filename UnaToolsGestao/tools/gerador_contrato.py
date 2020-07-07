@@ -23,10 +23,10 @@ class ContratoAPI(object):
     def nome_arquivo(self, contrato):
         return '{0}Contrato_{1}_{2}_{3}.pdf'.format(settings.DIRETORIO_CONTRATOS, str(contrato.contratante).replace(' ', '-'), contrato.cpf, self.cod_transacao)
 
-    def gerar_contrato(self, contrato, request_user, data_local):
+    def gerar_contrato(self, contrato):
         file_name = self.nome_arquivo(contrato)
         if file_name:
-            html_string = render_to_string(self.template_name,self.formatar_dados(contrato,request_user,data_local))
+            html_string = render_to_string(self.template_name,self.formatar_dados(contrato))
             html = HTML(string=html_string)
             result = html.write_pdf(file_name, stylesheets=[CSS(string=("@page { size: A3 }"))])
             contrato.url_contrato=file_name
@@ -34,7 +34,7 @@ class ContratoAPI(object):
             return True
         return False
 
-    def formatar_dados(self,contrato, request_user, data_local):
+    def formatar_dados(self,contrato):
         turma = Turma.objects.filter(id=contrato.turma.id).first()
         curso = Tag.objects.filter(id=turma.curso.id).first()
         return {'contratante': contrato.contratante,
@@ -52,5 +52,5 @@ class ContratoAPI(object):
                 'forma_pagamento': contrato.forma_pagamento,
                 'cond_pagamento': '{0}{1}'.format(' - ', contrato.condicoes_pagamento),
                 'turma_cliente': contrato.turma,
-                'consultor_nome': request_user,
-                'cidade_data_contrato': data_local}
+                'consultor_nome': contrato.consultor,
+                'cidade_data_contrato': contrato.data_criacao}
