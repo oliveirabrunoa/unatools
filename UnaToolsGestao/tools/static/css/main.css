@@ -206,7 +206,7 @@ iframe {
 .contact100-form-title {
   display: block;
   width: 100%;
-  font-family: Montserrat-Black;
+  font-family: inherit;
   font-size: 39px;
   color: #333333;
   line-height: 1.2;

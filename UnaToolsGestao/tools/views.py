@@ -186,6 +186,9 @@ class download_contrato(View):
         raise Http404
 
 
+def entrada(request):
+    return render(request, "login.html")
+
 def desc_mes(mes_atual):
     meses = [(1,'Janeiro'),(2,'Fevereiro'),(3,'Março'),(4,'Abril'),(5,'Maio'),(6,'Junho'),(7,'Julho'),(8,'Agosto'),(9,'Setembro'),(10,'Outubro'),(11,'Novembro'),(12,'Dezembro')]
     for mes in meses:
