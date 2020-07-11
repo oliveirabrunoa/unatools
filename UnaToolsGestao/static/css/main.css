@@ -188,6 +188,14 @@ iframe {
   padding: 62px 55px 90px 55px;
 }
 
+.wrap-contact80 {
+  width: 620px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 62px 55px 90px 55px;
+}
+
 
 /*------------------------------------------------------------------
 [  ]*/
@@ -206,7 +214,7 @@ iframe {
 .contact100-form-title {
   display: block;
   width: 100%;
-  font-family: Montserrat-Black;
+  font-family: inherit;
   font-size: 39px;
   color: #333333;
   line-height: 1.2;

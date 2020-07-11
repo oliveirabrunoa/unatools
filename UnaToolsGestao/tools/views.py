@@ -16,20 +16,43 @@ from django.template.loader import get_template
 #Aplications Imports
 from .models import Contrato, Turma, Tag, Transaction
 from .forms import ContratoFormAdmin
+from django.contrib.auth import authenticate, login
 
+
+class index(View):
+    template_name = 'login.html'
+
+    def get(self, request,*args, **kwargs):
+        return render(request, self.template_name, {})
+
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        if request.POST:
+            email = request.POST['email']
+            pwd = request.POST['senha']
+            user = authenticate(request, username=email, password=pwd)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('consultar_cliente')
+            else:
+                return render(request, self.template_name, {'messages' : 'messages', 'email':email})
+        return render(request, self.template_name, {})
 
 class consultar_cliente(View):
     template_name = 'index_base.html'
     form_class = ContratoFormAdmin
 
     def get(self, request,*args, **kwargs):
-        # if not request.user.is_authenticated:
-        #     return HttpResponseRedirect('/login/?next=%s' % request.path)
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
 
         form = self.form_class()
         return render(request, self.template_name, { 'form' : form})
 
     def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
         param = request.POST['email']
         if param:
             if Contrato.objects.filter(email=param).first():
@@ -45,17 +68,23 @@ class confirmar_dados(View):
     form_class = ContratoFormAdmin
 
     def get(self, request,*args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
         contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
 
         if not contrato:
             return HttpResponseRedirect('consultar_cliente')
-        print(contrato.data_nascimento)
+
         return render(request, self.template_name, { 'form' : self.form_class(), 'contratante': contrato.contratante, 'email': contrato.email,
                         'rg': contrato.rg, 'cpf': contrato.cpf,'endereco': contrato.endereco,
                         'cidade_estado': contrato.cidade_estado, 'cep': contrato.cep,
                         'telefone': contrato.telefone, 'data_nascimento': contrato.data_nascimento})
 
     def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
         contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
 
         if request.POST:
@@ -102,6 +131,9 @@ class confirmar_servico(View):
         return lista_cursos
 
     def get(self, request,*args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
         contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
 
         if not contrato:
@@ -112,8 +144,9 @@ class confirmar_servico(View):
                         'consultor': request.user, 'data_local_assinatura': '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)})
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
-        print(self.querydict_to_string(request.POST, 'forma-pagamento'))
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
         contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
 
         if not contrato:
@@ -135,6 +168,9 @@ class generate_pdf(View):
     template_name = 'generate-wait.html'
 
     def get(self, request,*args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
         contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
 
         if not contrato:
@@ -149,12 +185,18 @@ class concluido(View):
     template_name = 'generated.html'
 
     def get(self, request,*args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
         return render(request, self.template_name)
 
 
 class visualizar_contrato(View):
 
     def get(self, request,*args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
         contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
 
         if not contrato:
@@ -172,6 +214,9 @@ class visualizar_contrato(View):
 class download_contrato(View):
 
     def get(self, request,*args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
         contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
 
         if not contrato:
@@ -185,9 +230,6 @@ class download_contrato(View):
                 return response
         raise Http404
 
-
-def entrada(request):
-    return render(request, "login.html")
 
 def desc_mes(mes_atual):
     meses = [(1,'Janeiro'),(2,'Fevereiro'),(3,'Março'),(4,'Abril'),(5,'Maio'),(6,'Junho'),(7,'Julho'),(8,'Agosto'),(9,'Setembro'),(10,'Outubro'),(11,'Novembro'),(12,'Dezembro')]

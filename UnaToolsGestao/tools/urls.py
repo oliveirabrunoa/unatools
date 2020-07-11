@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^download_contrato$', views.download_contrato.as_view(), name='download_contrato'),
     #Index
     # url(r'^$', views.index, name='index'),
-    url(r'^entrada$', views.entrada, name='entrada'),
+    url(r'^$', views.index.as_view(), name='index'),
+    url(r'^login$', views.index.as_view(), name='index'),
 ]
