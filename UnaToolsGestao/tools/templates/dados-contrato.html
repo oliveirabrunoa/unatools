@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,34 +14,35 @@
 
 			<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
-		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/fonts/iconic/css/material-design-iconic-font.min.css">
-		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
-		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
-		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/animsition/css/animsition.min.css">
-		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
-		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/daterangepicker/daterangepicker.css">
-		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/noui/nouislider.min.css">
-		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/css/util.css">
-			<link rel="stylesheet" type="text/css" href="static/css/main.css">
-		<!--===============================================================================================-->
 
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/noui/nouislider.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+			<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+		<!--===============================================================================================-->
+ <!-- href="{% static 'vendor/daterangepicker/daterangepicker.css' %}"> -->
   </head>
   <body>
       <div class="container-contact100">
           <div class="wrap-contact100">
           <div class="row">
-						<form method="POST" class="contact100-form validate-form" name="contratoForm">{% csrf_token %}
+						<form method="POST" action="/confirmar_dados" class="contact100-form validate-form" name="contratoForm">{% csrf_token %}
 							<span class="contact100-form-title">
 								Gerador de Contratos - UnaCoaching
 							</span>

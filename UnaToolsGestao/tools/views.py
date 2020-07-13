@@ -17,7 +17,25 @@ from django.template.loader import get_template
 from .models import Contrato, Turma, Tag, Transaction
 from .forms import ContratoFormAdmin
 from django.contrib.auth import authenticate, login
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
+
+class allcontracts(ListView):
+    template_name = 'contracts_list.html'
+    model = Contrato
+    queryset = Contrato.objects.all()
+
+
+class contractdetails(DetailView):
+    slug_field = 'pk'
+    model = Contrato
+    context_object_name = 'meu_artigo'
+    template_name = 'detail.html'
+
+    def get_queryset(self):
+        # return self.model.filter(user=self.request.user)
+        return Contrato.objects.all()
 
 class index(View):
     template_name = 'login.html'
@@ -66,12 +84,14 @@ class consultar_cliente(View):
 class confirmar_dados(View):
     template_name = 'dados-contrato.html'
     form_class = ContratoFormAdmin
+    # slug_field = 'pk'
 
     def get(self, request,*args, **kwargs):
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect('/?next=%s' % request.path)
+        print('USOU GET')
+        # if not request.user.is_authenticated:
+        #     return HttpResponseRedirect('/?next=%s' % request.path)
 
-        contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
+        contrato=Contrato.objects.filter(id=1).first()
 
         if not contrato:
             return HttpResponseRedirect('consultar_cliente')
@@ -82,6 +102,7 @@ class confirmar_dados(View):
                         'telefone': contrato.telefone, 'data_nascimento': contrato.data_nascimento})
 
     def post(self, request, *args, **kwargs):
+        print('USOU POST***********************')
         if not request.user.is_authenticated:
             return HttpResponseRedirect('/?next=%s' % request.path)
 
