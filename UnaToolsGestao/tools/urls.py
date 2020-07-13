@@ -25,12 +25,7 @@ urlpatterns = [
     # url(r'^$', views.index, name='index'),
     url(r'^$', views.index.as_view(), name='index'),
     url(r'^login$', views.index.as_view(), name='index'),
-    #DEU CERTO:
-    # url(r'^entrada$', views.entrada.as_view(), name='entrada'),
-    # url(r'^entrada/(?P<pk>\d+)$', ArticleDetailView.as_view(), name='article-detail'),
 
-    #RENOMEAR
     url(r'^contracts/$', views.allcontracts.as_view(), name='contracts'),
     url(r'^contracts/(?P<pk>\d+)/$', views.confirmar_dados.as_view(), name='contractdetails'),
-    # url(r'^confirmar_dados/<pk>/$', views.confirmar_dados.as_view(), name='confirmardados'),
 ]

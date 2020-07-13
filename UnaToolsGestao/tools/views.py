@@ -26,17 +26,6 @@ class allcontracts(ListView):
     model = Contrato
     queryset = Contrato.objects.all()
 
-
-class contractdetails(DetailView):
-    slug_field = 'pk'
-    model = Contrato
-    context_object_name = 'meu_artigo'
-    template_name = 'detail.html'
-
-    def get_queryset(self):
-        # return self.model.filter(user=self.request.user)
-        return Contrato.objects.all()
-
 class index(View):
     template_name = 'login.html'
 
@@ -51,11 +40,12 @@ class index(View):
             user = authenticate(request, username=email, password=pwd)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('consultar_cliente')
+                return HttpResponseRedirect('contracts')
             else:
                 return render(request, self.template_name, {'messages' : 'messages', 'email':email})
         return render(request, self.template_name, {})
 
+#opcao com consulta de cliente por email
 class consultar_cliente(View):
     template_name = 'index_base.html'
     form_class = ContratoFormAdmin
@@ -84,25 +74,22 @@ class consultar_cliente(View):
 class confirmar_dados(View):
     template_name = 'dados-contrato.html'
     form_class = ContratoFormAdmin
-    # slug_field = 'pk'
 
     def get(self, request,*args, **kwargs):
-        print('USOU GET')
-        # if not request.user.is_authenticated:
-        #     return HttpResponseRedirect('/?next=%s' % request.path)
 
-        contrato=Contrato.objects.filter(id=1).first()
+        contrato=Contrato.objects.filter(id=self.kwargs.get('pk')).first()
 
         if not contrato:
             return HttpResponseRedirect('consultar_cliente')
 
+        request.session['contrato_id']= str(contrato.id)
         return render(request, self.template_name, { 'form' : self.form_class(), 'contratante': contrato.contratante, 'email': contrato.email,
                         'rg': contrato.rg, 'cpf': contrato.cpf,'endereco': contrato.endereco,
                         'cidade_estado': contrato.cidade_estado, 'cep': contrato.cep,
                         'telefone': contrato.telefone, 'data_nascimento': contrato.data_nascimento})
 
     def post(self, request, *args, **kwargs):
-        print('USOU POST***********************')
+
         if not request.user.is_authenticated:
             return HttpResponseRedirect('/?next=%s' % request.path)
 
