@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,46 +14,52 @@
 
 			<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+			<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/fonts/iconic/css/material-design-iconic-font.min.css">
+			<link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/animsition/css/animsition.min.css">
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/daterangepicker/daterangepicker.css">
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}">
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/vendor/noui/nouislider.min.css">
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/noui/nouislider.min.css' %}">
 		<!--===============================================================================================-->
-			<link rel="stylesheet" type="text/css" href="static/css/util.css">
-			<link rel="stylesheet" type="text/css" href="static/css/main.css">
+			<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+			<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 		<!--===============================================================================================-->
 
   </head>
   <body>
-      <div class="container-contact100">
-				<div class="list-group">
-					{% for contrato in contrato_list %}
-					  <a href="{% url 'tools:contracts' %}{{contrato.pk}}" class="list-group-item list-group-item-action flex-column align-items-start">
-					    <div class="d-flex w-100 justify-content-between">
-					      <h5 class="mb-1">{{ contrato }}</h5>
-					      <small>3 days ago</small>
-					    </div>
-					    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-					    <small>Donec id elit non mi porta.</small>
-					  </a>
-					{% empty %}
-					    <li>No articles yet.</li>
-					{% endfor %}
-				</div>
+    <div class="container-contact100">
+        <div class="wrap-contact100">
+          <span class="contact100-form-title">
+            Contratos Pendentes
+          </span>
+    				<div class="list-group">
+    					{% for contrato in contrato_list %}
+    					  <a href="{% url 'tools:contracts' %}{{contrato.pk}}" class="list-group-item list-group-item-action flex-column align-items-start">
+    					    <div class="d-flex w-100 justify-content-between">
+    					      <h5 class="mb-1">{{ contrato }}</h5>
+    					      <small>{{ contrato.data_criacao }}</small>
+    					    </div>
+    					    <p class="mb-1">{{ contrato.telefone }} | {{ contrato.email }}</p>
+    					    <small>Consultor(a): {{ contrato.consultor }}</small>
+    					  </a>
+    					{% empty %}
+    					    <li>No articles yet.</li>
+    					{% endfor %}
+    				</div>
+
       </div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
