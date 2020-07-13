@@ -47,8 +47,10 @@ class Contrato(models.Model):
     condicoes_pagamento=models.TextField(blank=False, null=True)
     extra_bonus =  models.CharField(max_length=100,blank=False, null=True)
     data_criacao = models.CharField(max_length=100,blank=True, null=True)
+    data_recebimento = models.DateTimeField(default=timezone.now)
     consultor = models.CharField(max_length=100,blank=True, null=True)
     url_contrato=models.CharField(max_length=250,blank=False, null=True)
+    assinado = models.BooleanField(default=False, blank=True, null=True, verbose_name="Assinado?")
 
     def __str__(self):
         return '{0} - {1}'.format(self.contratante, self.cpf)
