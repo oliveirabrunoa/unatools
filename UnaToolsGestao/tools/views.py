@@ -19,12 +19,23 @@ from .forms import ContratoFormAdmin
 from django.contrib.auth import authenticate, login
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 class allcontracts(ListView):
     template_name = 'contracts_list.html'
     model = Contrato
-    queryset = Contrato.objects.all()
+    # queryset = Contrato.objects.all()
+
+    # @method_decorator(login_required)
+    # def dispatch(self, *args, **kwargs):
+    #     return super(allcontracts, self).dispatch(*args, **kwargs)
+    #
+    # def get_queryset(self):
+    #     return User.objects.filter(email=self.request.user.email)
+
+
 
 class index(View):
     template_name = 'login.html'
@@ -138,6 +149,12 @@ class confirmar_servico(View):
             lista_cursos.append((int(c.id), c))
         return lista_cursos
 
+    def get_consultor_info(self, user):
+        nome_consultor = User.objects.filter(username=user).first()
+        if nome_consultor:
+            return '{0} {1}'.format(nome_consultor.first_name,nome_consultor.last_name)
+        return ''
+
     def get(self, request,*args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseRedirect('/?next=%s' % request.path)
@@ -149,7 +166,7 @@ class confirmar_servico(View):
 
         data_atual=date.today()
         return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email, 'lista_turmas': self.get_turmas_abertas(), 'lista_cursos': self.get_cursos(),
-                        'consultor': request.user, 'data_local_assinatura': '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)})
+                        'consultor': self.get_consultor_info(request.user), 'data_local_assinatura': '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)})
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -165,7 +182,7 @@ class confirmar_servico(View):
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
                               forma_pagamento =  self.querydict_to_string(request.POST, 'forma-pagamento'),
                               condicoes_pagamento=request.POST['condicoes-pagamento'],
-                              consultor='{0}'.format(request.user))
+                              consultor='{0}'.format(self.get_consultor_info(request.user)))
 
             return HttpResponseRedirect('generate_pdf')
 
