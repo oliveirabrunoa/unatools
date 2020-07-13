@@ -27,7 +27,7 @@ from django.contrib.auth import logout
 class allcontracts(ListView):
     template_name = 'contracts_list.html'
     model = Contrato
-    # queryset = Contrato.objects.all()
+    queryset = Contrato.objects.all().filter(assinado=False)
 
     # @method_decorator(login_required)
     # def dispatch(self, *args, **kwargs):

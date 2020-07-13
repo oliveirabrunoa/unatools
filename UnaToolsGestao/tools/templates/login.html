@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="icon" type="image/png" href="static/images/iconpucco.png"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
@@ -36,9 +36,8 @@
 			<form method="POST" class="contact100-form validate-form">{% csrf_token %}
 				<span class="contact100-form-title">
 					<strong>PUCCO</strong>
+					<h6>Programa Unificado para Criação de Contratos Online</h6>
 				</span>
-
-
 						<div class="wrap-input100 validate-input bg1" data-validate = "O Email informado é inválido">
 							<span class="label-input100">Email *</span>
 							<input class="input100" type="text" value='{{ email }}' name="email"  placeholder="Digite seu email ">
