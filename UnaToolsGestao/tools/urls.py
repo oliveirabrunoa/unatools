@@ -25,6 +25,7 @@ urlpatterns = [
     # url(r'^$', views.index, name='index'),
     url(r'^$', views.index.as_view(), name='index'),
     url(r'^login$', views.index.as_view(), name='index'),
+    url(r'^logout$', views.logout_view, name='logout'),
 
     url(r'^contracts/$', views.allcontracts.as_view(), name='contracts'),
     url(r'^contracts/(?P<pk>\d+)/$', views.confirmar_dados.as_view(), name='contractdetails'),

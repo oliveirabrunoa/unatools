@@ -22,6 +22,7 @@ from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
 
 class allcontracts(ListView):
     template_name = 'contracts_list.html'
@@ -55,6 +56,12 @@ class index(View):
             else:
                 return render(request, self.template_name, {'messages' : 'messages', 'email':email})
         return render(request, self.template_name, {})
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+    # Redirect to a success page.
 
 #opcao com consulta de cliente por email
 class consultar_cliente(View):
