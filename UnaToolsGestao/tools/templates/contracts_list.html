@@ -38,7 +38,7 @@
 
   </head>
   <body>
-    {% include "menu.html" %}   
+    {% include "menu.html" %}
     <div class="container-contact100">
         <div class="wrap-contact100">
 
@@ -50,13 +50,13 @@
     					  <a href="{% url 'tools:contracts' %}{{contrato.pk}}" class="list-group-item list-group-item-action flex-column align-items-start">
     					    <div class="d-flex w-100 justify-content-between">
     					      <h5 class="mb-1">{{ contrato }}</h5>
-    					      <small>{{ contrato.data_criacao }}</small>
+    					      <small>{{ contrato.data_recebimento }}</small>
     					    </div>
     					    <p class="mb-1">{{ contrato.telefone }} | {{ contrato.email }}</p>
-    					    <small>Consultor(a): {{ contrato.consultor }}</small>
+    					    <small>Consultor(a): {% if contrato.consultor is not none %}{{ contrato.consultor }}{% else %}A definir{%endif %}</small>
     					  </a>
     					{% empty %}
-    					    <li>No articles yet.</li>
+    					    <li>Sem Contratos Pendentes no Momento.</li>
     					{% endfor %}
     				</div>
 
