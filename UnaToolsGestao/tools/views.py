@@ -101,6 +101,7 @@ class confirmar_dados(View):
             return HttpResponseRedirect('consultar_cliente')
 
         request.session['contrato_id']= str(contrato.id)
+        transaction = Transaction.objects.create(contrato=contrato)
         return render(request, self.template_name, { 'form' : self.form_class(), 'contratante': contrato.contratante, 'email': contrato.email,
                         'rg': contrato.rg, 'cpf': contrato.cpf,'endereco': contrato.endereco,
                         'cidade_estado': contrato.cidade_estado, 'cep': contrato.cep,
