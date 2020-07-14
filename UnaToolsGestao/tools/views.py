@@ -104,7 +104,9 @@ class confirmar_dados(View):
         transaction = Transaction.objects.create(contrato=contrato)
         return render(request, self.template_name, { 'form' : self.form_class(), 'contratante': contrato.contratante, 'email': contrato.email,
                         'rg': contrato.rg, 'cpf': contrato.cpf,'endereco': contrato.endereco,
-                        'cidade_estado': contrato.cidade_estado, 'cep': contrato.cep,
+                        'cidade': contrato.endereco_cidade,'estado': contrato.endereco_uf,
+                        'bairro': contrato.endereco_bairro, 'cep': contrato.cep,'complemento': contrato.complemento_endereco,
+                        'numero': contrato.numero_endereco,'estadocivil': contrato.estado_civil,'profissao': contrato.profissao,
                         'telefone': contrato.telefone, 'data_nascimento': contrato.data_nascimento})
 
     def post(self, request, *args, **kwargs):
@@ -119,9 +121,11 @@ class confirmar_dados(View):
                               contratante = request.POST['contratante'],
                               rg=request.POST['rg'], cpf=request.POST['cpf'],
                               endereco=request.POST['endereco'],
-                              cidade_estado=request.POST['cidade-estado'],
-                              cep=request.POST['cep'], telefone=request.POST['telefone'],
-                              data_nascimento=data_nasc_format(request.POST['data_nascimento'])) #VERIFICAR VALIDAÇÃO
+                              endereco_cidade=request.POST['cidade'],endereco_uf= request.POST['estado'],
+                              cep=request.POST['cep'], telefone=request.POST['telefone'],profissao=request.POST['profissao'],
+                              endereco_bairro=request.POST['bairro'], complemento_endereco=request.POST['complemento'],
+                              numero_endereco=request.POST['numero'], estado_civil=request.POST['estadocivil'],
+                              data_nascimento=data_nasc_format(request.POST['data_nascimento']))
 
             return HttpResponseRedirect('confirmar_servico')
         return HttpResponseRedirect('consultar_cliente')
