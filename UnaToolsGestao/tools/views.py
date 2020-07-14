@@ -16,6 +16,7 @@ from django.template.loader import get_template
 #Aplications Imports
 from .models import Contrato, Turma, Tag, Transaction
 from .forms import ContratoFormAdmin
+from .choices import ESTADOS, ESTADO_CIVIL
 from django.contrib.auth import authenticate, login
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -104,9 +105,9 @@ class confirmar_dados(View):
         transaction = Transaction.objects.create(contrato=contrato)
         return render(request, self.template_name, { 'form' : self.form_class(), 'contratante': contrato.contratante, 'email': contrato.email,
                         'rg': contrato.rg, 'cpf': contrato.cpf,'endereco': contrato.endereco,
-                        'cidade': contrato.endereco_cidade,'estado': contrato.endereco_uf,
+                        'cidade': contrato.endereco_cidade,'estadolist': ESTADOS,
                         'bairro': contrato.endereco_bairro, 'cep': contrato.cep,'complemento': contrato.complemento_endereco,
-                        'numero': contrato.numero_endereco,'estadocivil': contrato.estado_civil,'profissao': contrato.profissao,
+                        'numero': contrato.numero_endereco,'estadocivillist': ESTADO_CIVIL,'profissao': contrato.profissao,
                         'telefone': contrato.telefone, 'data_nascimento': contrato.data_nascimento})
 
     def post(self, request, *args, **kwargs):

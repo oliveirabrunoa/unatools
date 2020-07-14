@@ -1,11 +1,10 @@
 ESTADO_CIVIL = [
     ('','Selecione o estado civil'),
-    ('1', 'Solteiro'),
-    ('2', 'Casado'),
+    ('1', 'Solteiro/Solteira'),
+    ('2', 'Casado/Casada'),
     ('3', 'União Estável'),
-    ('4', 'Divorciado'),
-    ('5', 'Viuvo'),
-    ('6', 'Separado'),
+    ('4', 'Divorciado/Divorciada'),
+    ('5', 'Viúvo/Viúva'),
 ]
 
 ESTADOS = [
