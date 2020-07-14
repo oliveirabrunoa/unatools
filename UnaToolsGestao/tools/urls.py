@@ -2,7 +2,7 @@ from django.conf.urls import url
 from . import views
 from . import webhooks
 from . import gerador_contrato
-# from .views import ArticleDetailView
+from . import validacao_ajax
 
 
 app_name = 'tools'
@@ -27,6 +27,12 @@ urlpatterns = [
     url(r'^login$', views.index.as_view(), name='index'),
     url(r'^logout$', views.logout_view, name='logout'),
 
+
     url(r'^contracts/$', views.allcontracts.as_view(), name='contracts'),
     url(r'^contracts/(?P<pk>\d+)/$', views.confirmar_dados.as_view(), name='contractdetails'),
+    #Validações
+    url(r'^testevalidate$', views.testevalidate, name='testevalidate'),
+    url(r'^validar_cpf/$', validacao_ajax.validar_cpf, name='validar_cpf'),
+    url(r'^validar_cep/$', validacao_ajax.validar_cep, name='validar_cep'),
+    url(r'^validar_data_nascimento/$', validacao_ajax.validar_data_nascimento, name='validar_data_nascimento'),
 ]

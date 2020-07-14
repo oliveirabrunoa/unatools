@@ -277,3 +277,8 @@ def data_nasc_format(data_nasc):
     elif data_nasc_cliente.find('-')  > 0:
         return datetime.datetime.strptime(data_nasc_cliente,"%d-%m-%Y").strftime("%Y-%m-%d")
     return None
+
+
+def testevalidate(request):
+    return render(request, "testevalidation.html", {'contrato': Contrato.objects.filter(id=1).first()})
+    # Redirect to a success page.

@@ -1,0 +1,332 @@
+{% extends 'base_site.html' %}
+
+{% block header %}
+  {% include "menu.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="">
+
+<section class="form">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1>FORMULÁRIO RASTREAMENTO</h1>
+                <form method="POST" class="registerForm">{% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                              <label>Nome</label>
+                              <input type="text" class="form-control" name="nome" value="{{nome_cliente}}" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                              <label>CPF</label>
+                              <input type="text" class="form-control" name="cpf" value="{{cpf_cliente}}" disabled/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                              <label>RG</label>
+                              <input type="text" class="form-control" name="rg" required/>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                              <label>Telefone (Fixo)</label>
+                              <input type="text" class="form-control" name="telefone_fixo" data-inputmask="'mask': '(99) 9999-9999'" required/>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                              <label>Celular </label>
+                              <input type="text" class="form-control" name="celular" value="{{celular_cliente}}" disabled/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="form-group">
+                              <label>Data de Nascimento</label>
+                              <input type="text" class="form-control" name="data_nascimento" data-inputmask="'mask': '99/99/9999'" required/>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                              <label>CEP</label>
+                              <input type="text" class="form-control" name="cep" value="{{cep}}" disabled/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Rua</label>
+                              <input type="text" class="form-control" name="rua" value="{{rua}}" required/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                              <label>Número</label>
+                              <input type="text" class="form-control" name="numero" required/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                              <label>Complemento</label>
+                              <input type="text" class="form-control" name="complemento"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                              <label>Bairro</label>
+                              <input type="text" class="form-control" name="bairro" value="{{bairro}}" required/>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                              <label>Cidade</label>
+                              <input type="text" class="form-control" name="cidade" value="{{cidade}}" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                              <label>Estado</label>
+                              <input type="text" class="form-control" name="estado" value="{{estado}}" disabled/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Senha</label>
+                              <input type="password" class="form-control" name="senha" required/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                              <label>Confirmar Senha</label>
+                              <input type="password" class="form-control" name="confirmar_senha" data-match="#senha" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </section>
+
+</div>
+
+    <script>
+    jQuery(document).ready(function($){
+        $(":input").inputmask({showMaskOnFocus: false, showMaskOnHover: false, autoUnmask : true});
+        $('.registerForm').bootstrapValidator({
+            message: 'Esse valor não é válido!',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                nome: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 100,
+                            message: 'Insira seu nome completo'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z ._-]+$/,
+                            message: 'Somente letras do alfabeto são permitidas.'
+                        }
+                    }
+                },
+                cpf: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        stringLength: {
+                            min: 11,
+                            max: 11,
+                            message: 'O CPF deve possuir 11 digitos'
+                          }
+                    }
+                },
+                rg: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        stringLength: {
+                            min: 5,
+                            max: 10,
+                            message: ' '
+                          },
+                        regexp: {
+                            regexp: /^([0-9]{5,10})$/,
+                            message: 'O RG deve possuir entre 5 e 10 digitos (apenas números)'
+                        },
+                    }
+                },
+                telefone_fixo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        stringLength: {
+                            min: 10,
+                            max: 10,
+                            message: 'O número do Telefone Fixo deve possuir 10 digitos'
+                        },
+                        regexp: {
+                            regexp: /^[0-9]+$/,
+                            message: 'Somente números são permitidos'
+                        }
+                    }
+                },
+                celular: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        stringLength: {
+                            min: 11,
+                            max: 11,
+                            message: 'O número do celular deve possuir 9 digitos'
+                        },
+                        regexp: {
+                            regexp: /^[0-9]+$/,
+                            message: 'Somente números são permitidos'
+                        }
+                    }
+                },
+                data_nascimento: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        stringLength: {
+                            min: 8,
+                            max: 8,
+                            message: ' '
+                        },
+                        regexp: {
+                            regexp: /^([0-9]{2})([0-9]{2})([0-9]{4})$/,
+                            message: 'A Data de Nascimento deve estar no padrão DD/MM/AAAA'
+                        },
+                        remote: {
+                            url: '/validar_data_nascimento/',
+                            type: 'GET',
+                            data: function(validator) {
+                                return {
+                                    data_nascimento: validator.getFieldElements('data_nascimento').val()
+                                };
+                            }
+                        }
+                    }
+                },
+                cep: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        stringLength: {
+                            min: 8,
+                            max: 8,
+                            message: 'O CEP deve possuir 8 digitos'
+                        },
+                        regexp: {
+                            regexp: /^([0-9]{5})([0-9]{3})$/,
+                            message: 'O CEP deve estar no padrão XXXXX-XXX'
+                        }
+                    }
+                },
+                numero: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        regexp: {
+                            regexp: /^([0-9])+$/,
+                            message: 'Somente números são permitidos'
+                        }
+                    }
+                },
+                bairro: {
+                    validators: {
+                      notEmpty: {
+                          message: 'Este campo é obrigatório'
+                      },
+                      stringLength: {
+                          min: 3,
+                          max: 80,
+                          message: ' '
+                      }
+                }},
+                complemento: {
+                    validators: {
+                        stringLength: {
+                            min: 0,
+                            max: 20,
+                            message: 'O complemento deve ter até 50 caracteres'
+                        }
+                    }
+                },
+                rua: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        stringLength: {
+                            min: 5,
+                            max: 80,
+                            message: ' '
+                        }
+                    }
+                },
+                senha: {
+                    validators: {
+                      notEmpty: {
+                          message: 'Este campo é obrigatório'
+                      },
+                      stringLength: {
+                          min: 6,
+                          max: 12,
+                          message: 'A Senha deve possuir entre 6 e 12 caracteres |'
+                      },
+                      identical: {
+                          field: 'confirmar_senha',
+                          message: ' A Senha e a Confirmação de Senha não são compatíveis'
+                      }
+                    }
+                },
+                confirmar_senha: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        identical: {
+                            field: 'senha',
+                            message: 'A Senha e a Confirmação de Senha não são compatíveis'
+                        }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
