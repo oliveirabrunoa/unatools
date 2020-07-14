@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from decimal import Decimal
+from .choices import ESTADOS, ESTADO_CIVIL
 
 
 class Tag(models.Model):
@@ -37,11 +38,17 @@ class Contrato(models.Model):
     rg = models.CharField(max_length=11,verbose_name="RG",blank=False, null=True)
     cpf = models.CharField(max_length=14,verbose_name="CPF",blank=False, null=True)
     endereco = models.CharField(max_length=250,blank=False, null=True)
-    cidade_estado = models.CharField(max_length=100,verbose_name="Cidade/UF",blank=False, null=True)
+    endereco_cidade = models.CharField(max_length=100,verbose_name="Cidade",blank=False, null=True)
+    endereco_uf = models.CharField(max_length=2,choices=ESTADOS,verbose_name="UF", blank=False, null=True)
+    endereco_bairro = models.CharField(max_length=100,verbose_name="Bairro",blank=False, null=True)
     cep = models.CharField(max_length=100,verbose_name="CEP",blank=False, null=True)
+    complemento_endereco = models.CharField(max_length=100,verbose_name="Complemento",blank=False, null=True)
+    numero_endereco = models.CharField(max_length=100,verbose_name="Número do endereço",blank=False, null=True)
     telefone = models.CharField(max_length=100,blank=False, null=True)
     data_nascimento = models.DateField(verbose_name="Data de Nascimento",blank=False, null=True)
     email = models.CharField(max_length=100,blank=False, null=True)
+    estado_civil = models.CharField(max_length=1,choices=ESTADO_CIVIL,blank=False, null=True)
+    profissao = models.CharField(max_length=100,verbose_name="Profissão",blank=False, null=True)
     turma = models.ForeignKey(Turma, null=True, on_delete=models.SET_NULL)
     forma_pagamento=models.CharField(max_length=250,blank=False, null=True)
     condicoes_pagamento=models.TextField(blank=False, null=True)
