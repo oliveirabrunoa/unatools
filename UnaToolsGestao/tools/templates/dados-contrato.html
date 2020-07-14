@@ -132,8 +132,8 @@
                                 <input type="text" class="form-control" name="estado" value="{{estado}}" required/>
                               </div> -->
                               <div class="form-group">
-                              <label for="estadocivil">Estado Civil</label>
-                              <select class="form-control" id="estadocivil" class='required' name="estadocivil" data-validate="true">
+                              <label for="estado">Estado</label>
+                              <select class="form-control" id="estado" class='required' name="estado" data-validate="true">
                                 {% for opc in estadolist %}
                                 <option value="{{opc.0}}">{{opc.1}}</option>
                                 {% endfor %}
