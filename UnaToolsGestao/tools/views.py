@@ -94,6 +94,13 @@ class confirmar_dados(View):
     template_name = 'dados-contrato.html'
     form_class = ContratoFormAdmin
 
+    def get_sigla_codigo(self,codigo_uf):
+        if codigo_uf:
+            for estado in ESTADOS:
+                if estado[0]==codigo_uf:
+                    return estado[1]
+        return ""
+
     def get(self, request,*args, **kwargs):
 
         contrato=Contrato.objects.filter(id=self.kwargs.get('pk')).first()
