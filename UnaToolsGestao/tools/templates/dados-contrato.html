@@ -127,15 +127,15 @@
                               </div>
                           </div>
                           <div class="col-lg-2">
-                              <!-- <div class="form-group">
-                                <label>Estado</label>
-                                <input type="text" class="form-control" name="estado" value="{{estado}}" required/>
-                              </div> -->
                               <div class="form-group">
                               <label for="estado">Estado</label>
                               <select class="form-control" id="estado" class='required' name="estado" data-validate="true">
                                 {% for opc in estadolist %}
-                                <option value="{{opc.0}}">{{opc.1}}</option>
+                                    {% if opc.0 == selected_opc_est %}
+                                        <option value="{{opc.0}}" selected>{{opc.1}}</option>
+                                    {% else %}
+                                        <option value="{{opc.0}}">{{opc.1}}</option>
+                                    {% endif %}
                                 {% endfor %}
                               </select>
                             </div>
@@ -151,18 +151,18 @@
                         </div>
                         <div class="row">
                           <div class="col-lg-4">
-                              <!-- <div class="form-group">
-                                <label>Estado Civil</label>
-                                <input type="text" class="form-control" name="estadocivil" value="{{estadocivil}}" required/>
-                              </div> -->
-                              <div class="form-group">
-                              <label for="estadocivil">Estado Civil</label>
-                              <select class="form-control" id="estadocivil" class='required' name="estadocivil" data-validate="true">
-                                {% for opc in estadocivillist %}
-                                <option value="{{opc.0}}">{{opc.1}}</option>
-                                {% endfor %}
-                              </select>
-                            </div>
+                            <div class="form-group">
+                            <label for="estadocivil">Estado Civil</label>
+                            <select class="form-control" id="estadocivil" class='required' name="estadocivil" data-validate="true">
+                              {% for opc in estadocivillist %}
+                                  {% if opc.0 == selected_opc_est_civil %}
+                                      <option value="{{opc.0}}" selected>{{opc.1}}</option>
+                                  {% else %}
+                                      <option value="{{opc.0}}">{{opc.1}}</option>
+                                  {% endif %}
+                              {% endfor %}
+                            </select>
+                          </div>
                           </div>
                           <div class="col-lg-5">
                               <div class="form-group">
@@ -177,8 +177,9 @@
                               </div>
                           </div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                      </br>
+                      </br>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Continuar</button>
                         <!-- <button type="button" class="btn btn-primary btn-lg btn-block">Continuar</button> -->
 
         							<!-- <div class="container-contact100-form-btn">

@@ -94,11 +94,18 @@ class confirmar_dados(View):
     template_name = 'dados-contrato.html'
     form_class = ContratoFormAdmin
 
-    def get_sigla_codigo(self,codigo_uf):
-        if codigo_uf:
+    def get_sigla_codigo(self,contrato):
+        if contrato.endereco_uf:
             for estado in ESTADOS:
-                if estado[0]==codigo_uf:
-                    return estado[1]
+                if estado[0]==contrato.endereco_uf:
+                    return estado[0]
+        return ""
+
+    def get_estado_civil(self,contrato):
+        if contrato.estado_civil:
+            for estado_civil in ESTADO_CIVIL:
+                if estado_civil[0]==contrato.estado_civil:
+                    return estado_civil[0]
         return ""
 
     def get(self, request,*args, **kwargs):
@@ -115,7 +122,9 @@ class confirmar_dados(View):
                         'cidade': contrato.endereco_cidade,'estadolist': ESTADOS,
                         'bairro': contrato.endereco_bairro, 'cep': contrato.cep,'complemento': contrato.complemento_endereco,
                         'numero': contrato.numero_endereco,'estadocivillist': ESTADO_CIVIL,'profissao': contrato.profissao,
-                        'telefone': contrato.telefone, 'data_nascimento': contrato.data_nascimento})
+                        'telefone': contrato.telefone, 'data_nascimento': contrato.data_nascimento,
+                        'selected_opc_est': self.get_sigla_codigo(contrato),
+                        'selected_opc_est_civil': self.get_estado_civil(contrato)})
 
     def post(self, request, *args, **kwargs):
 

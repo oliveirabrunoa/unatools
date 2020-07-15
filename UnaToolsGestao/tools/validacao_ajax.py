@@ -75,9 +75,9 @@ def validar_cep(request):
         try:
             cep_correios = pycep_correios.consultar_cep(cep)
             print(cep_correios)
-            return JsonResponse({'valid':'true', 'message': 'okok'}, status=200)
+            return JsonResponse({'valid':'true', 'message': ' '}, status=200)
         except Exception:
-            return JsonResponse({'valid':'false','message': 'O CEP informado é inválido!'})
+            return JsonResponse({'valid':'false','message': 'CEP Inválido!'})
     return JsonResponse({'valid':'false','message': ' '})
 
 
