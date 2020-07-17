@@ -14,7 +14,7 @@ class ContratoAPI(object):
 
     def __init__(self):
         self.base_url = 'http://127.0.0.1:8000'+'/internal_url'
-        self.template_name = 'Modelo-de-Contrato-PPC-ONLINE.html'
+        self.template_name = 'Modelo-de-Contrato-PPC-ONLINE-atualizado.html'
         self.cod_transacao = self.gerar_codigo()
 
     def gerar_codigo(self, size=6, chars=string.ascii_uppercase + string.digits):
