@@ -8,6 +8,7 @@ import os
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from .models import Turma, Tag
+from .choices import ESTADOS, ESTADO_CIVIL
 
 
 class ContratoAPI(object):
@@ -34,6 +35,20 @@ class ContratoAPI(object):
             return True
         return False
 
+    def get_sigla_by_id(self, uf_id):
+        if uf_id:
+            for estado in ESTADOS:
+                if estado[0]==uf_id:
+                    return estado[1]
+        return ""
+
+    def get_estado_civil_by_id(self, cv_id):
+        if cv_id:
+            for estado_civil in ESTADO_CIVIL:
+                if estado_civil[0]==cv_id:
+                    return estado_civil[1]
+        return ""
+
     def formatar_dados(self,contrato):
         turma = Turma.objects.filter(id=contrato.turma.id).first()
         curso = Tag.objects.filter(id=turma.curso.id).first()
@@ -44,11 +59,11 @@ class ContratoAPI(object):
                 'numero': contrato.numero_endereco,
                 'endereco_bairro': contrato.endereco_bairro,
                 'endereco_cidade': contrato.endereco_cidade,
-                'uf': contrato.endereco_uf,
+                'uf': self.get_sigla_by_id(contrato.endereco_uf),
                 'cep_cliente': contrato.cep,
                 'telefone_cliente': contrato.telefone,
                 'nasc_cliente': contrato.data_nascimento,
-                'estado_civil': contrato.estado_civil,
+                'estado_civil': self.get_estado_civil_by_id(contrato.estado_civil),
                 'email_cliente': contrato.email,
                 'curso_info': curso.categoria,
                 'curso_desc': contrato.extra_bonus if contrato.extra_bonus else '  ',
