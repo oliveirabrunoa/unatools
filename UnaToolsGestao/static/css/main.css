@@ -180,6 +180,22 @@ iframe {
 
 }
 
+.container-contact80 {
+  width: 80%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #e6e6e6;
+
+}
+
 .wrap-contact100 {
   width: 920px;
   background: #fff;

@@ -180,6 +180,22 @@ iframe {
 
 }
 
+.container-contact80 {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: top;
+  padding: 20px;
+  background: #e6e6e6;
+
+}
+
 .wrap-contact100 {
   width: 920px;
   background: #fff;
@@ -219,6 +235,17 @@ iframe {
   line-height: 1.2;
   text-align: center;
   padding-bottom: 59px;
+}
+
+.contact100-form-title-dois {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  font-size: 39px;
+  color: #333333;
+  line-height: 1.2;
+  text-align: center;
+  padding-bottom: 35px;
 }
 
 
