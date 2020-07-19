@@ -195,7 +195,7 @@ class confirmar_servico(View):
 
         data_atual=date.today()
         return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email, 'lista_turmas': self.get_turmas_abertas(), 'lista_cursos': self.get_cursos(),
-                        'consultor': self.get_consultor_info(request.user), 'data_local_assinatura': '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)})
+                        'consultor': self.get_consultor_info(request.user), 'datalocalassinatura': '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)})
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -209,8 +209,8 @@ class confirmar_servico(View):
         if request.POST:
             contrato_atualizado=Contrato.objects.filter(id=request.session.get('contrato_id')).update(
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
-                              forma_pagamento =  self.querydict_to_string(request.POST, 'forma-pagamento'),
-                              condicoes_pagamento=request.POST['condicoes-pagamento'],
+                              forma_pagamento =  self.querydict_to_string(request.POST, 'formapagamento'),
+                              condicoes_pagamento=request.POST['condicoespagamento'],
                               consultor='{0}'.format(self.get_consultor_info(request.user)))
 
             return HttpResponseRedirect('generate_pdf')
