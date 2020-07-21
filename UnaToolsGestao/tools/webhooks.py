@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 import requests
 from urllib import parse
+from .choices import ESTADOS, ESTADO_CIVIL
 # from .views import criar_lead_moskit
 
 #### Recebimento de Cadastro LL ####
@@ -125,10 +126,9 @@ def ac_webhook_contrato(request):
         endereco_estado = '{0}'.format(params.get("contact[fields][estado]")[0])
         cep = '{0}'.format(params.get("contact[fields][cep]")[0])
         profissao = '{0}'.format(params.get("contact[fields][profissao]")[0])
+        estado_civil = '{0}'.format(params.get("contact[fields][estado_civil]")[0])
 
-
-
-        # print(nome_completo, email, telefone, cpf, rg,data_nasc,cidade_estado_cliente,endereco_cliente,bairro_cliente,cep)
+        print(params)
 
         #Criação de Instância do Tipo Contrato
         contrato = Contrato()
@@ -136,9 +136,12 @@ def ac_webhook_contrato(request):
         contrato.rg=rg
         contrato.cpf=cpf
         contrato.endereco= '{0}'.format(endereco_cliente )
-        contrato.endereco_bairro = '{0}'.format(endereco_estado)
+        contrato.endereco_bairro = '{0}'.format(endereco_bairro)
         contrato.endereco_cidade = endereco_cidade
-        contrato.endereco_uf = '{0}'.format(endereco_estado)
+        contrato.numero_endereco = endereco_numero
+        contrato.profissao = profissao
+        contrato.estado_civil = '{0}'.format(get_estado_civil(estado_civil ))
+        contrato.endereco_uf = '{0}'.format(get_sigla_codigo(endereco_estado))
         contrato.cep = cep
         contrato.complemento_endereco =' '
         contrato.telefone = telefone
@@ -148,6 +151,20 @@ def ac_webhook_contrato(request):
 
     return HttpResponse(status=200)
 
+def get_estado_civil(estado_civil_web):
+    if estado_civil_web:
+        for ec in ESTADO_CIVIL:
+            if ec[1] in estado_civil_web:
+                return ec[0]
+    return ""
+
+def get_sigla_codigo(endereco_estado):
+    if endereco_estado:
+        for estado in ESTADOS:
+            if estado[1] in endereco_estado:
+                return estado[0]
+    return ""
+
 def data_nasc_format(data_nasc):
     data_nasc_cliente = data_nasc
     if data_nasc_cliente.find('/')  > 0:
@@ -155,7 +172,3 @@ def data_nasc_format(data_nasc):
     elif data_nasc_cliente.find('-')  > 0:
         return datetime.datetime.strptime(data_nasc_cliente,"%d-%m-%Y").strftime("%Y-%m-%d")
     return None
-
-
-
-    return datetime.datetime.strptime(data_nasc_cliente,"%d/%m/%Y").strftime("%Y-%m-%d")
