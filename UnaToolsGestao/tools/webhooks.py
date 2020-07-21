@@ -118,21 +118,29 @@ def ac_webhook_contrato(request):
         cpf = '{0}'.format(params.get("contact[fields][cpf]")[0])
         rg = '{0}'.format(params.get("contact[fields][rg]")[0])
         data_nasc = '{0}'.format(params.get("contact[fields][nascimento]")[0])
-        cidade_estado_cliente = '{0}'.format(params.get("contact[fields][cidade]")[0])
+        endereco_cidade = '{0}'.format(params.get("contact[fields][cidade]")[0])
         endereco_cliente = '{0}'.format(params.get("contact[fields][enderecocompleto]")[0])
-        bairro_cliente = '{0}'.format(params.get("contact[fields][bairro]")[0])
+        endereco_numero = '{0}'.format(params.get("contact[fields][endereconumero]")[0])
+        endereco_bairro = '{0}'.format(params.get("contact[fields][bairro]")[0])
+        endereco_estado = '{0}'.format(params.get("contact[fields][estado]")[0])
         cep = '{0}'.format(params.get("contact[fields][cep]")[0])
+        profissao = '{0}'.format(params.get("contact[fields][profissao]")[0])
 
-        print(nome_completo, email, telefone, cpf, rg,data_nasc,cidade_estado_cliente,endereco_cliente,bairro_cliente,cep)
+
+
+        # print(nome_completo, email, telefone, cpf, rg,data_nasc,cidade_estado_cliente,endereco_cliente,bairro_cliente,cep)
 
         #Criação de Instância do Tipo Contrato
         contrato = Contrato()
         contrato.contratante = nome_completo
         contrato.rg=rg
         contrato.cpf=cpf
-        contrato.endereco= '{0} - {1}'.format(endereco_cliente,bairro_cliente )
-        contrato.cidade_estado = cidade_estado_cliente
+        contrato.endereco= '{0}'.format(endereco_cliente )
+        contrato.endereco_bairro = '{0}'.format(endereco_estado)
+        contrato.endereco_cidade = endereco_cidade
+        contrato.endereco_uf = '{0}'.format(endereco_estado)
         contrato.cep = cep
+        contrato.complemento_endereco =' '
         contrato.telefone = telefone
         contrato.data_nascimento=data_nasc_format(data_nasc)
         contrato.email = email
