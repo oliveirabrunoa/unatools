@@ -223,6 +223,7 @@ class confirmar_servico(View):
         if request.POST:
             contrato_atualizado=Contrato.objects.filter(id=request.session.get('contrato_id')).update(
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
+                              extra_bonus = request.POST['curso_desc'],
                               forma_pagamento =  self.querydict_to_string(request.POST, 'formapagamento'),
                               condicoes_pagamento=self.format_cond_pag(request.POST['condicoespagamento']),
                               consultor='{0}'.format(self.get_consultor_info(request.user)))
