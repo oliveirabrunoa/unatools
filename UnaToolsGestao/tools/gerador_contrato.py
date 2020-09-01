@@ -69,7 +69,7 @@ class ContratoAPI(object):
                 'curso_desc': contrato.extra_bonus if contrato.extra_bonus else '  ',
                 'curso_period': turma.periodo,
                 'forma_pagamento': contrato.forma_pagamento,
-                'cond_pagamento': '{0}{1}'.format(' - ', contrato.condicoes_pagamento),
+                'cond_pagamento': '{0}'.format(contrato.condicoes_pagamento),
                 'turma_cliente': contrato.turma,
                 'consultor_nome': contrato.consultor,
                 'cidade_data_contrato': contrato.data_criacao}

@@ -184,6 +184,20 @@ class confirmar_servico(View):
             return '{0} {1}'.format(nome_consultor.first_name,nome_consultor.last_name)
         return ''
 
+    def split_cond_pag(self,cond_pag):
+        s = cond_pag
+        n = 87
+        linhas = []
+        for start in range(0, len(s), n):
+            yield s[start:start+n]
+
+    def format_cond_pag(self, cond_pag):
+        linhas = []
+        for linha in self.split_cond_pag(cond_pag):
+            linhas.append(linha)
+            linhas.append('\n')
+        return ''.join(linhas)
+
     def get(self, request,*args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseRedirect('/?next=%s' % request.path)
@@ -210,7 +224,7 @@ class confirmar_servico(View):
             contrato_atualizado=Contrato.objects.filter(id=request.session.get('contrato_id')).update(
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
                               forma_pagamento =  self.querydict_to_string(request.POST, 'formapagamento'),
-                              condicoes_pagamento=request.POST['condicoespagamento'],
+                              condicoes_pagamento=self.format_cond_pag(request.POST['condicoespagamento']),
                               consultor='{0}'.format(self.get_consultor_info(request.user)))
 
             return HttpResponseRedirect('generate_pdf')
