@@ -245,13 +245,13 @@
                               message: 'Este campo é obrigatório'
                           },
                           stringLength: {
-                              min: 5,
-                              max: 10,
+                              min: 3,
+                              max: 25,
                               message: ' '
                             },
                           regexp: {
-                              regexp: /^([0-9]{5,10})$/,
-                              message: 'O RG deve possuir entre 5 e 10 digitos'
+                              regexp: /^([a-zA-Z0-9]{3,25})$/,
+                              message: 'O RG deve possuir no máximo 25 digitos'
                           },
                       }
                   },
