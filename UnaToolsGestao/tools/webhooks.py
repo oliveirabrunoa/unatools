@@ -50,15 +50,17 @@ from .choices import ESTADOS, ESTADO_CIVIL
 def ac_webhook_cadastro_klick(request):
     body_unicode = request.body.decode('utf-8')
     post_args=request.POST
+    print(post_args)
     if post_args:
         params=dict(post_args.lists())
         nome = params.get("contact[first_name]")[0]
         email = params.get("contact[email]")[0]
         transaction = '{0}'.format("FromAC")
-        token = '{0}'.format("c8f64ca00902401400674529e36f9b26")
+        token = '{0}'.format("c2363aef42623fa5cff5615078e5dfed")
         status = '{0}'.format("approved")
-        url = "https://api.klickmembers.com.br/webhook/advanced/NTAwOQ==/NjM2OA=="
+        url = "https://api.klickmembers.com.br/webhook/advanced/NTAwOQ==/NzkwNw=="
         headers = {'content-type': "application/json"}
+
 
         try:
             payload = json.dumps({  "name":'{0}'.format(nome),
@@ -68,6 +70,7 @@ def ac_webhook_cadastro_klick(request):
                     "status":'{0}'.format(status)
                 })
             response = requests.post(url, data=payload, headers=headers)
+            print(response)
             if response.status_code =="200":
                 return HttpResponse(status=200)
         except:
