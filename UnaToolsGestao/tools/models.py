@@ -22,7 +22,9 @@ class Turma(models.Model):
     cod_turma = models.CharField(max_length=50,blank=False, null=True)
     curso = models.ForeignKey(Tag, null=True, on_delete=models.SET_NULL)
     periodo = models.CharField(max_length=200,blank=False, null=True)
-    qtd_encontros =  models.IntegerField()
+    qtd_encontros =  models.IntegerField()    
+    token_klickmembers = models.CharField(max_length=200,blank=False, null=True)
+    url_klickmembers = models.CharField(max_length=300,blank=False, null=True)
     status_turma = models.BooleanField(default=False, verbose_name="Turma Concluída?")
 
     def __str__(self):

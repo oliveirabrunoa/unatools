@@ -1,4 +1,4 @@
-from .models import Tag, Transaction, Contrato
+from .models import Tag, Transaction, Contrato, Turma
 from django.utils import timezone
 import datetime
 import json
@@ -55,21 +55,18 @@ def ac_webhook_cadastro_klick(request):
         params=dict(post_args.lists())
         nome = params.get("contact[first_name]")[0]
         email = params.get("contact[email]")[0]
-        transaction = '{0}'.format("FromAC")
-        token = '{0}'.format("c2363aef42623fa5cff5615078e5dfed")
-        status = '{0}'.format("approved")
-        url = "https://api.klickmembers.com.br/webhook/advanced/NTAwOQ==/NzkwNw=="
-        headers = {'content-type': "application/json"}
+        # token = '{0}'.format("c2363aef42623fa5cff5615078e5dfed")
+        # url = "https://api.klickmembers.com.br/webhook/advanced/NTAwOQ==/NzkwNw=="
 
-
+        turma = Turma.objects.all().filter(cod_turma__icontains="T02").first()
         try:
             payload = json.dumps({  "name":'{0}'.format(nome),
                     "email":'{0}'.format(email),
-                    "transaction": '{0}'.format(transaction),
-                    "token":'{0}'.format(token),
-                    "status":'{0}'.format(status)
+                    "transaction": '{0}'.format("FromAC"),
+                    "token":'{0}'.format(turma.token_klickmembers),
+                    "status":'{0}'.format("approved")
                 })
-            response = requests.post(url, data=payload, headers=headers)
+            response = requests.post(turma.url_klickmembers, data=payload, headers={'content-type': "application/json"})
             print(response)
             if response.status_code =="200":
                 return HttpResponse(status=200)
