@@ -9,7 +9,8 @@ from django.conf import settings
 import requests
 from urllib import parse
 from .choices import ESTADOS, ESTADO_CIVIL
-# from .views import criar_lead_moskit
+from django.core.mail import send_mail
+from django.conf import settings
 
 #### Recebimento de Cadastro LL ####
 # 1|Formação Completa em Coaching com PNL
@@ -17,33 +18,6 @@ from .choices import ESTADOS, ESTADO_CIVIL
 # 3|Formação Liderança 4.0 com técnicas de Coaching e PNL
 # 4|Formação NevEX  com técnicas de Coaching e PNL
 
-
-# @require_POST
-# @csrf_exempt
-# def leadlovers_webhook_cadastro_ppc(request):
-#     body_unicode = request.body.decode('utf-8')
-#     params = dict(parse.parse_qsl(parse.urlsplit(body_unicode).path))
-#     print(params)
-#     if params:
-#         lead = Lead()
-#         lead.nome = params['Nome']
-#         lead.email = params['Email']
-#         lead.telefone = params['Telefone']
-#         lead.area_atuacao = params['AreadeAtuacao']
-#         lead.save()
-#
-#         tag = Tag.objects.filter(id=params['maquina_origem']).first()
-#
-#         transaction = Transaction()
-#         transaction.lead = lead
-#         transaction.tag = tag
-#         transaction.save()
-#
-#         criar_lead_moskit(lead)
-#
-#     return HttpResponse(status=200)
-
-# parsed = urlparse('http://user:pass@NetLoc:80/path;parameters?query=argument#fragment')
 
 @require_POST
 @csrf_exempt
@@ -65,16 +39,20 @@ def ac_webhook_cadastro_klick(request):
                         "email":'{0}'.format(email),
                         "transaction": '{0}'.format("FromAC"),
                         "token":'{0}'.format(turma.token_klickmembers),
-                        "status":'{0}'.format("reproved")
+                        "status":'{0}'.format("approved")
                     })
                 response = requests.post(turma.url_klickmembers, data=payload, headers={'content-type': "application/json"})
-                print(response)
+
                 if response.status_code =="200":
+                    send_mail('Acesso criado com sucesso!', 'Por favor, verifique o acesso de: \n  {0} | {1} | {2}'.format(nome,email,turma_tag),
+                               settings.EMAIL_HOST_USER, ['brunooliveira@unacoaching.com.br','tauanbaqueiro@unacoaching.com.br'])
                     return HttpResponse(status=200)
             except:
                 print("Não foi possível criar o usuário")
-        return HttpResponse(status=200)
+                send_mail('Ocorreu um erro ao criar usuário no Portal do Aluno', 'Por favor, verifique o acesso de: \n  {0} | {1} | {2}'.format(nome,email,turma_tag),
+                           settings.EMAIL_HOST_USER, ['brunooliveira@unacoaching.com.br','tauanbaqueiro@unacoaching.com.br'])
 
+        return HttpResponse(status=200)
 
 # @require_POST
 # @csrf_exempt

@@ -25,7 +25,7 @@ SECRET_KEY = '8_v6wb!hrcaf1s1dmm^hl3+acupx=smxb+32=kimlhs!7h5(vx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','unatools.pythonanywhere.com', 'b85d6be8a9dd.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1','unatools.pythonanywhere.com', 'c789d40df462.ngrok.io']
 
 
 # Application definition
@@ -142,3 +142,11 @@ br_formats.DATE_FORMAT = 'd/m/Y'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DIRETORIO_CONTRATOS = '{0}{1}'.format(BASE_DIR,'/tools/contratos/')
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'unaroompc@gmail.com'
+EMAIL_HOST_PASSWORD = 'A6901804'
