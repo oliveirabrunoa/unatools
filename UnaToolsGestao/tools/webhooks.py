@@ -54,6 +54,42 @@ def ac_webhook_cadastro_klick(request):
 
         return HttpResponse(status=200)
 
+
+@require_POST
+@csrf_exempt
+def ac_webhook_cadastro_klick_degust(request):
+    body_unicode = request.body.decode('utf-8')
+    post_args=request.POST
+    print(post_args)
+    if post_args:
+        params=dict(post_args.lists())
+        nome = params.get("contact[first_name]")[0]
+        email = params.get("contact[email]")[0]
+
+        turma = Turma.objects.all().filter(cod_turma__icontains="DEGUST01").first()
+        if turma:
+            print(turma)
+            try:
+                payload = json.dumps({  "name":'{0}'.format(nome),
+                        "email":'{0}'.format(email),
+                        "transaction": '{0}'.format("FromAC"),
+                        "token":'{0}'.format(turma.token_klickmembers),
+                        "status":'{0}'.format("approved")
+                    })
+                response = requests.post(turma.url_klickmembers, data=payload, headers={'content-type': "application/json"})
+
+                if response.status_code =="200":
+                    send_mail('Acesso criado com sucesso!', 'Por favor, verifique o acesso de: \n  {0} | {1} | {2}'.format(nome,email,turma_tag),
+                               settings.EMAIL_HOST_USER, ['brunooliveira@unacoaching.com.br','tauanbaqueiro@unacoaching.com.br'])
+                    return HttpResponse(status=200)
+            except:
+                print("Não foi possível criar o usuário")
+                send_mail('Ocorreu um erro ao criar usuário no Portal do Aluno', 'Por favor, verifique o acesso de: \n  {0} | {1} | {2}'.format(nome,email,turma_tag),
+                           settings.EMAIL_HOST_USER, ['brunooliveira@unacoaching.com.br','tauanbaqueiro@unacoaching.com.br'])
+
+        return HttpResponse(status=200)
+
+    
 # @require_POST
 # @csrf_exempt
 # def ac_webhook_cadastro_klick_ppc(request):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tag, Transaction, UsersCRM, Turma, Contrato
+from .models import Tag, Transaction, UsersCRM, Turma, Contrato,ModeloContrato
 from .forms import ContratoFormAdmin
 from django.utils.html import format_html
 
@@ -21,3 +21,4 @@ admin.site.register(Transaction)
 admin.site.register(UsersCRM)
 admin.site.register(Turma)
 admin.site.register(Contrato)
+admin.site.register(ModeloContrato)

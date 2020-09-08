@@ -22,7 +22,7 @@ class Turma(models.Model):
     cod_turma = models.CharField(max_length=50,blank=False, null=True)
     curso = models.ForeignKey(Tag, null=True, on_delete=models.SET_NULL)
     periodo = models.CharField(max_length=200,blank=False, null=True)
-    qtd_encontros =  models.IntegerField()    
+    qtd_encontros =  models.IntegerField()
     token_klickmembers = models.CharField(max_length=200,blank=False, null=True)
     url_klickmembers = models.CharField(max_length=300,blank=False, null=True)
     status_turma = models.BooleanField(default=False, verbose_name="Turma Concluída?")
@@ -33,6 +33,13 @@ class Turma(models.Model):
     class Meta:
         verbose_name = 'Turma'
         verbose_name_plural = 'Turmas'
+
+class ModeloContrato(models.Model):
+    id = models.AutoField(primary_key=True, blank=False, null=False)
+    nome_modelo=models.CharField(max_length=250,blank=False, null=True)
+    url_modelo=models.CharField(max_length=450,blank=False, null=True)
+    versao =  models.IntegerField()
+
 
 class Contrato(models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
