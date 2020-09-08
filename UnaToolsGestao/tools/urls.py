@@ -11,6 +11,8 @@ urlpatterns = [
 
     #Weebhooks
     url(r'^ac_webhook_cadastro_klick$', webhooks.ac_webhook_cadastro_klick, name='ac_webhook_cadastro_klick'),
+    url(r'^ac_webhook_cadastro_klick_degust$', webhooks.ac_webhook_cadastro_klick_degust, name='ac_webhook_cadastro_klick_degust'),
+
     url(r'^ac_webhook_contrato$', webhooks.ac_webhook_contrato, name='ac_webhook_contrato'),
     #Internal
     url(r'^visualizar_contrato/(?P<param>[\w{}.-]{0,200})/$', views.visualizar_contrato, name='visualizar_contrato'),
