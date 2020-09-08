@@ -55,23 +55,24 @@ def ac_webhook_cadastro_klick(request):
         params=dict(post_args.lists())
         nome = params.get("contact[first_name]")[0]
         email = params.get("contact[email]")[0]
-        # token = '{0}'.format("c2363aef42623fa5cff5615078e5dfed")
-        # url = "https://api.klickmembers.com.br/webhook/advanced/NTAwOQ==/NzkwNw=="
+        turma_tag = params.get("contact[fields][codturmainterno]")[0]
 
-        turma = Turma.objects.all().filter(cod_turma__icontains="T02").first()
-        try:
-            payload = json.dumps({  "name":'{0}'.format(nome),
-                    "email":'{0}'.format(email),
-                    "transaction": '{0}'.format("FromAC"),
-                    "token":'{0}'.format(turma.token_klickmembers),
-                    "status":'{0}'.format("approved")
-                })
-            response = requests.post(turma.url_klickmembers, data=payload, headers={'content-type': "application/json"})
-            print(response)
-            if response.status_code =="200":
-                return HttpResponse(status=200)
-        except:
-            print("Não foi possível criar o usuário")
+        turma = Turma.objects.all().filter(cod_turma__icontains=turma_tag).first()
+        if turma:
+            print(turma)
+            try:
+                payload = json.dumps({  "name":'{0}'.format(nome),
+                        "email":'{0}'.format(email),
+                        "transaction": '{0}'.format("FromAC"),
+                        "token":'{0}'.format(turma.token_klickmembers),
+                        "status":'{0}'.format("reproved")
+                    })
+                response = requests.post(turma.url_klickmembers, data=payload, headers={'content-type': "application/json"})
+                print(response)
+                if response.status_code =="200":
+                    return HttpResponse(status=200)
+            except:
+                print("Não foi possível criar o usuário")
         return HttpResponse(status=200)
 
 
