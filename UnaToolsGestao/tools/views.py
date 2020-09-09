@@ -30,15 +30,6 @@ class allcontracts(ListView):
     model = Contrato
     queryset = Contrato.objects.all().filter(assinado=False)
 
-    # @method_decorator(login_required)
-    # def dispatch(self, *args, **kwargs):
-    #     return super(allcontracts, self).dispatch(*args, **kwargs)
-    #
-    # def get_queryset(self):
-    #     return User.objects.filter(email=self.request.user.email)
-
-
-
 class index(View):
     template_name = 'login.html'
 
@@ -89,6 +80,40 @@ class consultar_cliente(View):
             else:
                 return render(request, self.template_name, {'messages' : 'messages', 'email':param})
         return render(request, self.template_name, { 'form' : self.form_class()})
+
+
+class confirmar_dados_branco(View):
+    template_name = 'dados-contrato-branco.html'
+    form_class = ContratoFormAdmin
+
+    def get(self, request,*args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
+        return render(request, self.template_name, { 'form' : self.form_class(), 'estadolist': ESTADOS,'estadocivillist': ESTADO_CIVIL})
+
+    def post(self, request, *args, **kwargs):
+
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
+        if request.POST:
+            contrato_novo=Contrato.objects.create(email=request.POST['email'],
+                              contratante = request.POST['contratante'],
+                              rg=request.POST['rg'], cpf=request.POST['cpf'],
+                              endereco=request.POST['endereco'],
+                              endereco_cidade=request.POST['cidade'],endereco_uf= request.POST['estado'],
+                              cep=request.POST['cep'], telefone=request.POST['telefone'],profissao=request.POST['profissao'],
+                              endereco_bairro=request.POST['bairro'], complemento_endereco=request.POST['complemento'],
+                              numero_endereco=request.POST['numero'], estado_civil=request.POST['estadocivil'],
+                              data_nascimento=data_nasc_format(request.POST['data_nascimento']))
+            contrato_novo.save()
+
+            request.session['contrato_id']= str(contrato_novo.id)
+            transaction = Transaction.objects.create(contrato=Contrato.objects.filter(id=contrato_novo.id).first())
+            return HttpResponseRedirect('confirmar_servico')
+        return render(request, self.template_name, {})
+
 
 class confirmar_dados(View):
     template_name = 'dados-contrato.html'
