@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^confirmar_dados$', views.confirmar_dados.as_view(), name='confirmar_dados'),
     url(r'^confirmar_dados_branco$', views.confirmar_dados_branco.as_view(), name='confirmar_dados_branco'),
     url(r'^confirmar_servico$', views.confirmar_servico.as_view(), name='confirmar_servico'),
+    url(r'^escolher_servico$', views.escolher_servico.as_view(), name='escolher_servico'),
     url(r'^generate_pdf$', views.generate_pdf.as_view(), name='generate_pdf'),
     url(r'^concluido$', views.concluido.as_view(), name='concluido'),
     url(r'^visualizar_contrato$', views.visualizar_contrato.as_view(), name='visualizar_contrato'),

@@ -111,7 +111,7 @@ class confirmar_dados_branco(View):
 
             request.session['contrato_id']= str(contrato_novo.id)
             transaction = Transaction.objects.create(contrato=Contrato.objects.filter(id=contrato_novo.id).first())
-            return HttpResponseRedirect('confirmar_servico')
+            return HttpResponseRedirect('escolher_servico')
         return render(request, self.template_name, {})
 
 
@@ -169,16 +169,60 @@ class confirmar_dados(View):
                               numero_endereco=request.POST['numero'], estado_civil=request.POST['estadocivil'],
                               data_nascimento=data_nasc_format(request.POST['data_nascimento']))
 
-            return HttpResponseRedirect('confirmar_servico')
+            return HttpResponseRedirect('escolher_servico')
         return HttpResponseRedirect('consultar_cliente')
+
+
+class escolher_servico(View):
+    template_name = 'escolher-servico.html'
+    form_class = ContratoFormAdmin
+
+    def get_cursos(self):
+        cursos = Tag.objects.all()
+        lista_cursos = [('','Selecione o Curso')]
+        # lista_cursos = []
+        for c in cursos:
+            lista_cursos.append((int(c.id), c))
+        return lista_cursos
+
+
+    def get(self, request,*args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
+        contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
+
+        if not contrato:
+            return HttpResponseRedirect('consultar_cliente')
+
+        data_atual=date.today()
+        return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email, 'lista_cursos': self.get_cursos()})
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect('/?next=%s' % request.path)
+
+        contrato=Contrato.objects.filter(id=request.session.get('contrato_id')).first()
+
+        if not contrato:
+            return HttpResponseRedirect('consultar_cliente')
+
+        if request.POST:
+            contrato_atualizado=Contrato.objects.filter(id=request.session.get('contrato_id')).update(
+                              curso=Tag.objects.filter(id=request.POST['cursos']).first(),
+                              extra_bonus = request.POST['curso_desc'])
+
+            return HttpResponseRedirect('confirmar_servico')
+
+        return render(request, self.template_name)
 
 
 class confirmar_servico(View):
     template_name = 'dados-servico.html'
     form_class = ContratoFormAdmin
 
-    def get_turmas_abertas(self):
-        turmas_ativas = Turma.objects.filter(status_turma=False)
+    def get_turmas_abertas(self, curso_id):
+        turmas_ativas = Turma.objects.filter(status_turma=False, curso=curso_id)
         lista_turmas = [('','Selecione a Turma')]
         for turma in turmas_ativas:
             lista_turmas.append((int(turma.id), turma))
@@ -194,14 +238,6 @@ class confirmar_servico(View):
                 result = ', '.join(v)
                 return result
         return result
-
-    def get_cursos(self):
-        cursos = Tag.objects.all()
-        # lista_cursos = [('','Selecione o Curso')]
-        lista_cursos = []
-        for c in cursos:
-            lista_cursos.append((int(c.id), c))
-        return lista_cursos
 
     def get_consultor_info(self, user):
         nome_consultor = User.objects.filter(username=user).first()
@@ -233,7 +269,7 @@ class confirmar_servico(View):
             return HttpResponseRedirect('consultar_cliente')
 
         data_atual=date.today()
-        return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email, 'lista_turmas': self.get_turmas_abertas(), 'lista_cursos': self.get_cursos(),
+        return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email, 'lista_turmas': self.get_turmas_abertas(contrato.curso.id),
                         'consultor': self.get_consultor_info(request.user), 'datalocalassinatura': '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)})
 
     def post(self, request, *args, **kwargs):
@@ -248,7 +284,6 @@ class confirmar_servico(View):
         if request.POST:
             contrato_atualizado=Contrato.objects.filter(id=request.session.get('contrato_id')).update(
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
-                              extra_bonus = request.POST['curso_desc'],
                               forma_pagamento =  self.querydict_to_string(request.POST, 'formapagamento'),
                               condicoes_pagamento=self.format_cond_pag(request.POST['condicoespagamento']),
                               consultor='{0}'.format(self.get_consultor_info(request.user)))
