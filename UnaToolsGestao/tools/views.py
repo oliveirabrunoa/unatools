@@ -269,7 +269,7 @@ class confirmar_servico(View):
             return HttpResponseRedirect('consultar_cliente')
 
         data_atual=date.today()
-        return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email, 'lista_turmas': self.get_turmas_abertas(contrato.curso.id),
+        return render(request, self.template_name, { 'form' : self.form_class(), 'email': contrato.email, 'lista_turmas': self.get_turmas_abertas(contrato.curso.id), 'curso': contrato.curso.nome_curso,
                         'consultor': self.get_consultor_info(request.user), 'datalocalassinatura': '{0}, {1} de {2} de {3}'.format('Salvador/BA', data_atual.day, desc_mes(data_atual.month), data_atual.year)})
 
     def post(self, request, *args, **kwargs):

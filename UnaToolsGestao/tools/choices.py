@@ -5,6 +5,7 @@ ESTADO_CIVIL = [
     ('3', 'União Estável'),
     ('4', 'Divorciado / Divorciada'),
     ('5', 'Viúvo / Viúva'),
+    ('6', 'Não se aplica'),
 ]
 
 
