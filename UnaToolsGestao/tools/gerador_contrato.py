@@ -66,7 +66,7 @@ class ContratoAPI(object):
                 'nasc_cliente': contrato.data_nascimento,
                 'estado_civil': self.get_estado_civil_by_id(contrato.estado_civil),
                 'email_cliente': contrato.email,
-                'curso_info': curso.categoria,
+                'curso_info': curso.nome_curso,
                 'curso_desc': contrato.extra_bonus if contrato.extra_bonus else '-------------------------------------------------------------------------------------------------------------------------------------------',
                 'curso_period': turma.periodo,
                 'forma_pagamento': contrato.forma_pagamento,
