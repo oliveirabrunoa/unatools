@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 from .gerador_contrato import ContratoAPI
 
-from .models import Contrato, Transaction
+from .models import Contrato, Transaction, ModeloContrato
 
 @receiver(post_save, sender=Contrato, dispatch_uid="update_contrato")
 def update_contrato(sender, instance, **kwargs):
@@ -15,4 +15,9 @@ def update_contrato(sender, instance, **kwargs):
             contrato_process=ContratoAPI()
             ultima_transacao.cod_transacao = contrato_process.cod_transacao
             ultima_transacao.save()
-            result = contrato_process.gerar_contrato(instance)
+            template_contrato = ''
+            if 'PROVI' in instance.forma_pagamento:
+                template_contrato = ModeloContrato.objects.filter(nome_modelo__icontains='PROVI').first().url_modelo
+            else:
+                template_contrato = ModeloContrato.objects.filter(nome_modelo__icontains='PPC Online - Base').first().url_modelo
+            result = contrato_process.gerar_contrato(instance, template_contrato)
