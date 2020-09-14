@@ -102,6 +102,23 @@
                           </div>
                           </div>
                         </div>
+                        <div class="col-lg-6" id="cedulaProvi">
+                            <div class="form-group">
+                            <label for="NCedula">Nº da Cédula do Contrato Provi:</label>
+                            <input type="text" class="form-control" name="NCedula" required/>
+                          </div>
+                        </div>
+
+
+
+
+                        <!-- <div id="browserother">
+                            <p>Please Specify:
+                                <label id="browserlabel">
+                                    <input name="Other Browser" type="text" placeholder="Other Browser" size="50" />
+                                </label>
+                            </p>
+                        </div> -->
                         <div class="row">
                               <div class="col-lg-12">
                                   <div class="form-group">
@@ -132,6 +149,16 @@
             </div>
 				</div>
       </div>
+      <script>
+      $('#cedulaProvi').hide();
+      $('select[name=formapagamento]').change(function () {
+          if ($(this).val().indexOf('PROVI') >= 0) {
+              $('#cedulaProvi').show();
+          } else {
+              $('#cedulaProvi').hide();
+          }
+      });
+      </script>
       <script>
       jQuery(document).ready(function($){
           $(":input").inputmask({showMaskOnFocus: false, showMaskOnHover: false, autoUnmask : true});
