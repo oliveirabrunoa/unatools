@@ -108,22 +108,11 @@
                             <input type="text" class="form-control" name="NCedula" required/>
                           </div>
                         </div>
-
-
-
-
-                        <!-- <div id="browserother">
-                            <p>Please Specify:
-                                <label id="browserlabel">
-                                    <input name="Other Browser" type="text" placeholder="Other Browser" size="50" />
-                                </label>
-                            </p>
-                        </div> -->
                         <div class="row">
-                              <div class="col-lg-12">
+                              <div class="col-lg-12" id="Fieldcondicoespagamento">
                                   <div class="form-group">
                                   <label for="condicoespagamento">Condições do Pagamento e Datas de Vencimento:</label>
-                                  <textarea class="form-control" type="text" name="condicoespagamento" placeholder="Descreva aqui os prazos de pagamento e outras observações que julgar importantes" rows="5" required></textarea>
+                                  <textarea class="form-control" type="text" id="condicoespagamento" name="condicoespagamento" placeholder="Descreva aqui os prazos de pagamento e outras observações que julgar importantes" rows="5" required></textarea>
                                 </div>
                               </div>
                         </div>
@@ -154,9 +143,14 @@
       $('select[name=formapagamento]').change(function () {
           if ($(this).val().indexOf('PROVI') >= 0) {
               $('#cedulaProvi').show();
+              // $('#condicoespagamento').val("Condições de Pagamento: conforme estabelecido nos termos contratuais da PROVI.");
           } else {
               $('#cedulaProvi').hide();
           }
+      });
+
+      $('#cedulaProvi').change(function () {
+          $('#condicoespagamento').val("Condições de Pagamento: conforme estabelecido nos termos contratuais da PROVI.");
       });
       </script>
       <script>
