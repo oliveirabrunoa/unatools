@@ -72,4 +72,5 @@ class ContratoAPI(object):
                 'cond_pagamento': '{0}'.format(contrato.condicoes_pagamento),
                 'turma_cliente': contrato.turma,
                 'consultor_nome': contrato.consultor,
+                'cod_provi': contrato.cod_provi,
                 'cidade_data_contrato': contrato.data_criacao}

@@ -45,6 +45,7 @@ class ModeloContrato(models.Model):
 class Contrato(models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
     contratante = models.CharField(max_length=250,verbose_name="Contratante",blank=False, null=True)
+    cod_provi =  models.CharField(max_length=50,blank=True, null=True)
     rg = models.CharField(max_length=25,verbose_name="RG",blank=False, null=True)
     cpf = models.CharField(max_length=14,verbose_name="CPF",blank=False, null=True)
     endereco = models.CharField(max_length=250,blank=False, null=True)

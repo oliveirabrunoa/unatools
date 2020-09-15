@@ -286,6 +286,7 @@ class confirmar_servico(View):
                               turma=Turma.objects.filter(id=request.POST['turmas']).first(),
                               forma_pagamento =  self.querydict_to_string(request.POST, 'formapagamento'),
                               condicoes_pagamento=self.format_cond_pag(request.POST['condicoespagamento']),
+                              cod_provi=request.POST['NCedula'],
                               consultor='{0}'.format(self.get_consultor_info(request.user)))
 
             return HttpResponseRedirect('generate_pdf')
