@@ -1,0 +1,176 @@
+{% load staticfiles %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Gerador de Contratos - Una</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- jQuery UI CSS -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+			<link rel="icon" type="image/png" href="{% static 'images/iconpucco.png' %}"/>
+		<!--===============================================================================================-->
+
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'vendor/noui/nouislider.min.css' %}">
+		<!--===============================================================================================-->
+			<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+			<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+		<!--===============================================================================================-->
+     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+     <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+     <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous"> -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.min.css' %}"> -->
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
+     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+     <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+
+  </head>
+  <body>
+    
+      <div class="container-contact100">
+          <div class="wrap-contact100">
+            <div class="row">
+                <div class="col-lg-12">
+                  <span class="contact100-form-title">
+                    Lista WhatsApp
+                  </span>
+                    <form method="POST" class="registerForm">{% csrf_token %}
+                      {% for c in clientes %}
+                        <div class="row">
+                              <div class="col-lg-6">
+                                  <div class="form-group">
+                                  <label for="cliente">Nome do Cliente:</label>
+                                  <input type="text" class="form-control" name="cliente" value="{{c.nome_cliente}}" required/>
+                                </div>
+                              </div>
+                              <div class="col-lg-6">
+                                  <div class="form-group">
+                                  <label for="whatsapp">WhatsApp:</label>
+                                  <input type="text" class="form-control" name="whatsapp" value="{{c.num_whatsapp}}" required/>
+                                </div>
+                              </div>
+                        </div>
+                        {% endfor %}
+                      </br>
+                      </br>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Continuar</button>
+                    </form>
+                </div>
+            </div>
+				</div>
+      </div>
+
+      <script>
+      jQuery(document).ready(function($){
+          $(":input").inputmask({showMaskOnFocus: false, showMaskOnHover: false, autoUnmask : true});
+          $('.registerForm').bootstrapValidator({
+              message: 'Esse valor não é válido!',
+              feedbackIcons: {
+                  valid: 'glyphicon glyphicon-ok',
+                  invalid: 'glyphicon glyphicon-remove',
+                  validating: 'glyphicon glyphicon-refresh'
+              },
+              fields: {
+                  cursos: {
+                      validators: {
+                          notEmpty: {
+                              message: 'Este campo é obrigatório'
+                          }
+                      }
+                  },
+                  turmas: {
+                      validators: {
+                          notEmpty: {
+                              message: 'Este campo é obrigatório'
+                          }
+                      }
+                  },
+                  formapagamento: {
+                      validators: {
+                          notEmpty: {
+                              message: 'Este campo é obrigatório'
+                          }
+                      }
+                  },
+                  condicoespagamento: {
+                      validators: {
+                          notEmpty: {
+                              message: 'Este campo é obrigatório'
+                          },
+                          stringLength: {
+                              min: 20,
+                              max: 300,
+                              message: 'Descreva as condições e datas de pagamento. Minimo de 20 caracteres e Máximo de 300 caracteres'
+                          }
+                      }
+                  },
+                  consultor: {
+                      validators: {
+                        notEmpty: {
+                            message: 'Este campo é obrigatório'
+                        },
+                        stringLength: {
+                            min: 3,
+                            max: 80,
+                            message: 'Min 3 caracteres e Max 80 caracteres'
+                        }
+                  }},
+                  datalocalassinatura: {
+                      validators: {
+                          notEmpty: {
+                              message: 'Este campo é obrigatório'
+                          },
+                          stringLength: {
+                              min: 10,
+                              max: 50,
+                              message: ' Data e Local devem ter pelo menos 10 caracteres'
+                          }
+                      }
+                  }
+              }
+          });
+      });
+      </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+    <script src="{% static 'js/masks.js' %}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  </body>
+  <style>
+      .has-error .help-block {
+      color: red;
+      font-size:14px;
+      font-weight: bold;
+      }
+  </style>
+</html>

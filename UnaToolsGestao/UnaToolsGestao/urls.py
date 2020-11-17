@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^', include('tools.urls')),
+    url(r'^', include('unazap.urls')),
     path('admin/', admin.site.urls),
 ]
 

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['127.0.0.1','unatools.pythonanywhere.com', 'c789d40df462.ngrok.
 # Application definition
 
 INSTALLED_APPS = [
+    'unazap',
     'tools',
     'localflavor',
     'django.contrib.admin',
