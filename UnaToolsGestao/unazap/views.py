@@ -96,7 +96,7 @@ import csv
 def loadlista():
     index = 0
 
-    with open('Export Lista PH.csv', newline='') as csvfile:
+    with open('Ph-Online-InNutri e Hot.csv', newline='') as csvfile:
         spamreader = csv.DictReader(csvfile, delimiter=',', quotechar='|')
         for row in spamreader:
             index +=1

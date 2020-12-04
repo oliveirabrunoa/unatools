@@ -5,11 +5,27 @@ from django.dispatch import receiver
 from decimal import Decimal
 from .choices import ESTADOS, ESTADO_CIVIL
 
+class ModeloContrato(models.Model):
+    id = models.AutoField(primary_key=True, blank=False, null=False)
+    nome_modelo=models.CharField(max_length=250,blank=False, null=True)
+    url_modelo=models.CharField(max_length=450,blank=False, null=True)
+    cod_modelo = models.CharField(max_length=50,blank=False, null=True)
+    modelo_provi = models.BooleanField(default=False, verbose_name="Contrato com Provi")
+
+
+    def __str__(self):
+        return '{0}'.format(self.nome_modelo)
+
+    class Meta:
+        verbose_name = 'Modelo de Contrato'
+        verbose_name_plural = 'Modelos de Contratos'
+
 
 class Tag(models.Model):
     id = models.AutoField(primary_key=True, blank=False, null=False)
     cod_curso = models.CharField(max_length=50,blank=False, null=True)
     nome_curso = models.CharField(max_length=200,blank=False, null=True)
+    modelo_contrato = models.ForeignKey(ModeloContrato,blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return '{0}'.format(self.nome_curso)
@@ -35,11 +51,6 @@ class Turma(models.Model):
         verbose_name = 'Turma'
         verbose_name_plural = 'Turmas'
 
-class ModeloContrato(models.Model):
-    id = models.AutoField(primary_key=True, blank=False, null=False)
-    nome_modelo=models.CharField(max_length=250,blank=False, null=True)
-    url_modelo=models.CharField(max_length=450,blank=False, null=True)
-    versao =  models.IntegerField()
 
 
 class Contrato(models.Model):

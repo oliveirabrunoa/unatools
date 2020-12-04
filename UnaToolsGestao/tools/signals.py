@@ -15,9 +15,11 @@ def update_contrato(sender, instance, **kwargs):
             contrato_process=ContratoAPI()
             ultima_transacao.cod_transacao = contrato_process.cod_transacao
             ultima_transacao.save()
-            template_contrato = ''
+            cod_modelo = instance.curso.modelo_contrato.cod_modelo
+            print(cod_modelo)
+            # template_contrato = ModeloContrato.objects.filter(id=id_modelo).first().url_modelo
             if 'PROVI' in instance.forma_pagamento:
-                template_contrato = ModeloContrato.objects.filter(nome_modelo__icontains='PROVI').first().url_modelo
+                template_contrato = ModeloContrato.objects.filter(cod_modelo=cod_modelo, modelo_provi=True).first().url_modelo
             else:
-                template_contrato = ModeloContrato.objects.filter(nome_modelo__icontains='PPC Online - Base').first().url_modelo
+                template_contrato = ModeloContrato.objects.filter(cod_modelo=cod_modelo, modelo_provi=False).first().url_modelo
             result = contrato_process.gerar_contrato(instance, template_contrato)
