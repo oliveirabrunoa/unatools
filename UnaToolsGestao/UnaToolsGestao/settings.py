@@ -77,21 +77,21 @@ WSGI_APPLICATION = 'UnaToolsGestao.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-#
-# DATABASES = {
-#    'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+
+DATABASES = {
+   'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'unatools$dbuna',
+        'NAME': '**',
         'USER': 'unatools',
-        'PASSWORD': 'A6901804',
+        'PASSWORD': '**',
         'HOST': 'unatools.mysql.pythonanywhere-services.com',
         'OPTIONS': {
              'init_command': 'SET innodb_strict_mode=1',
@@ -150,4 +150,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'unaroompc@gmail.com'
-EMAIL_HOST_PASSWORD = 'A6901804'
+EMAIL_HOST_PASSWORD = '**'
